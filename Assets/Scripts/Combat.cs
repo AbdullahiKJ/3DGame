@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class Combat : MonoBehaviour
 {
@@ -9,11 +10,13 @@ public class Combat : MonoBehaviour
     Animator animator;
     bool isPunching;
     float comboTimer = 0;
-    bool finalAttackInput = false;
     public int comboLevel = 0;
     public int newComboLevel = 0;
     [SerializeField] float timeBetweenPunches = 1.5f;
+    float timeBeforePunch = 0.75f;
     [SerializeField] List<GameObject> playerAttackColliders;
+    public List<AttackSO> playerAttackSO;
+    [SerializeField] GameObject vfxPrefab;
     [SerializeField] float attackRadius = 5f;
     [SerializeField] float enemyRange = 0.5f;
     [SerializeField] LayerMask enemyLayer;
@@ -43,7 +46,6 @@ public class Combat : MonoBehaviour
                 comboLevel = 0;
                 isPunching = false;
                 animator.SetBool("isPunching", false);
-                // finalAttackInput = false;
             }
             else if(comboLevel > newComboLevel)
             {
@@ -97,7 +99,8 @@ public class Combat : MonoBehaviour
     // trigger punch
     void OnPunch(InputValue value)
     {
-        if(value.isPressed)
+        // Condition prevents tirggering attacks before most of the animation has played out
+        if(value.isPressed && (comboTimer > timeBeforePunch || comboTimer == 0))
         {
             // reset the hit enemies list
             hitEnemies = new List<GameObject>();
@@ -115,13 +118,10 @@ public class Combat : MonoBehaviour
             else if(comboLevel == 3)
             {
                 comboLevel = 1;
-                // finalAttackInput = true;
             }
             
             animator.SetInteger("Combo", comboLevel);
-            
-            // StartCoroutine(WaitForPunchInput());
-            // StartCoroutine(ResetRollState(0.75f));
+            StartCoroutine(WaitForAnimationStateChange());
         } 
     }
 
@@ -139,9 +139,35 @@ public class Combat : MonoBehaviour
         Gizmos.DrawSphere(this.transform.position + new Vector3(0f, playerHeight, 0f), enemyRange);
     }
 
-    IEnumerator WaitForPunchInput()
+    public void playAttackVFX(int hitBoxIndex) {
+
+        float vfxScale = Random.Range(0.5f, 0.8f);
+        Vector3 vfxRotation = new Vector3(0f, 0f, Random.Range(-10f, 10f)) + playerAttackSO[hitBoxIndex].orientation;
+        GameObject slashInstance = Instantiate(vfxPrefab);
+
+        // Set the prefab rotation and scale
+        slashInstance.transform.position = playerAttackColliders[hitBoxIndex].transform.position;
+        slashInstance.transform.forward = transform.forward;
+        slashInstance.transform.Rotate(vfxRotation);
+        slashInstance.transform.localScale = Vector3.one * vfxScale;
+
+        // Play the vfx
+        slashInstance.GetComponent<VisualEffect>().Play();
+    }
+
+    public void destroyAttackVFX() {
+        GameObject[] slashPrefabs = GameObject.FindGameObjectsWithTag("SlashVfx");
+        foreach (GameObject slashPref in slashPrefabs) {
+            Destroy(slashPref);
+        }
+     }
+
+    // Wait for the animation state to change - wait the transition duration
+    IEnumerator WaitForAnimationStateChange()
     {
-        yield return new WaitForSeconds(1);
-        comboLevel = 0;
+        yield return new WaitForSeconds(0.1f);
+        AnimatorStateInfo currentState = animator.GetNextAnimatorStateInfo(0);
+        // Assign the new time variable
+        timeBeforePunch = 0.6f * currentState.length;
     }
 }
