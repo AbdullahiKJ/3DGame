@@ -131,7 +131,7 @@ public class Movement : MonoBehaviour
         else
         {
             Vector3 finalVelocity = new Vector3(move.x * playerSpeed, playerVelocity.y, move.z * playerSpeed);
-            controller.Move(finalVelocity * Time.deltaTime);
+            controller.Move(finalVelocity * Time.deltaTime * 1/Time.timeScale);
         }
     }
 
@@ -234,11 +234,12 @@ public class Movement : MonoBehaviour
         yield return new WaitForEndOfFrame();
     }
 
+    // TODO: FIX JUMP TIMING IN SLOW MO MODE
     IEnumerator AdjustJumpTiming()
     {
         animator.SetBool("isJumping", true);
         moveInput = Vector2.zero;
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.6f * Time.timeScale);
         isJumping = true;
         playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
         yield return new WaitForSeconds(0.8f);

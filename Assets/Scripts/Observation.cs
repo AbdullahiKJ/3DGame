@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -11,9 +10,10 @@ public class Observation : MonoBehaviour
     bool observationTriggered = false;
     bool volumeTransitionTriggered = false;
     [SerializeField] float transitionSpeed = 0.1f;
+    Animator animator;
     void Awake()
     {
-
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -46,6 +46,9 @@ public class Observation : MonoBehaviour
             observationTriggered = !observationTriggered;
             Time.timeScale = observationTriggered ? 0.5f : 1f;
             volumeTransitionTriggered = true;
+
+            // TODO: FIX THIS
+            animator.SetFloat("timeScaleMultiplier", 1/Time.timeScale);
         }
     }
 
