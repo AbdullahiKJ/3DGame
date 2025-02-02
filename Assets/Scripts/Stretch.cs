@@ -1,22 +1,31 @@
-using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Stretch : MonoBehaviour
 {
-    [SerializeField] LineRenderer lineRenderer;
-    public Camera mainCamera;
-    [SerializeField] List<MeshRenderer> visibleTargets;
-    Vector3 currentTarget;
-    CharacterController controller;
-    bool isSwinging = false;
-    Vector3 distance;
+    [SerializeField] GameObject hand;
+    LineRenderer lineRenderer;
     [SerializeField] float swingSpeed = 5f;
+    [SerializeField] LayerMask swingLayer;
+
+    public Camera mainCamera;
+    CharacterController controller;
+    public bool isSwinging = false;
+    Vector3 swingPoint;
+    Vector3 distance;
+    float maxDistance = 100f;
+    SpringJoint springJoint;
+    Vector3 currentSwingPosition;
+    // DEBUG
+    RaycastHit hit;
+    bool hitFound = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         controller = GetComponent<CharacterController>();
+        lineRenderer = hand.GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -24,55 +33,87 @@ public class Stretch : MonoBehaviour
     {
         if (isSwinging)
         {
-            distance =  currentTarget - transform.position;
-            controller.Move(distance.normalized * swingSpeed);
-            if (distance.magnitude < 0.2f)
-            {
-                isSwinging = false;
-                lineRenderer.positionCount = 0;
-                controller.Move(Vector3.zero);
-            }
+
         }
     }
 
     void LateUpdate()
     {
+        Debug.Log(Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, maxDistance, swingLayer));
         if (isSwinging)
         {
-            drawRope();
+            DrawRope();
         }
+    }
+
+    // DEBUG
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        if (hitFound)
+            Gizmos.DrawSphere(transform.position, 0.25f);
     }
 
     void OnSwing(InputValue value)
     {
-        if(value.isPressed && visibleTargets.Count > 0)
+        if (value.isPressed && !isSwinging)
         {
-            currentTarget = visibleTargets[0].transform.position;
+            Debug.Log(isSwinging);
             isSwinging = true;
+            StartSwing();
+        }
+        else if (isSwinging)
+        {
+            isSwinging = false;
+            StopSwing();
         }
     }
 
-    void drawRope() 
+    void DrawRope()
     {
-        lineRenderer.SetPosition(0, lineRenderer.gameObject.transform.position);
-        lineRenderer.SetPosition(1, currentTarget);
+        if (!springJoint)
+            return;
+
+        Debug.Log("isSwinging");
+        currentSwingPosition = Vector3.Lerp(currentSwingPosition, swingPoint, Time.deltaTime * 8f);
+
+        lineRenderer.SetPosition(0, hand.transform.position);
+        lineRenderer.SetPosition(1, currentSwingPosition);
     }
 
-    // Add visible targets to the list
-    public void AddTarget(MeshRenderer newTarget)
+    void StartSwing()
     {
-        visibleTargets.Add(newTarget);
-    }
-    
-    // Check if a target is on the list
-    public bool HasTarget(MeshRenderer newTarget)
-    {
-        return visibleTargets.Contains(newTarget);
+        if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out hit, maxDistance, swingLayer))
+        {
+
+            // DEBUG
+            hitFound = true;
+            Debug.Log("found target");
+            swingPoint = hit.point;
+            springJoint = hand.AddComponent<SpringJoint>();
+            springJoint.autoConfigureConnectedAnchor = false;
+            springJoint.connectedAnchor = swingPoint;
+
+            float distanceFromPoint = Vector3.Distance(hand.transform.position, swingPoint);
+
+            // Distance maintained between the player and swing point
+            springJoint.maxDistance = distanceFromPoint * 0.8f;
+            springJoint.minDistance = distanceFromPoint * 0.25f;
+
+            // Spring parameters
+            springJoint.spring = 4.5f;
+            springJoint.damper = 7f;
+            springJoint.massScale = 4.5f;
+
+            lineRenderer.positionCount = 2;
+            currentSwingPosition = hand.transform.position;
+        }
     }
 
-    // Remove targets that are no longer visible
-    public void RemoveTarget(MeshRenderer newTarget)
+    void StopSwing()
     {
-        visibleTargets.Remove(newTarget);
+        lineRenderer.positionCount = 0;
+        Destroy(springJoint);
     }
+
 }
