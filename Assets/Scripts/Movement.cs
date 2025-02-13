@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Vector2 = UnityEngine.Vector2;
@@ -25,7 +24,6 @@ public class Movement : MonoBehaviour
     bool isSprinting;
     bool isRolling;
     bool isJumping;
-    bool jumpStarted = false;
 
 
     [SerializeField] float jumpHeight = 1.0f;
@@ -46,61 +44,46 @@ public class Movement : MonoBehaviour
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0.05f)
         {
-            moveInput = Vector2.zero;
             playerVelocity.y = 0f;
             isJumping = false;
-            if(!jumpStarted)
-            {
-                animator.SetBool("isJumping", false);
-            }  
 
             // get joystick position
             moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
 
-        // if(!isJumping)
-        // {
-            animator.SetFloat("Speed", moveInput.magnitude); 
+        animator.SetFloat("Speed", moveInput.magnitude);
 
-            // send values to animator
-            animator.SetFloat("HorizontalInput", moveInput.x);
-            animator.SetFloat("VerticalInput", moveInput.y);
+        // send values to animator
+        animator.SetFloat("HorizontalInput", moveInput.x);
+        animator.SetFloat("VerticalInput", moveInput.y);
 
-            move = new Vector3(moveInput.x, 0, moveInput.y);
-            move = Quaternion.Euler(0f, cam.transform.eulerAngles.y, 0f) * move;
-        // }
-        
-        if(moveInput.magnitude < 0.05f)
+        move = new Vector3(moveInput.x, 0, moveInput.y);
+        move = Quaternion.Euler(0f, cam.transform.eulerAngles.y, 0f) * move;
+
+        // Set the player movement speed based on the joycon position and sprint button
+        if (moveInput.magnitude < 0.05f)
         {
-            // animator.SetBool("isStatic", true);
             move = Vector3.zero;
         }
 
-        else if(isSprinting)
+        else if (isSprinting)
         {
             playerSpeed = sprintSpeed;
-            // gameObject.transform.forward = move;
+            gameObject.transform.forward = move;
         }
 
-        else if(moveInput.magnitude < 0.25f)
+        else if (moveInput.magnitude < 0.25f)
         {
-            // animator.SetBool("isRunning", false);
-
             playerSpeed = walkSpeed;
-            // gameObject.transform.forward = move;
         }
 
         else
         {
-            // animator.SetBool("isRunning", true);
-            // animator.SetBool("isWalking", false);
-
             playerSpeed = jogSpeed;
-            // gameObject.transform.forward = move;
         }
 
-        // if not locked on set forward direction to move direction
-        if(!cameraLockOn.isLockedOn && moveInput.magnitude > 0.05f)
+        // If not locked on set forward direction to move direction
+        if (!cameraLockOn.isLockedOn && moveInput.magnitude > 0.05f)
         {
             try
             {
@@ -112,73 +95,84 @@ public class Movement : MonoBehaviour
             }
         }
 
+        // Apply gravity
         playerVelocity.y += gravityValue * Time.deltaTime;
-    
-        if(isRolling)
+
+        // Move the player depending on the current action
+        if (isRolling)
         {
-            if(cameraLockOn.isLockedOn)
+            if (cameraLockOn.isLockedOn)
             {
                 transform.forward = rollDirection;
             }
-            controller.Move(transform.forward * Time.deltaTime * rollSpeed);            
+            float adjustedRollSpeed = rollSpeed * (isSprinting ? 1.5f : 1f);
+            controller.Move(transform.forward * Time.deltaTime * adjustedRollSpeed);
             moveInput = Vector2.zero;
         }
-        // stop movement if the player is attacking
-        else if (combatScript.getIsPunching()) {
+        // Stop movement if the player is attacking
+        else if (combatScript.getIsPunching())
+        {
             controller.Move(Vector3.zero);
         }
         // Apply movement velocity and vertical velocity in one go
         else
         {
             Vector3 finalVelocity = new Vector3(move.x * playerSpeed, playerVelocity.y, move.z * playerSpeed);
-            controller.Move(finalVelocity * Time.deltaTime * 1/Time.timeScale);
+            controller.Move(finalVelocity * Time.deltaTime * 1 / Time.timeScale);
         }
     }
 
-    public void setMoveInput(Vector2 input) {
+    public void setMoveInput(Vector2 input)
+    {
         moveInput = input;
     }
 
-     public void turnOffSprint()
+    void OnJump()
     {
-        isSprinting = false;
-        animator.SetBool("isRunning", false);
-    }
-
-    void OnJump(InputValue value)
-    {
-        if(groundedPlayer)
+        if (groundedPlayer)
         {
             tempMoveInput = moveInput;
-            jumpStarted = true;
-            StartCoroutine(AdjustJumpTiming());
-            turnOffSprint();
+            animator.SetBool("isJumping", true);
+            moveInput = Vector2.zero;
         }
+    }
+
+    public void startJump()
+    {
+        isJumping = true;
+        playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
+    }
+
+    public void stopJump()
+    {
+        animator.SetBool("isJumping", false);
     }
 
     void OnMove(InputValue value)
     {
-        if(!combatScript.getIsPunching()) {
+        if (!combatScript.getIsPunching())
+        {
             // get the raw value if the player is on the ground
-            if(!isRolling && groundedPlayer )
+            if (!isRolling && groundedPlayer)
             {
                 moveInput = value.Get<Vector2>();
             }
-            // if the player is jumping add half of the value to the movement before the jump started
+            // if the player is jumping apply only half of the value to the movement
             else if (!groundedPlayer && !isRolling)
             {
-                moveInput = tempMoveInput + value.Get<Vector2>() *  0.5f;
-            }  
-            // if the player is rolling add half of the value to the movement before the roll started
-            else if (isRolling) {
-                moveInput += value.Get<Vector2>() *  0.5f;
-            } 
+                moveInput = tempMoveInput + value.Get<Vector2>() * 0.5f;
+            }
+            // if the player is rolling apply only half of the value to the movement 
+            else if (isRolling)
+            {
+                moveInput += value.Get<Vector2>() * 0.5f;
+            }
         }
     }
 
     void OnSprint(InputValue value)
     {
-        if(!isRolling && !isJumping && move.magnitude != 0 && !combatScript.getIsPunching())
+        if (!isRolling && !isJumping && move.magnitude != 0 && !combatScript.getIsPunching())
         {
             if (value.isPressed)
             {
@@ -194,22 +188,24 @@ public class Movement : MonoBehaviour
         {
             turnOffSprint();
         }
-        
+    }
+
+    public void turnOffSprint()
+    {
+        isSprinting = false;
+        animator.SetBool("isRunning", false);
     }
 
     void OnRoll(InputValue value)
     {
-        if(value.isPressed && !isJumping && !combatScript.getIsPunching())
+        if (value.isPressed && !isJumping && !combatScript.getIsPunching())
         {
-            // turnOffSprint();
-
-            if(cameraLockOn.isLockedOn)
+            if (cameraLockOn.isLockedOn)
             {
-                if(moveInput.magnitude >= 0.1)
+                if (moveInput.magnitude >= 0.1)
                 {
                     rollDirection = new Vector3(moveInput.x, 0, moveInput.y);
                     rollDirection = UnityEngine.Quaternion.Euler(0f, cam.transform.eulerAngles.y, 0f) * rollDirection;
-
                 }
                 else
                 {
@@ -219,36 +215,19 @@ public class Movement : MonoBehaviour
 
             isRolling = true;
             animator.SetTrigger("Roll");
-
-            StartCoroutine(ResetRollState(1f));
         }
     }
 
-    IEnumerator ResetRollState(float len)
+    public void stopRoll()
     {
-
-        yield return new WaitForSeconds(len);
         isRolling = false;
-        // animator.SetBool("isPunching", false);
-        moveInput = new Vector2 (0f, 0.01f);
-        yield return new WaitForEndOfFrame();
+        moveInput = new Vector2(0f, 0.01f);
     }
 
-    // TODO: FIX JUMP TIMING IN SLOW MO MODE
-    IEnumerator AdjustJumpTiming()
+    // Draw a sphere using the distance between the player and enemy
+    void OnDrawGizmosSelected()
     {
-        animator.SetBool("isJumping", true);
-        moveInput = Vector2.zero;
-        yield return new WaitForSeconds(0.6f * Time.timeScale);
-        isJumping = true;
-        playerVelocity.y += Mathf.Sqrt(jumpHeight * -3.0f * gravityValue);
-        yield return new WaitForSeconds(0.8f);
-        jumpStarted = false;
-    }
-
-    void OnDrawGizmosSelected() {
         float distance = (enemy.transform.position - transform.position).magnitude;
         Gizmos.DrawWireSphere(transform.position, distance);
     }
-
 }
