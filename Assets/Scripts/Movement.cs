@@ -9,6 +9,7 @@ public class Movement : MonoBehaviour
     CharacterController controller;
     Animator animator;
     Combat combatScript;
+    Teleport teleportScript;
     [SerializeField] Transform cam;
     [SerializeField] float walkSpeed = 2f;
     [SerializeField] float jogSpeed = 6f;
@@ -37,6 +38,7 @@ public class Movement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         combatScript = GetComponent<Combat>();
+        teleportScript = GetComponent<Teleport>();
     }
 
     void Update()
@@ -172,17 +174,10 @@ public class Movement : MonoBehaviour
 
     void OnSprint(InputValue value)
     {
-        if (!isRolling && !isJumping && move.magnitude != 0 && !combatScript.getIsPunching())
+        if (value.isPressed && !isRolling && !isJumping && move.magnitude != 0 && !combatScript.getIsPunching())
         {
-            if (value.isPressed)
-            {
-                isSprinting = true;
-                animator.SetBool("isRunning", true);
-            }
-            else
-            {
-                turnOffSprint();
-            }
+            isSprinting = true;
+            animator.SetBool("isRunning", true);
         }
         else
         {
@@ -198,7 +193,7 @@ public class Movement : MonoBehaviour
 
     void OnRoll(InputValue value)
     {
-        if (value.isPressed && !isJumping && !combatScript.getIsPunching())
+        if (value.isPressed && !isJumping && !combatScript.getIsPunching() && !teleportScript.getIsTeleporting())
         {
             if (cameraLockOn.isLockedOn)
             {
@@ -216,6 +211,11 @@ public class Movement : MonoBehaviour
             isRolling = true;
             animator.SetTrigger("Roll");
         }
+    }
+
+    public bool getIsRolling()
+    {
+        return isRolling;
     }
 
     public void stopRoll()
