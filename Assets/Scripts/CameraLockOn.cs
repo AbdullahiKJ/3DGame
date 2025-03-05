@@ -34,7 +34,7 @@ public class CameraLockOn : MonoBehaviour
 
     void Update()
     {
-        if(isLockedOn)
+        if (isLockedOn)
         {
             // display lock on target
             targetUI.enabled = true;
@@ -57,7 +57,7 @@ public class CameraLockOn : MonoBehaviour
     {
         visibleTargets.Add(newTarget);
     }
-    
+
     // Check if a target is on the list
     public bool HasTarget(GameObject newTarget)
     {
@@ -75,7 +75,7 @@ public class CameraLockOn : MonoBehaviour
     {
         return visibleTargets.Count != 0;
     }
-    
+
     // get object closest to the camera
     GameObject GetClosestObject()
     {
@@ -102,7 +102,7 @@ public class CameraLockOn : MonoBehaviour
 
     void OnLockOn(InputValue value)
     {
-        if(value.isPressed)
+        if (value.isPressed)
         {
             if (isTargetAvailable() && !isLockedOn)
             {
@@ -124,7 +124,7 @@ public class CameraLockOn : MonoBehaviour
             }
 
             // if not locked on and no target ahead, turn camera to where the player is facing
-            else if(!isLockedOn && !isTargetAvailable())
+            else if (!isLockedOn && !isTargetAvailable())
             {
                 // turn on camera recentre
                 freeLookCamOrbitalFollow.HorizontalAxis.Recentering.Enabled = true;
@@ -133,10 +133,10 @@ public class CameraLockOn : MonoBehaviour
                 // turn off camera recentre
                 StartCoroutine(WaitForCameraTurn());
             }
-            
-            else if(isLockedOn)
+
+            else if (isLockedOn)
             {
-                // reset locked on status to false and change aniamtor value
+                // reset locked on status to false and change animator value
                 isLockedOn = false;
                 characterAnimator.SetFloat("isLockedOn", 0);
 
@@ -148,14 +148,14 @@ public class CameraLockOn : MonoBehaviour
 
                 // enable camera movement script
                 camMovementScript.enabled = true;
-            }   
-        }       
+            }
+        }
     }
 
     void OnLook(InputValue value)
     {
         Vector2 playerInput = value.Get<Vector2>();
-        if(isLockedOn && playerInput.magnitude > 0.5f && canSwitch)
+        if (isLockedOn && playerInput.magnitude > 0.5f && canSwitch)
         {
             // write function to place visible targets into a grid and move the lock on to another target based on the look input
             // create UI and place an indicator for the locked on target
@@ -181,53 +181,53 @@ public class CameraLockOn : MonoBehaviour
         }
 
         // store the relative angles of the targets
-        foreach(Vector3 position in objectPositions) 
+        foreach (Vector3 position in objectPositions)
         {
-            objectAngles.Add(Mathf.Atan2(position.y-0.5f, position.x-0.5f) * Mathf.Rad2Deg);
+            objectAngles.Add(Mathf.Atan2(position.y - 0.5f, position.x - 0.5f) * Mathf.Rad2Deg);
         }
 
         // store the input angle
         float stickAngle = Mathf.Atan2(playerInput.y, playerInput.x) * Mathf.Rad2Deg;
 
-        for(int i = 0; i < visibleTargets.Count; i++) 
+        for (int i = 0; i < visibleTargets.Count; i++)
         {
-            if(visibleTargets[i] == currentTarget)
+            if (visibleTargets[i] == currentTarget)
             {
                 // ignore the current target when checking
             }
 
             // check if angle is less than a certain threshold
-            else if(Mathf.Abs(objectAngles[i] - stickAngle) < 30f)
+            else if (Mathf.Abs(objectAngles[i] - stickAngle) < 30f)
             {
                 // closestObjectIndex = i;
                 objectsWithinRange.Add(visibleTargets[i]);
             }
         }
 
-        if(objectsWithinRange.Count > 0)
+        if (objectsWithinRange.Count > 0)
         {
             List<Vector3> newObjectsPositions = new List<Vector3>();
-        foreach(GameObject target in objectsWithinRange)
-        {
-            // convert each target position to a new vector relative to the viewport
-            newObjectsPositions.Add(mainCamera.WorldToViewportPoint(target.transform.position));
-        }
-
-        for(int i = 0; i < objectsWithinRange.Count; i++) 
-        {
-            Vector3 currentTargetViewPort = mainCamera.WorldToViewportPoint(currentTarget.transform.position);
-            float currentDistance = new Vector2(newObjectsPositions[i].x - currentTargetViewPort.x, newObjectsPositions[i].y - currentTargetViewPort.y).magnitude;
-            float previousDistance = new Vector2(newObjectsPositions[closestObjectIndex].x - currentTargetViewPort.x, newObjectsPositions[closestObjectIndex].y - currentTargetViewPort.y).magnitude;
-
-            if(currentDistance < previousDistance)
+            foreach (GameObject target in objectsWithinRange)
             {
-                closestObjectIndex = i;
+                // convert each target position to a new vector relative to the viewport
+                newObjectsPositions.Add(mainCamera.WorldToViewportPoint(target.transform.position));
             }
+
+            for (int i = 0; i < objectsWithinRange.Count; i++)
+            {
+                Vector3 currentTargetViewPort = mainCamera.WorldToViewportPoint(currentTarget.transform.position);
+                float currentDistance = new Vector2(newObjectsPositions[i].x - currentTargetViewPort.x, newObjectsPositions[i].y - currentTargetViewPort.y).magnitude;
+                float previousDistance = new Vector2(newObjectsPositions[closestObjectIndex].x - currentTargetViewPort.x, newObjectsPositions[closestObjectIndex].y - currentTargetViewPort.y).magnitude;
+
+                if (currentDistance < previousDistance)
+                {
+                    closestObjectIndex = i;
+                }
+            }
+
+            currentTarget = objectsWithinRange[closestObjectIndex];
         }
 
-        currentTarget = objectsWithinRange[closestObjectIndex];
-        }
-        
         if (previousTarget != currentTarget)
         {
             canSwitch = false;
