@@ -64,11 +64,11 @@ public class AI : MonoBehaviour
         }
 
         // Trigger special attack
-        if (playerDistance > approachDistance) {
-            currentState = State.Special;
-            doNotInterrupt = true;
-            specialAttacks.triggerSpecial();
-        }
+        // if (playerDistance > approachDistance) {
+        //     currentState = State.Special;
+        //     doNotInterrupt = true;
+        //     specialAttacks.triggerSpecial();
+        // }
 
     
         // Approach if within approach distance

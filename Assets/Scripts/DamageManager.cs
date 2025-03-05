@@ -4,19 +4,17 @@ using UnityEngine;
 public class DamageManager : MonoBehaviour
 {
     Animator animator;
-    CharacterController controller;
 
     void Awake()
     {
         animator = GetComponent<Animator>();
-        controller = GetComponent<CharacterController>();
     }
 
     public void TakeDamage(Vector3 attacker, float enemyRange)
     {
         // face the attacker and move the game object to an appropriate distance from the attacker
         FaceAttacker(attacker, enemyRange);
-        
+
         WaitForStaggerAnimation(5f);
         animator.SetTrigger("isHit");
         // WaitForStaggerAnimation(0.967f);
