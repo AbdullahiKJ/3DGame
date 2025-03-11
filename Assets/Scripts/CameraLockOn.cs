@@ -14,20 +14,18 @@ public class CameraLockOn : MonoBehaviour
     [SerializeField] Animator cameraAnimator;
     Animator characterAnimator;
     [SerializeField] Image targetUI;
-    [SerializeField] List<GameObject> visibleTargets;
+    public List<GameObject> visibleTargets;
     public bool isLockedOn = false;
     bool canSwitch = true;
     GameObject currentTarget;
     GameObject previousTarget;
     CinemachineInputAxisController camMovementScript;
     CinemachineOrbitalFollow freeLookCamOrbitalFollow;
-    CinemachineTargetGroup targetGroup;
 
     void Awake()
     {
         // store camera movement script
         camMovementScript = FindFirstObjectByType<CinemachineInputAxisController>();
-        targetGroup = FindFirstObjectByType<CinemachineTargetGroup>();
         characterAnimator = GetComponent<Animator>();
         freeLookCamOrbitalFollow = freeLookCam.GetComponent<CinemachineOrbitalFollow>();
     }
@@ -52,52 +50,10 @@ public class CameraLockOn : MonoBehaviour
         }
     }
 
-    // Add visible targets to the list
-    public void AddTarget(GameObject newTarget)
-    {
-        visibleTargets.Add(newTarget);
-    }
-
-    // Check if a target is on the list
-    public bool HasTarget(GameObject newTarget)
-    {
-        return visibleTargets.Contains(newTarget);
-    }
-
-    // Remove targets that are no longer visible
-    public bool RemoveTarget(GameObject newTarget)
-    {
-        return visibleTargets.Remove(newTarget);
-    }
-
     // check if target list is empty 
     bool isTargetAvailable()
     {
         return visibleTargets.Count != 0;
-    }
-
-    // get object closest to the camera
-    GameObject GetClosestObject()
-    {
-        List<Vector3> objectPositions = new List<Vector3>();
-        int closestObjectIndex = 0;
-
-        foreach (GameObject target in visibleTargets)
-        {
-            // convert each target position to a new vector relative to the viewport
-            objectPositions.Add(mainCamera.WorldToViewportPoint(target.transform.position));
-        }
-
-        for (int i = 0; i < objectPositions.Count; i++)
-        {
-            if (Mathf.Abs(objectPositions[i].x - 0.5f) < Mathf.Abs(objectPositions[closestObjectIndex].x - 0.5f))
-            {
-                closestObjectIndex = i;
-            }
-        }
-
-        currentTarget = visibleTargets[closestObjectIndex];
-        return visibleTargets[closestObjectIndex];
     }
 
     void OnLockOn(InputValue value)
@@ -111,7 +67,8 @@ public class CameraLockOn : MonoBehaviour
                 characterAnimator.SetFloat("isLockedOn", 1);
 
                 // get target closest to the middle of the camera
-                GameObject target = GetClosestObject();
+                GameObject target = Targets.Instance.GetClosestObject(visibleTargets);
+                currentTarget = target;
 
                 // switch to lock on camera
                 cameraAnimator.Play("LockOnCam");

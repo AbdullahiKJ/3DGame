@@ -5,24 +5,24 @@ public class ObjectLockOn : MonoBehaviour
     CameraLockOn cameraLockOn;
     void Awake()
     {
-        cameraLockOn = FindFirstObjectByType<CameraLockOn>();  
+        cameraLockOn = FindFirstObjectByType<CameraLockOn>();
     }
 
     // run when object comes into view of camera
     void OnBecameVisible()
     {
         // check if in list and add
-        if(!cameraLockOn.HasTarget(gameObject))
+        if (!Targets.Instance.HasTarget(gameObject, cameraLockOn.visibleTargets))
         {
-            cameraLockOn.AddTarget(gameObject);
+            Targets.Instance.AddTarget(gameObject, cameraLockOn.visibleTargets);
         }
     }
 
     void OnBecameInvisible()
     {
-        if(cameraLockOn.HasTarget(gameObject))
+        if (Targets.Instance.HasTarget(gameObject, cameraLockOn.visibleTargets))
         {
-            cameraLockOn.RemoveTarget(gameObject);
+            Targets.Instance.RemoveTarget(gameObject, cameraLockOn.visibleTargets);
         }
     }
 }
