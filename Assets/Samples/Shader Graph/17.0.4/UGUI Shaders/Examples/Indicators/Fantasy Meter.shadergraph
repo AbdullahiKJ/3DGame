@@ -354,6 +354,18 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.Rendering.HighDefinition.ShaderGraph.HDCanvasSubTarget",
+    "m_ObjectId": "32e5213c4b334bfeb1d7aea2f95436e2"
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.Rendering.HighDefinition.ShaderGraph.HDCanvasSubTarget",
+    "m_ObjectId": "337a68a849fe49b283d7660f082f1726"
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.Rendering.BuiltIn.ShaderGraph.BuiltInCanvasSubTarget",
     "m_ObjectId": "362b93aa66e9452c8124a85675b677b0"
 }
@@ -412,6 +424,13 @@
     "m_SupportsLODCrossFade": false,
     "m_CustomEditorGUI": "",
     "m_SupportVFX": false
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.Rendering.HighDefinition.ShaderGraph.HDCanvasData",
+    "m_ObjectId": "3d7882455342469badf9b85649b4d809",
+    "supportsMotionVectors": false
 }
 
 {
@@ -710,6 +729,13 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.Rendering.HighDefinition.ShaderGraph.HDCanvasData",
+    "m_ObjectId": "cafe4dfb66fa41449a2bbf6804a520f5",
+    "supportsMotionVectors": false
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalCanvasSubTarget",
     "m_ObjectId": "d4c64a3ec6124e59ab94142d70644f47"
 }
@@ -772,14 +798,5 @@
     "m_PropertyIds": [],
     "m_Dropdowns": [],
     "m_DropdownSelectedEntries": []
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.Rendering.Canvas.ShaderGraph.CanvasData",
-    "m_ObjectId": "ff2141a9305f44f9b9c0219bd77b08bf",
-    "m_Version": 0,
-    "m_AlphaClip": false,
-    "m_DisableTint": true
 }
 

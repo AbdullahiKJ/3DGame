@@ -10,6 +10,7 @@ public class Movement : MonoBehaviour
     Animator animator;
     Combat combatScript;
     Teleport teleportScript;
+    DamageManager damageManagerScript;
     [SerializeField] Transform cam;
     [SerializeField] float walkSpeed = 2f;
     [SerializeField] float jogSpeed = 6f;
@@ -39,6 +40,7 @@ public class Movement : MonoBehaviour
         animator = GetComponent<Animator>();
         combatScript = GetComponent<Combat>();
         teleportScript = GetComponent<Teleport>();
+        damageManagerScript = GetComponent<DamageManager>();
     }
 
     void Update()
@@ -111,8 +113,8 @@ public class Movement : MonoBehaviour
             controller.Move(transform.forward * Time.deltaTime * adjustedRollSpeed);
             moveInput = Vector2.zero;
         }
-        // Stop movement if the player is attacking
-        else if (combatScript.getIsPunching())
+        // Stop movement if the player is attacking or is staggered
+        else if (combatScript.getIsPunching() || damageManagerScript.isStaggering)
         {
             controller.Move(Vector3.zero);
         }

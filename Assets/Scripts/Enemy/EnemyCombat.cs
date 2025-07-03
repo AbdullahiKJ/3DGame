@@ -5,29 +5,22 @@ public class EnemyCombat : MonoBehaviour
 {
     Animator animator;
     AI aI;
-    CharacterController controller;
-    [SerializeField] float moveControllerSpeed = 0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         animator = GetComponent<Animator>();
         aI = GetComponent<AI>();
-        controller = GetComponent<CharacterController>();
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+    public void triggerAttack(int attackLevel)
     {
-        if(moveControllerSpeed != 0f) {
-            controller.Move(transform.forward * moveControllerSpeed);
-        }
-    }
-
-    public void triggerAttack(int attackLevel) {
         // choose the attack animation
-        switch (attackLevel) {
-            case 1: 
+        switch (attackLevel)
+        {
+            case 1:
                 triggerComboOne();
                 break;
             case 2:
@@ -61,7 +54,6 @@ public class EnemyCombat : MonoBehaviour
         yield return new WaitForSeconds(animationTime);
         // change back to idle state after animation ends
         animator.SetBool("isAttacking", false);
-        moveControllerSpeed = 0f;
         // reset the do not interrupt variable
         aI.setDoNotInterrupt();
     }

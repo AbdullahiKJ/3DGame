@@ -630,8 +630,8 @@
     "m_ObjectId": "004020dba81941109ce6b0c19f882aeb",
     "m_Title": "Min/Max",
     "m_Position": {
-        "x": -1435.0001220703125,
-        "y": 254.9999237060547
+        "x": -1435.0,
+        "y": 255.5
     }
 }
 
@@ -1705,7 +1705,7 @@
     "m_Title": "Direction",
     "m_Position": {
         "x": -2603.0,
-        "y": 625.0000610351563
+        "y": 625.5
     }
 }
 
@@ -1840,6 +1840,21 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "5e7d8c11131649289cb3fb9769180e4c",
+    "m_Id": 2,
+    "m_DisplayName": "Pixel Per Unit",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_CanvasPixelPerUnit",
+    "m_StageCapability": 3,
+    "m_Value": 100.0,
+    "m_DefaultValue": 100.0,
+    "m_Labels": []
 }
 
 {
@@ -2233,8 +2248,8 @@
         "y": 1.0
     },
     "m_DefaultValue": {
-        "x": 1.0,
-        "y": 1.0
+        "x": 100.0,
+        "y": 100.0
     },
     "m_Labels": []
 }
@@ -2801,6 +2816,12 @@
     "m_Slots": [
         {
             "m_Id": "8e0575d444f840e1b20424f825941848"
+        },
+        {
+            "m_Id": "eac9ba45a19041048deaeabcea67e181"
+        },
+        {
+            "m_Id": "5e7d8c11131649289cb3fb9769180e4c"
         }
     ],
     "synonyms": [],
@@ -2810,7 +2831,13 @@
     "m_PreviewMode": 0,
     "m_CustomColors": {
         "m_SerializableColors": []
-    }
+    },
+    "previewSize": {
+        "x": 100.0,
+        "y": 100.0
+    },
+    "previewScaleFactor": 1.0,
+    "previewPixelsPerUnit": 100.0
 }
 
 {
@@ -3509,6 +3536,21 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "eac9ba45a19041048deaeabcea67e181",
+    "m_Id": 1,
+    "m_DisplayName": "Scale Factor",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_CanvasScaleFactor",
+    "m_StageCapability": 3,
+    "m_Value": 1.0,
+    "m_DefaultValue": 1.0,
+    "m_Labels": []
 }
 
 {

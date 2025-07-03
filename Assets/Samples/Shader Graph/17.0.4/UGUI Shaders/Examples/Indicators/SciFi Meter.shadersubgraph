@@ -2668,8 +2668,8 @@
     "m_ObjectId": "6a918cc7c274453d93a2a421ded94c87",
     "m_Title": "Create Button UVs",
     "m_Position": {
-        "x": -1047.0001220703125,
-        "y": 1306.0
+        "x": -1046.9998779296875,
+        "y": 1305.9998779296875
     }
 }
 
@@ -2890,7 +2890,7 @@
     "m_ObjectId": "7bebbfe07277490792d90e48a7564aeb",
     "m_Title": "Shake UVs when health is low",
     "m_Position": {
-        "x": -1755.0001220703125,
+        "x": -1754.999755859375,
         "y": 1161.4998779296875
     }
 }
@@ -3980,7 +3980,7 @@
     "m_ObjectId": "b93cf151851c43dda0f3141851420008",
     "m_Title": "Progress Multiplier",
     "m_Position": {
-        "x": 138.9998321533203,
+        "x": 138.9999237060547,
         "y": 1305.4998779296875
     }
 }
@@ -4965,8 +4965,8 @@
     "m_ObjectId": "de2112479c4b4d22944529bd20bffa96",
     "m_Title": "Segment Divisions",
     "m_Position": {
-        "x": 328.9999084472656,
-        "y": 735.0
+        "x": 329.0,
+        "y": 734.9999389648438
     }
 }
 

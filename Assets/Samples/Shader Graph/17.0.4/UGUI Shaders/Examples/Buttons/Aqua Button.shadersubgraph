@@ -2281,7 +2281,7 @@
     "m_ObjectId": "0508680588f64dfebf1860c0162e8e8a",
     "m_Title": "Drop Shadow",
     "m_Position": {
-        "x": -1513.5,
+        "x": -1513.500244140625,
         "y": -561.0
     }
 }
@@ -2340,8 +2340,8 @@
     "m_ObjectId": "05f315be93224c48af87a9c5fe8c0a04",
     "m_Title": "Fresnel",
     "m_Position": {
-        "x": -1942.5,
-        "y": 472.0
+        "x": -1942.500244140625,
+        "y": 472.00006103515627
     }
 }
 
@@ -5086,8 +5086,8 @@
     "m_ObjectId": "49010be2784a4ddeb26ea45c61219a6f",
     "m_Title": "Invert Selection Color On Press",
     "m_Position": {
-        "x": -324.0,
-        "y": 316.5
+        "x": -324.000244140625,
+        "y": 316.50006103515627
     }
 }
 
@@ -5310,8 +5310,8 @@
     "m_ObjectId": "4cd59acfba02466193495324822903e4",
     "m_Title": "Body Color",
     "m_Position": {
-        "x": -2659.5,
-        "y": -58.5
+        "x": -2659.500244140625,
+        "y": -58.5001220703125
     }
 }
 
@@ -6532,8 +6532,8 @@
     "m_ObjectId": "71bf5ff5e7d14392a7e3a4721c64ee78",
     "m_Title": "Desaturate When Inactive",
     "m_Position": {
-        "x": -280.5,
-        "y": -154.0
+        "x": -280.500244140625,
+        "y": -153.99990844726563
     }
 }
 
@@ -8234,7 +8234,7 @@
     "m_ObjectId": "a81bd0579609449f993d195eab8b8288",
     "m_Title": "Alpha",
     "m_Position": {
-        "x": -999.5,
+        "x": -999.500244140625,
         "y": 566.0
     }
 }
@@ -11048,7 +11048,7 @@
     "m_ObjectId": "e6b34f05a61f4192890e2a6989ac4d4f",
     "m_Title": "Use Selection Outline",
     "m_Position": {
-        "x": 151.0,
+        "x": 150.99951171875,
         "y": -192.0
     }
 }
@@ -11676,7 +11676,7 @@
     "m_ObjectId": "f2cada8834794011a732797c553c7fac",
     "m_Title": "No Highlght When Pressed",
     "m_Position": {
-        "x": -1044.5,
+        "x": -1044.500244140625,
         "y": -83.0
     }
 }

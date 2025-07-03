@@ -4648,7 +4648,7 @@
     "m_ObjectId": "58dd3935c99a49e3842497b21f7c6001",
     "m_Title": "Animated Bubbles",
     "m_Position": {
-        "x": -3442.0,
+        "x": -3442.000244140625,
         "y": 2585.0
     }
 }
@@ -5941,7 +5941,7 @@
     "m_Title": "Fresnel",
     "m_Position": {
         "x": -1132.5,
-        "y": 886.5
+        "y": 886.5001220703125
     }
 }
 
@@ -6877,7 +6877,7 @@
     "m_Title": "Specular Highlight",
     "m_Position": {
         "x": -1282.5,
-        "y": 520.5
+        "y": 520.5000610351563
     }
 }
 
@@ -6965,7 +6965,7 @@
     "m_ObjectId": "a466d86ca1c34310acb9bf4e7aac7770",
     "m_Title": "Liquid Shading",
     "m_Position": {
-        "x": -1919.0,
+        "x": -1919.000244140625,
         "y": 2193.5
     }
 }
@@ -9820,7 +9820,7 @@
     "m_Title": "Outer Mask",
     "m_Position": {
         "x": -1345.5,
-        "y": 1256.5
+        "y": 1256.5001220703125
     }
 }
 

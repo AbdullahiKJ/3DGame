@@ -1,6 +1,9 @@
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using Unity.UI.Shaders.Sample;
+using UnityEngine.UI;
 
 public class Teleport : MonoBehaviour
 {
@@ -14,15 +17,27 @@ public class Teleport : MonoBehaviour
     Movement movement;
     Vector2 moveInput;
     CharacterController controller;
+    bool canTeleport = true;
     bool isTeleporting = false;
     bool isAiming = false;
     bool isSettingAimPosition = true;
-    [SerializeField] float maxDistance = 100f;
+    public float maxDistance = 100f;
     [SerializeField] float timeLimit = 5f;
     float timer = 0f;
+    bool pointVisible = false;
+    public List<GameObject> teleportTargets;
+    GameObject currentTeleportTarget;
+    [SerializeField] GameObject teleportMeter;
+    Meter meterScript;
+    Image meterImage;
+    [SerializeField] Color disabledColour;
+    [SerializeField] Color enabledColour;
 
     void Awake()
     {
+        meterScript = teleportMeter.GetComponent<Meter>();
+        meterImage = teleportMeter.GetComponent<Image>();
+
         movement = GetComponent<Movement>();
         controller = GetComponent<CharacterController>();
         aimIndicator.SetActive(false);
@@ -45,23 +60,34 @@ public class Teleport : MonoBehaviour
         }
 
         // Ability timer
-        if (isTeleporting && timer < timeLimit)
+        if (!canTeleport && timer < timeLimit)
         {
             timer += Time.deltaTime;
+            meterScript.Value = timer / timeLimit;
         }
         else
         {
-            isTeleporting = false;
+            // todo: this is run every frame, use an event?
+            canTeleport = true;
             timer = 0f;
+            meterScript.Value = 1;
+            meterImage.color = enabledColour;
         }
     }
 
     void OnTeleport(InputValue value)
     {
-        if (value.isPressed && !movement.getIsRolling() && !isTeleporting)
-        {
-            isTeleporting = true;
+        // Ground teleport
+        if (value.isPressed && isAiming && !movement.getIsRolling() && canTeleport)
             StartTeleport();
+
+        // Platform teleport
+        if (!isAiming && canTeleport)
+        {
+            pointVisible = TeleportPointsAvailable();
+            Debug.Log(pointVisible);
+            if (pointVisible)
+                StartTeleport(true);
         }
     }
 
@@ -101,18 +127,39 @@ public class Teleport : MonoBehaviour
         return isTeleporting;
     }
 
-    void StartTeleport()
+    public bool getCanTeleport()
     {
+        return canTeleport;
+    }
+
+    void StartTeleport(bool usingPlatform = false)
+    {
+        isTeleporting = true;
+
+        // Update the teleport meter
+        meterScript.Value = 0;
+        meterImage.color = disabledColour;
+
         // todo create a coroutine to wait a certain amount of time
 
         // todo create and play an animation or activate a shader
 
         // Teleport to the raycast hit
-        Vector3 newPosition = aimIndicator.transform.position + new Vector3(0f, 2f, 0f) - transform.position;
+        Vector3 newPosition;
+        if (usingPlatform)
+            newPosition = currentTeleportTarget.transform.position + new Vector3(0f, 2f, 0f) - transform.position;
+        else
+            newPosition = aimIndicator.transform.position + new Vector3(0f, 2f, 0f) - transform.position;
+
         controller.Move(newPosition);
+
+        // Reset bools and variables
+        canTeleport = false;
+        currentTeleportTarget = null;
 
         // Deactivate the indicator
         aimIndicator.SetActive(false);
+        isTeleporting = false;
     }
 
     void SetAimPosition()
@@ -144,4 +191,15 @@ public class Teleport : MonoBehaviour
                 c.Input.Gain = gain.y;
         }
     }
+
+    bool TeleportPointsAvailable()
+    {
+        if (teleportTargets.Count == 0)
+            return false;
+
+        // Get the object closest to the centre of the viewport
+        currentTeleportTarget = Targets.Instance.GetClosestObject(teleportTargets);
+        return true;
+    }
+
 }
