@@ -160,6 +160,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1930416720302622481}
   - component: {fileID: 2007068674564528102}
+  - component: {fileID: 2068813473340651581}
   m_Layer: 5
   m_Name: Ability UI
   m_TagString: Untagged
@@ -239,3 +240,17 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2068813473340651581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7029866145970272113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccd3ce63f79cf49ac8f48b3ffaf9ed30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  icon: {fileID: 8654668892151558570}
+  fillImage: {fileID: 3543152495321762440}
