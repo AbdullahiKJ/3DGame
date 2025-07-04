@@ -22,7 +22,7 @@ public class TeleportPoint : MonoBehaviour
     {
         float distance = (transform.position - player.transform.position).magnitude;
         // Change the material color depending on the teleport cooldown and distance from the player
-        if (teleportScript.getCanTeleport() && distance < maxDistance && distance > 8f)
+        if (teleportScript.canUse && distance < maxDistance && distance > 8f)
         {
             material.SetColor("_EmissionColor", activeColor * intensity);
         }

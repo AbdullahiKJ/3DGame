@@ -2,10 +2,8 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
-using Unity.UI.Shaders.Sample;
-using UnityEngine.UI;
 
-public class Teleport : MonoBehaviour
+public class Teleport : AbilityBase
 {
     [SerializeField] CinemachineCamera freeLookCam;
     [SerializeField] GameObject aimIndicator;
@@ -17,27 +15,15 @@ public class Teleport : MonoBehaviour
     Movement movement;
     Vector2 moveInput;
     CharacterController controller;
-    bool canTeleport = true;
-    bool isTeleporting = false;
     bool isAiming = false;
     bool isSettingAimPosition = true;
     public float maxDistance = 100f;
-    [SerializeField] float timeLimit = 5f;
-    float timer = 0f;
     bool pointVisible = false;
     public List<GameObject> teleportTargets;
     GameObject currentTeleportTarget;
-    [SerializeField] GameObject teleportMeter;
-    Meter meterScript;
-    Image meterImage;
-    [SerializeField] Color disabledColour;
-    [SerializeField] Color enabledColour;
 
     void Awake()
     {
-        meterScript = teleportMeter.GetComponent<Meter>();
-        meterImage = teleportMeter.GetComponent<Image>();
-
         movement = GetComponent<Movement>();
         controller = GetComponent<CharacterController>();
         aimIndicator.SetActive(false);
@@ -46,7 +32,22 @@ public class Teleport : MonoBehaviour
         SetAxisControllerGain(defaultAxisGain);
     }
 
-    void Update()
+    public override void Ability()
+    {
+        // Ground teleport
+        if (isAiming && !movement.getIsRolling())
+            StartTeleport();
+
+        // Platform teleport
+        if (!isAiming)
+        {
+            pointVisible = TeleportPointsAvailable();
+            if (pointVisible)
+                StartTeleport(true);
+        }
+    }
+
+    public override void Helper()
     {
         // Move the aim indicator when aiming
         if (isAiming)
@@ -58,42 +59,11 @@ public class Teleport : MonoBehaviour
             if (distanceFromPlayer < maxDistance)
                 aimIndicator.transform.position = newPosition;
         }
-
-        // Ability timer
-        if (!canTeleport && timer < timeLimit)
-        {
-            timer += Time.deltaTime;
-            meterScript.Value = timer / timeLimit;
-        }
-        else
-        {
-            // todo: this is run every frame, use an event?
-            canTeleport = true;
-            timer = 0f;
-            meterScript.Value = 1;
-            meterImage.color = enabledColour;
-        }
-    }
-
-    void OnTeleport(InputValue value)
-    {
-        // Ground teleport
-        if (value.isPressed && isAiming && !movement.getIsRolling() && canTeleport)
-            StartTeleport();
-
-        // Platform teleport
-        if (!isAiming && canTeleport)
-        {
-            pointVisible = TeleportPointsAvailable();
-            Debug.Log(pointVisible);
-            if (pointVisible)
-                StartTeleport(true);
-        }
     }
 
     void OnAim(InputValue value)
     {
-        if (value.isPressed && !isTeleporting && !movement.getIsRolling())
+        if (value.isPressed && !abilityStarted && !movement.getIsRolling())
         {
             isAiming = true;
 
@@ -122,23 +92,9 @@ public class Teleport : MonoBehaviour
         }
     }
 
-    public bool getIsTeleporting()
-    {
-        return isTeleporting;
-    }
-
-    public bool getCanTeleport()
-    {
-        return canTeleport;
-    }
-
     void StartTeleport(bool usingPlatform = false)
     {
-        isTeleporting = true;
-
-        // Update the teleport meter
-        meterScript.Value = 0;
-        meterImage.color = disabledColour;
+        abilityStarted = true;
 
         // todo create a coroutine to wait a certain amount of time
 
@@ -153,13 +109,12 @@ public class Teleport : MonoBehaviour
 
         controller.Move(newPosition);
 
-        // Reset bools and variables
-        canTeleport = false;
+        // Reset teleport target
         currentTeleportTarget = null;
 
         // Deactivate the indicator
         aimIndicator.SetActive(false);
-        isTeleporting = false;
+        abilityStarted = false;
     }
 
     void SetAimPosition()

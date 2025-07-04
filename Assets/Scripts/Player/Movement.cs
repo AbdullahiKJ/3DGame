@@ -9,7 +9,7 @@ public class Movement : MonoBehaviour
     CharacterController controller;
     Animator animator;
     Combat combatScript;
-    Teleport teleportScript;
+    AbilityManager abiltyScript;
     DamageManager damageManagerScript;
     [SerializeField] Transform cam;
     [SerializeField] float walkSpeed = 2f;
@@ -39,7 +39,7 @@ public class Movement : MonoBehaviour
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         combatScript = GetComponent<Combat>();
-        teleportScript = GetComponent<Teleport>();
+        abiltyScript = GetComponent<AbilityManager>();
         damageManagerScript = GetComponent<DamageManager>();
     }
 
@@ -195,7 +195,7 @@ public class Movement : MonoBehaviour
 
     void OnRoll(InputValue value)
     {
-        if (value.isPressed && !isJumping && !combatScript.getIsPunching() && !teleportScript.getIsTeleporting())
+        if (value.isPressed && !isJumping && !combatScript.getIsPunching() && abiltyScript.CurrentAbilityScript?.abilityStarted != null && abiltyScript.CurrentAbilityScript?.abilityStarted == true)
         {
             if (cameraLockOn.isLockedOn)
             {
