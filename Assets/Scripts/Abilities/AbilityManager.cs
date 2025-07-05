@@ -18,6 +18,15 @@ public class AbilityManager : MonoBehaviour
         ? abilities[(int)currentAbility - 1]
         : null;
     bool canUseAbility = true;
+    [SerializeField] RectTransform uiSelector;
+
+    (int, int)[] abilityUiPositions = new (int, int)[]
+    {
+        (25,25), // Ability 1
+        (25,-25), // Ability 2
+        (-25,-25), // Ability 3
+        (-25,25)  // Ability 4
+    };
 
     void Awake()
     {
@@ -25,6 +34,7 @@ public class AbilityManager : MonoBehaviour
         if (abilities.Length == 0)
         {
             currentAbility = AbilityType.None;
+            uiSelector.gameObject.SetActive(false);
         }
         else
         {
@@ -40,16 +50,39 @@ public class AbilityManager : MonoBehaviour
 
     void OnAbilityUse(InputValue value)
     {
-        Debug.Log("Button pressed");
         if (value.isPressed && currentAbility != AbilityType.None && canUseAbility)
         {
-            Debug.Log("Can use ability");
             int abilityIndex = (int)currentAbility - 1; // Convert enum to index
             if (abilityIndex >= 0 && abilityIndex < abilities.Length)
             {
-                Debug.Log("Ability exists");
                 abilities[abilityIndex].TriggerAbility();
             }
+        }
+    }
+
+    void OnAbilitySelect(InputValue value)
+    {
+        Vector2 input = value.Get<Vector2>();
+
+        if (input == new Vector2(0, 1) && abilities.Length > 0)
+        {
+            currentAbility = AbilityType.Ability1;
+            uiSelector.anchoredPosition = new Vector2(abilityUiPositions[0].Item1, abilityUiPositions[0].Item2);
+        }
+        else if (input == new Vector2(1, 0) && abilities.Length > 1)
+        {
+            currentAbility = AbilityType.Ability2;
+            uiSelector.anchoredPosition = new Vector2(abilityUiPositions[1].Item1, abilityUiPositions[1].Item2);
+        }
+        else if (input == new Vector2(0, -1) && abilities.Length > 2)
+        {
+            currentAbility = AbilityType.Ability3;
+            uiSelector.anchoredPosition = new Vector2(abilityUiPositions[2].Item1, abilityUiPositions[2].Item2);
+        }
+        else if (input == new Vector2(-1, 0) && abilities.Length > 3)
+        {
+            currentAbility = AbilityType.Ability4;
+            uiSelector.anchoredPosition = new Vector2(abilityUiPositions[3].Item1, abilityUiPositions[3].Item2);
         }
     }
 }
