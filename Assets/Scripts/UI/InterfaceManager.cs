@@ -21,6 +21,7 @@ public class InterfaceManager : MonoBehaviour
             AbilityUI abilityUI = Instantiate(abilityUIPrefab, abilityUiParent);
             player.abilities[i].OnAbilityUse.AddListener((cooldown) => abilityUI.ShowCoolDown(cooldown));
             abilityUI.SetIcon(player.abilities[i].icon);
+            abilityUI.SetTransform(abilityUiPositions[i]);
         }
 
     }

@@ -11,6 +11,11 @@ public class AbilityUI : MonoBehaviour
     {
         icon.sprite = s;
     }
+    public void SetTransform((int, int) position)
+    {
+        RectTransform rectTransform = GetComponent<RectTransform>();
+        rectTransform.anchoredPosition = new Vector2(position.Item1, position.Item2);
+    }
     public void ShowCoolDown(float cooldown)
     {
         fillImage.fillAmount = 0f;
