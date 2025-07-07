@@ -22,6 +22,7 @@ public class Combat : MonoBehaviour
     [SerializeField] LayerMask enemyLayer;
     public float playerHeight = 5f;
     List<GameObject> hitEnemies = new List<GameObject>();
+    [SerializeField] DamageSO damageSO;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -35,7 +36,7 @@ public class Combat : MonoBehaviour
     void Update()
     {
         // Combo check
-        if(isPunching)
+        if (isPunching)
         {
             movement.setMoveInput(Vector2.zero);
 
@@ -47,10 +48,10 @@ public class Combat : MonoBehaviour
                 isPunching = false;
                 animator.SetBool("isPunching", false);
             }
-            else if(comboLevel > newComboLevel)
+            else if (comboLevel > newComboLevel)
             {
                 newComboLevel = comboLevel;
-                if  (newComboLevel == 2)
+                if (newComboLevel == 2)
                 {
                     newComboLevel = -1;
                 }
@@ -58,18 +59,18 @@ public class Combat : MonoBehaviour
 
             // get list of enemies hit and trigger animation and damage dealt
             Collider[] hitColliders;
-            if(comboLevel == 0)
+            if (comboLevel == 0)
             {
                 hitColliders = Physics.OverlapSphere(playerAttackColliders[0].transform.position, attackRadius, enemyLayer);
             }
             else
             {
-                hitColliders = Physics.OverlapSphere(playerAttackColliders[comboLevel-1].transform.position, attackRadius, enemyLayer);
+                hitColliders = Physics.OverlapSphere(playerAttackColliders[comboLevel - 1].transform.position, attackRadius, enemyLayer);
             }
 
-            
+
             // Debug.Log(hitColliders.Length);
-            foreach(Collider hit in hitColliders)
+            foreach (Collider hit in hitColliders)
             {
                 GameObject newEnemy = hit.transform.root.gameObject;
                 if (hitEnemies.Contains(newEnemy))
@@ -79,9 +80,9 @@ public class Combat : MonoBehaviour
                 else
                 {
                     hitEnemies.Add(newEnemy);
-                    newEnemy.GetComponent<DamageManager>().TakeDamage(gameObject.transform.position, enemyRange);
+                    newEnemy.GetComponent<DamageManager>().TakeDamage(gameObject.transform.position, damageSO, enemyRange);
                 }
-                
+
             }
         }
 
@@ -92,7 +93,8 @@ public class Combat : MonoBehaviour
         }
     }
 
-    public bool getIsPunching() {
+    public bool getIsPunching()
+    {
         return isPunching;
     }
 
@@ -100,7 +102,7 @@ public class Combat : MonoBehaviour
     void OnPunch(InputValue value)
     {
         // Condition prevents tirggering attacks before most of the animation has played out
-        if(value.isPressed && (comboTimer > timeBeforePunch || comboTimer == 0))
+        if (value.isPressed && (comboTimer > timeBeforePunch || comboTimer == 0))
         {
             // reset the hit enemies list
             hitEnemies = new List<GameObject>();
@@ -111,25 +113,25 @@ public class Combat : MonoBehaviour
             animator.SetBool("isPunching", true);
             comboTimer = 0;
 
-            if(comboLevel < 3)
+            if (comboLevel < 3)
             {
-                comboLevel ++;
+                comboLevel++;
             }
-            else if(comboLevel == 3)
+            else if (comboLevel == 3)
             {
                 comboLevel = 1;
             }
-            
+
             animator.SetInteger("Combo", comboLevel);
             StartCoroutine(WaitForAnimationStateChange());
-        } 
+        }
     }
 
     void OnDrawGizmosSelected()
     {
         if (comboLevel != 0)
         {
-            Gizmos.DrawSphere(playerAttackColliders[comboLevel-1].transform.position, attackRadius);
+            Gizmos.DrawSphere(playerAttackColliders[comboLevel - 1].transform.position, attackRadius);
         }
         else
         {
@@ -139,7 +141,8 @@ public class Combat : MonoBehaviour
         Gizmos.DrawSphere(this.transform.position + new Vector3(0f, playerHeight, 0f), enemyRange);
     }
 
-    public void playAttackVFX(int hitBoxIndex) {
+    public void playAttackVFX(int hitBoxIndex)
+    {
 
         float vfxScale = Random.Range(0.5f, 0.8f);
         Vector3 vfxRotation = new Vector3(0f, 0f, Random.Range(-10f, 10f)) + playerAttackSO[hitBoxIndex].orientation;
@@ -155,12 +158,14 @@ public class Combat : MonoBehaviour
         slashInstance.GetComponent<VisualEffect>().Play();
     }
 
-    public void destroyAttackVFX() {
+    public void destroyAttackVFX()
+    {
         GameObject[] slashPrefabs = GameObject.FindGameObjectsWithTag("SlashVfx");
-        foreach (GameObject slashPref in slashPrefabs) {
+        foreach (GameObject slashPref in slashPrefabs)
+        {
             Destroy(slashPref);
         }
-     }
+    }
 
     // Wait for the animation state to change - wait the transition duration
     IEnumerator WaitForAnimationStateChange()

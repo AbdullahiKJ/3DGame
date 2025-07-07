@@ -20,7 +20,7 @@ public class DamageManager : MonoBehaviour
     }
 
     // TODO: pass attack data to use
-    public void TakeDamage(Vector3 attacker, float enemyRange = 0f)
+    public void TakeDamage(Vector3 attacker, DamageSO damageSO = null, float enemyRange = 0f)
     {
         // If the character is already staggering, do not take damage again
         if (isStaggering)
@@ -33,6 +33,7 @@ public class DamageManager : MonoBehaviour
         }
 
         // Reduce health and stagger 
+        float damageDealt = damageSO != null ? CalculateDamage(damageSO) : 10f;
         currentHealth -= 10f; // Example damage value
         healthBar.Value = new Vector2(1 - currentHealth / maxHealth, healthBar.Value.y);
 
@@ -61,9 +62,23 @@ public class DamageManager : MonoBehaviour
     }
 
     // TODO: store stats for each attack and calculate damage based on those stats
-    void CalculateDamage()
+    float CalculateDamage(DamageSO damageSO)
     {
-
+        // Example calculation, can be replaced with more complex logic
+        float damage = damageSO.baseDamage * damageSO.multiplier;
+        if (damageSO.isFireDamage)
+        {
+            // Apply fire damage logic
+        }
+        if (damageSO.isIceDamage)
+        {
+            // Apply ice damage logic
+        }
+        if (damageSO.isPoisonDamage)
+        {
+            // Apply poison damage logic
+        }
+        return damage;
     }
 
     IEnumerator WaitForStaggerAnimation(float time)

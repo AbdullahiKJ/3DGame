@@ -5,11 +5,12 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "HitDetection", story: "Check [IsAttacking] variable, [AttackManager] AttackManager script and [Agent] for hits and update [State]", category: "Action", id: "828d7c607943a9112c00a96c3d306b8a")]
+[NodeDescription(name: "HitDetection", story: "Check [IsAttacking] variable, [AttackManager] AttackManager script, [enemyDamageSO] scriptable object and [Agent] for hits and update [State]", category: "Action", id: "828d7c607943a9112c00a96c3d306b8a")]
 public partial class HitDetectionAction : Action
 {
     [SerializeReference] public BlackboardVariable<bool> IsAttacking;
     [SerializeReference] public BlackboardVariable<AttackManager> AttackManager;
+    [SerializeReference] public BlackboardVariable<DamageSO> enemyDamageSO;
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<State> State;
     GameObject weapon;
@@ -46,7 +47,7 @@ public partial class HitDetectionAction : Action
                 else
                 {
                     // hitEnemies.Add(newEnemy);
-                    damageManager.TakeDamage(Agent.Value.gameObject.transform.position);
+                    damageManager.TakeDamage(Agent.Value.gameObject.transform.position, enemyDamageSO.Value);
                 }
             }
         }
