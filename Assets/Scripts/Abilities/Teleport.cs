@@ -61,6 +61,11 @@ public class Teleport : AbilityBase
         }
     }
 
+    public override void EndAbility()
+    {
+    }
+
+
     void OnAim(InputValue value)
     {
         if (value.isPressed && !abilityStarted && !movement.getIsRolling())
