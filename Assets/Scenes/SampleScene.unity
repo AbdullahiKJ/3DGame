@@ -4076,6 +4076,12 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1327215566}
+    - target: {fileID: 706478257149331030, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: hitParticlePrefab
+      value: 
+      objectReference: {fileID: 8301483922777730208, guid: 7d41ff61cc9114cc0bdf31e43e156e4a,
+        type: 3}
     - target: {fileID: 2176700191280390426, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4159,6 +4165,12 @@ PrefabInstance:
       objectReference: {fileID: 1847800850}
     - target: {fileID: 7982654594632849719, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
+      propertyPath: damageSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 573ddcf2bda164937bc70366f65cf3ab,
+        type: 2}
+    - target: {fileID: 7982654594632849719, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
       propertyPath: cooldownIcon
       value: 
       objectReference: {fileID: 21300000, guid: 7489eab16af37444a83e75a9c363a311,
@@ -4168,6 +4180,12 @@ PrefabInstance:
       propertyPath: outlineMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 2b8aadf84f69a4850a269a635e17ba77, type: 2}
+    - target: {fileID: 7982654594632849719, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: hitParticlePrefab
+      value: 
+      objectReference: {fileID: 4240438636061828671, guid: 7d55b4967fcbf4bd4a9af968b7e450f6,
+        type: 3}
     - target: {fileID: 7982654594632849719, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: cooldownIconColor.a
@@ -5204,6 +5222,12 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 312641652}
+    - target: {fileID: 9057683202083248488, guid: 43a964d791a76462f95a4c2bf3a7ff68,
+        type: 3}
+      propertyPath: hitParticlePrefab
+      value: 
+      objectReference: {fileID: 8301483922777730208, guid: 7d41ff61cc9114cc0bdf31e43e156e4a,
+        type: 3}
     - target: {fileID: 9119408393502509846, guid: 43a964d791a76462f95a4c2bf3a7ff68,
         type: 3}
       propertyPath: m_LocalPosition.x

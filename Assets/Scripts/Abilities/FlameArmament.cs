@@ -8,6 +8,9 @@ public class FlameArmament : AbilityBase
     [SerializeField] SkinnedMeshRenderer surfaceMeshRenderer;
     [SerializeField] Material outlineMaterial;
     List<GameObject> flameVfxInstances = new List<GameObject>();
+    [SerializeField] DamageSO damageSO;
+    [SerializeField] float damageMultiplier = 1.5f;
+
     public override void Ability()
     {
         // Create flame VFX instances at each parent object
@@ -26,8 +29,13 @@ public class FlameArmament : AbilityBase
         }
 
         // Add damage modifier to the player
+        damageSO.multiplier *= damageMultiplier;
 
-        // Add fire hit fx to the player
+        // Add fire hit fx to the damage scriptable object
+        if (damageSO.specialEffectPrefabs.Find(prefab => prefab.name.StartsWith(hitParticlePrefab.name)) == null)
+        {
+            damageSO.specialEffectPrefabs.Add(hitParticlePrefab);
+        }
 
         abilityStarted = true;
     }
@@ -56,5 +64,11 @@ public class FlameArmament : AbilityBase
             materialList.RemoveAll(mat => mat.name.StartsWith(outlineMaterial.name));
             surfaceMeshRenderer.materials = materialList.ToArray();
         }
+
+        // Reset the damage multiplier
+        damageSO.multiplier /= damageMultiplier;
+
+        // Remove fire hit fx from the damage scriptable object
+        damageSO.specialEffectPrefabs.RemoveAll(prefab => prefab.name.StartsWith(hitParticlePrefab.name));
     }
 }

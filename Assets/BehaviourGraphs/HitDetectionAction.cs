@@ -47,7 +47,8 @@ public partial class HitDetectionAction : Action
                 else
                 {
                     // hitEnemies.Add(newEnemy);
-                    damageManager.TakeDamage(Agent.Value.gameObject.transform.position, enemyDamageSO.Value);
+                    Vector3 contactPoint = hit.ClosestPoint(weapon.transform.position);
+                    damageManager.TakeDamage(Agent.Value.gameObject.transform.position, contactPoint, enemyDamageSO.Value);
                 }
             }
         }

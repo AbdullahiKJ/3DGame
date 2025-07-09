@@ -17,6 +17,7 @@ public abstract class AbilityBase : MonoBehaviour
     public float abilityDuration = 10f;
     public bool canUse = true;
     public bool abilityStarted = false;
+    public GameObject hitParticlePrefab;
 
     public void TriggerAbility()
     {

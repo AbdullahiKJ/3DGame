@@ -11,6 +11,7 @@ public class DamageManager : MonoBehaviour
     [SerializeField] float stagger = 100f;
     public bool isStaggering { get; set; } = false;
     [SerializeField] RangeBar healthBar;
+    [SerializeField] GameObject hitParticlePrefab;
 
     void Awake()
     {
@@ -20,7 +21,7 @@ public class DamageManager : MonoBehaviour
     }
 
     // TODO: pass attack data to use
-    public void TakeDamage(Vector3 attacker, DamageSO damageSO = null, float enemyRange = 0f)
+    public void TakeDamage(Vector3 attacker, Vector3 contactPoint, DamageSO damageSO = null, float enemyRange = 0f)
     {
         // If the character is already staggering, do not take damage again
         if (isStaggering)
@@ -34,18 +35,35 @@ public class DamageManager : MonoBehaviour
 
         // Reduce health and stagger 
         float damageDealt = damageSO != null ? CalculateDamage(damageSO) : 10f;
-        currentHealth -= 10f; // Example damage value
+        currentHealth -= damageDealt; // Example damage value
         healthBar.Value = new Vector2(1 - currentHealth / maxHealth, healthBar.Value.y);
 
         // face the attacker and move the game object to an appropriate distance from the attacker
         FaceAttacker(attacker, enemyRange);
+
+        // Play hit particle effect
+        if (damageSO.specialEffectPrefabs.Count == 0)
+        {
+            // Play base hit particle effect
+            GameObject hitEffect = Instantiate(hitParticlePrefab, contactPoint, Quaternion.identity);
+            Destroy(hitEffect, 2f); // Destroy the effect after 2 seconds
+        }
+        else
+        {
+            // Play each custom hit particle effect
+            foreach (GameObject effectPrefab in damageSO.specialEffectPrefabs)
+            {
+                GameObject hitEffect = Instantiate(effectPrefab, contactPoint, Quaternion.identity);
+                Destroy(hitEffect, 2f); // Destroy the effect after 2 seconds
+            }
+        }
+
 
         animator.SetTrigger("isHit");
         animator.SetFloat("Speed", 69f);
 
         // Character cannot take damage for half of the stagger animation time
         float staggerLength = animator.GetCurrentAnimatorStateInfo(0).length;
-        Debug.Log(staggerLength);
         StartCoroutine(WaitForStaggerAnimation(staggerLength));
     }
 

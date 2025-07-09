@@ -80,7 +80,9 @@ public class Combat : MonoBehaviour
                 else
                 {
                     hitEnemies.Add(newEnemy);
-                    newEnemy.GetComponent<DamageManager>().TakeDamage(gameObject.transform.position, damageSO, enemyRange);
+                    Vector3 sphereCentre = playerAttackColliders[comboLevel == 0 ? 0 : comboLevel - 1].transform.position;
+                    Vector3 contactPoint = hit.ClosestPoint(sphereCentre);
+                    newEnemy.GetComponent<DamageManager>().TakeDamage(gameObject.transform.position, contactPoint, damageSO, enemyRange);
                 }
 
             }
