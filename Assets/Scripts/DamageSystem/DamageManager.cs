@@ -60,7 +60,6 @@ public class DamageManager : MonoBehaviour
 
 
         animator.SetTrigger("isHit");
-        animator.SetFloat("Speed", 69f);
 
         // Character cannot take damage for half of the stagger animation time
         float staggerLength = animator.GetCurrentAnimatorStateInfo(0).length;
@@ -76,7 +75,10 @@ public class DamageManager : MonoBehaviour
         Vector2 posDifference = new Vector2(attacker.x - transform.position.x, attacker.y - transform.position.y);
         float posDiffMagnitude = posDifference.magnitude;
         // controller.Move(transform.forward * -1 * (enemyRange - posDiffMagnitude));
-        controller.Move(transform.forward * -1 * posDiffMagnitude * 0.1f);
+        if (controller != null)
+            controller.Move(transform.forward * -1 * posDiffMagnitude * 0.1f);
+        else
+            transform.position += transform.forward * -1 * posDiffMagnitude * 0.1f;
     }
 
     // TODO: store stats for each attack and calculate damage based on those stats
@@ -101,7 +103,7 @@ public class DamageManager : MonoBehaviour
 
     IEnumerator WaitForStaggerAnimation(float time)
     {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(time / 6);
         isStaggering = false;
         animator.ResetTrigger("isHit");
     }

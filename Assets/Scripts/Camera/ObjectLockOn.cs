@@ -20,7 +20,7 @@ public class ObjectLockOn : MonoBehaviour
 
     void OnBecameInvisible()
     {
-        if (Targets.Instance.HasTarget(gameObject, cameraLockOn.visibleTargets))
+        if (cameraLockOn != null && Targets.Instance.HasTarget(gameObject, cameraLockOn.visibleTargets))
         {
             Targets.Instance.RemoveTarget(gameObject, cameraLockOn.visibleTargets);
         }
