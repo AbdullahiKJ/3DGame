@@ -17,4 +17,4 @@ MonoBehaviour:
   isIceDamage: 0
   isPoisonDamage: 0
   multiplier: 1
-  specialEffectPrefab: {fileID: 0}
+  specialEffectPrefabs: []
