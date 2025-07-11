@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 public class Teleport : AbilityBase
 {
+    [Header("Teleport Settings")]
     [SerializeField] CinemachineCamera freeLookCam;
     [SerializeField] GameObject aimIndicator;
     [SerializeField] Vector2 defaultAxisGain;

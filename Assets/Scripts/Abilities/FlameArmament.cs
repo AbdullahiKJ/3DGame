@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class FlameArmament : AbilityBase
 {
+    [Header("Flame Armament Settings")]
     [SerializeField] GameObject flameVfxPrefab;
     [SerializeField] GameObject[] vfxParents;
     [SerializeField] SkinnedMeshRenderer surfaceMeshRenderer;

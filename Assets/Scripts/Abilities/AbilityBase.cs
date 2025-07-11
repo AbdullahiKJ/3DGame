@@ -7,7 +7,7 @@ public abstract class AbilityBase : MonoBehaviour
     public MyFloatEvent OnAbilityUse = new MyFloatEvent();
     public MyFloatEvent OnAbilityStarted = new MyFloatEvent();
 
-    [Header("Ability Settings")]
+    [Header("Base Ability Settings")]
     public string title;
     public Sprite icon;
     public Sprite cooldownIcon;
