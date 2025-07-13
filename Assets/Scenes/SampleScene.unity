@@ -1259,11 +1259,40 @@ MonoBehaviour:
     type: 3}
   cooldownIconColor: {r: 0, g: 0.8784314, b: 1, a: 1}
   cooldownTime: 5
-  abilityDuration: 10
+  abilityDuration: 10000
   canUse: 1
   abilityStarted: 0
   hitParticlePrefab: {fileID: 0}
+  baseController: {fileID: 9100000, guid: 3ba6daab8dffc4c639563e8281647b64, type: 2}
+  lightningController: {fileID: 9100000, guid: 89b3119ce2939401b981672a3c4d2ecc, type: 2}
+  surfaceMeshRenderer: {fileID: 640953683}
+  outlineMaterial: {fileID: 2100000, guid: bb48792a424df49a39cc915aee01985e, type: 2}
   lightningDamage: 10
+--- !u!114 &433211514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 266067958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b20a58ff5cd14544a88983fc7c6df3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InputX: 0
+  InputZ: 0
+  moveSpeed: 10
+  allowPlayerRotation: 0.1
+  desiredRotationSpeed: 0.1
+  StartAnimTime: 0.3
+  StopAnimTime: 0.15
+  dashSpeed: 40
+  ascendActionReference: {fileID: -5485238077985867799, guid: e4893553dd20b480d9a2c80ac7af172f,
+    type: 3}
+  descendActionReference: {fileID: 839739373153085792, guid: e4893553dd20b480d9a2c80ac7af172f,
+    type: 3}
+  ascendSpeed: 5
 --- !u!1001 &515416388
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4074,7 +4103,7 @@ PrefabInstance:
         type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: 2b8aadf84f69a4850a269a635e17ba77, type: 2}
+      objectReference: {fileID: 2100000, guid: bb48792a424df49a39cc915aee01985e, type: 2}
     - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: damageSO
@@ -4327,7 +4356,11 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9106208337617058006, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
-      insertIndex: 13
+      insertIndex: 7
+      addedObject: {fileID: 433211514}
+    - targetCorrespondingSourceObject: {fileID: 9106208337617058006, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      insertIndex: 14
       addedObject: {fileID: 433211513}
   m_SourcePrefab: {fileID: 100100000, guid: f3e4000cdbcf343e1854b9460f97453a, type: 3}
 --- !u!1001 &9121262307975083097

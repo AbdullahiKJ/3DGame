@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Outline
+  m_Name: FlameOutline
   m_Shader: {fileID: -6465566751694194690, guid: 1e1557d086637499e986e24308c2e7f4,
     type: 3}
   m_Parent: {fileID: 0}
