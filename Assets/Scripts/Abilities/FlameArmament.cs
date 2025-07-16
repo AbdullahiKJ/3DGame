@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class FlameArmament : AbilityBase
 {
@@ -11,6 +12,8 @@ public class FlameArmament : AbilityBase
     List<GameObject> flameVfxInstances = new List<GameObject>();
     [SerializeField] DamageSO damageSO;
     [SerializeField] float damageMultiplier = 1.5f;
+    [SerializeField] UniversalRendererData overlayRenderer;
+    ScriptableRendererFeature overlayFeature;
 
     public override void Ability()
     {
@@ -36,6 +39,14 @@ public class FlameArmament : AbilityBase
         if (damageSO.specialEffectPrefabs.Find(prefab => prefab.name.StartsWith(hitParticlePrefab.name)) == null)
         {
             damageSO.specialEffectPrefabs.Add(hitParticlePrefab);
+        }
+
+        // Enable the overlay feature for the flame effect
+        if (overlayRenderer != null)
+        {
+            overlayFeature = overlayRenderer.rendererFeatures.Find(feature => feature is FullScreenPassRendererFeature);
+            if (overlayFeature != null)
+                overlayFeature.SetActive(true);
         }
 
         abilityStarted = true;
@@ -71,5 +82,12 @@ public class FlameArmament : AbilityBase
 
         // Remove fire hit fx from the damage scriptable object
         damageSO.specialEffectPrefabs.RemoveAll(prefab => prefab.name.StartsWith(hitParticlePrefab.name));
+
+        // Disable the overlay feature for the flame effect
+        if (overlayFeature != null)
+        {
+            overlayFeature.SetActive(false);
+        }
+
     }
 }

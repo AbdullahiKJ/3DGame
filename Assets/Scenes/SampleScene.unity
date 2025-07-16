@@ -1267,6 +1267,8 @@ MonoBehaviour:
   lightningController: {fileID: 9100000, guid: 89b3119ce2939401b981672a3c4d2ecc, type: 2}
   surfaceMeshRenderer: {fileID: 640953683}
   outlineMaterial: {fileID: 2100000, guid: bb48792a424df49a39cc915aee01985e, type: 2}
+  auraVfxPrefab: {fileID: 2582466540808627080, guid: 81ef2aaabad56451e9d184fccd66559b,
+    type: 3}
   lightningDamage: 10
 --- !u!114 &433211514
 MonoBehaviour:
@@ -1965,7 +1967,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 1
+  weight: 0
   sharedProfile: {fileID: 11400000, guid: 31a4f5f70550a4901acb112a12c8b28f, type: 2}
 --- !u!1 &832575517
 GameObject:
@@ -4668,80 +4670,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 10de0962313d94444a0f2bb97b3b6718, type: 3}
---- !u!1001 &5750167514821661494
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 433211488}
-    m_Modifications:
-    - target: {fileID: 1188141211122488819, guid: 81ef2aaabad56451e9d184fccd66559b,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1188141211122488819, guid: 81ef2aaabad56451e9d184fccd66559b,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1188141211122488819, guid: 81ef2aaabad56451e9d184fccd66559b,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1188141211122488819, guid: 81ef2aaabad56451e9d184fccd66559b,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1188141211122488819, guid: 81ef2aaabad56451e9d184fccd66559b,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1188141211122488819, guid: 81ef2aaabad56451e9d184fccd66559b,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1188141211122488819, guid: 81ef2aaabad56451e9d184fccd66559b,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1188141211122488819, guid: 81ef2aaabad56451e9d184fccd66559b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1188141211122488819, guid: 81ef2aaabad56451e9d184fccd66559b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1188141211122488819, guid: 81ef2aaabad56451e9d184fccd66559b,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2582466540808627080, guid: 81ef2aaabad56451e9d184fccd66559b,
-        type: 3}
-      propertyPath: m_Name
-      value: LightningAbilityAura
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 81ef2aaabad56451e9d184fccd66559b, type: 3}
---- !u!4 &5750167514821661495 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1188141211122488819, guid: 81ef2aaabad56451e9d184fccd66559b,
-    type: 3}
-  m_PrefabInstance: {fileID: 5750167514821661494}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6586036283017608557
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4864,6 +4792,12 @@ PrefabInstance:
       propertyPath: outlineMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 2b8aadf84f69a4850a269a635e17ba77, type: 2}
+    - target: {fileID: 7982654594632849719, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: overlayRenderer
+      value: 
+      objectReference: {fileID: 11400000, guid: c40be3174f62c4acf8c1216858c64956,
+        type: 2}
     - target: {fileID: 7982654594632849719, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: hitParticlePrefab
@@ -5008,6 +4942,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
+      propertyPath: vfxPrefab
+      value: 
+      objectReference: {fileID: 7761031033666763820, guid: 1eb833340b41fb444b576c4dced8d4dc,
+        type: 3}
+    - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 330585545}
@@ -5021,6 +4961,11 @@ PrefabInstance:
       propertyPath: aimIndicator
       value: 
       objectReference: {fileID: 1133065240}
+    - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: teleportVolume
+      value: 
+      objectReference: {fileID: 794259733}
     - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: abilityDuration
@@ -5059,10 +5004,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1898010981}
-    - targetCorrespondingSourceObject: {fileID: 8436386216473862764, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5750167514821661495}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 9106208337617058006, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
