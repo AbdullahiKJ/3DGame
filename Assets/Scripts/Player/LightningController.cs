@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -26,6 +28,9 @@ public class LightningMovement : MonoBehaviour
     public float dashSpeed = 20f;
     Vector3 dashMoveDirection = Vector3.zero;
     bool isDashing = false;
+    [SerializeField] GameObject dashTrail;
+    TrailRenderer[] trailObjects;
+    Gradient oldGradient;
 
     [Header("Ascend/Descend")]
 
@@ -53,6 +58,13 @@ public class LightningMovement : MonoBehaviour
         ascendAction.canceled += StopAscend;
         descendAction.started += StartDescend;
         descendAction.canceled += StopDescend;
+
+        // Get the dash trail and its components
+        trailObjects = dashTrail.GetComponentsInChildren<TrailRenderer>();
+        oldGradient = trailObjects[0].colorGradient;
+
+        // Disable the dash trail by default
+        dashTrail.SetActive(false);
     }
 
     void OnDisable()
@@ -64,6 +76,8 @@ public class LightningMovement : MonoBehaviour
     void Update()
     {
         InputMagnitude();
+        // TOOD: after adding animations, check if this is needed
+        LookInCameraDirection();
 
         finalMoveDirection += ascendMoveDirection * Time.deltaTime; // Add ascend/descend movement to final move direction
         finalMoveDirection += dashMoveDirection * Time.deltaTime; // Add dash movement to final move direction
@@ -79,13 +93,15 @@ public class LightningMovement : MonoBehaviour
         if (Speed > allowPlayerRotation)
         {
             // TODO: ANIMATION
-            // animator.SetFloat("Blend", Speed, StartAnimTime, Time.deltaTime);
+            // animator.SetFloat("VerticalInput", InputZ, StartAnimTime, Time.deltaTime);
+            // animator.SetFloat("HorizontalInput", InputX, StartAnimTime, Time.deltaTime);
             PlayerMoveAndRotation();
         }
         else if (Speed < allowPlayerRotation)
         {
             // TODO: ANIMATION
-            // animator.SetFloat("Blend", Speed, StopAnimTime, Time.deltaTime);
+            animator.SetFloat("VerticalInput", InputZ, StopAnimTime, Time.deltaTime);
+            animator.SetFloat("HorizontalInput", InputX, StopAnimTime, Time.deltaTime);
         }
     }
 
@@ -128,6 +144,40 @@ public class LightningMovement : MonoBehaviour
         DOTween.To(() => ascendMoveDirection.y, x => ascendMoveDirection.y = x, 0, 0.5f).SetEase(Ease.InOutQuad);
     }
 
+    // Fade out the trail alpha
+    void FadeTrailAlpha()
+    {
+        float alpha = 1f;
+        float fadeDuration = trailObjects[0].time; // Duration for the fade out
+
+        DOTween.To(() => alpha, a =>
+        {
+            alpha = a;
+
+            // Create a new gradient to update alpha
+            Gradient newGradient = new Gradient();
+            GradientColorKey[] colorKeys = oldGradient.colorKeys;
+            GradientAlphaKey[] alphaKeys = new GradientAlphaKey[colorKeys.Length];
+
+            for (int i = 0; i < colorKeys.Length; i++)
+            {
+                alphaKeys[i] = new GradientAlphaKey(alpha, colorKeys[i].time);
+            }
+
+            newGradient.SetKeys(colorKeys, alphaKeys);
+
+            foreach (TrailRenderer trail in trailObjects)
+            {
+                // Update the color gradient of each trail renderer
+                trail.colorGradient = newGradient;
+            }
+        }, 0f, fadeDuration)
+        .OnComplete(() =>
+        {
+            dashTrail.SetActive(false); // disable after fade
+        });
+    }
+
     // Input actions
     void OnMove(InputValue value)
     {
@@ -140,6 +190,16 @@ public class LightningMovement : MonoBehaviour
         if (value.isPressed && !isDashing)
         {
             isDashing = true;
+
+            // Enable the dash trail effect
+            dashTrail.SetActive(true);
+
+            // Reset the dash color gradient to full alpha
+            foreach (TrailRenderer trail in trailObjects)
+            {
+                // Reset the color gradient to the original one
+                trail.colorGradient = oldGradient;
+            }
 
             // Get the camera's forward and right vectors to adjust the dash direction
             var forward = cam.transform.forward;
@@ -158,7 +218,11 @@ public class LightningMovement : MonoBehaviour
             dashMoveDirection = target;
             DOTween.To(() => dashMoveDirection, x => dashMoveDirection = x, Vector3.zero, 0.2f)
                 .SetEase(Ease.InQuad)
-                .OnComplete(() => isDashing = false); // Reset the dash direction after the dash duration
+                .OnComplete(() =>
+                {
+                    isDashing = false; // Reset the dash direction after the dash duration
+                    FadeTrailAlpha(); // Disable the dash trail after the fading the alpha
+                });
 
             // TODO: ANIMATION
             // animator.SetTrigger("Dash");
@@ -171,6 +235,7 @@ public class LightningMovement : MonoBehaviour
     void OnLook(InputValue value)
     {
         // TODO: After adding animations, if the player rotation looks weird, call this method in the update method instead
-        LookInCameraDirection();
+        // TODO: also this was getting called even when this script was disabled
+        // LookInCameraDirection();
     }
 }
