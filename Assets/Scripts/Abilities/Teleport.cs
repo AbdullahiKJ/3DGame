@@ -2,6 +2,9 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
+using System.Collections;
+using DG.Tweening;
+using UnityEngine.Rendering;
 
 public class Teleport : AbilityBase
 {
@@ -22,6 +25,8 @@ public class Teleport : AbilityBase
     bool pointVisible = false;
     public List<GameObject> teleportTargets;
     GameObject currentTeleportTarget;
+    [SerializeField] GameObject vfxPrefab;
+    [SerializeField] Volume teleportVolume;
 
     void Awake()
     {
@@ -37,14 +42,14 @@ public class Teleport : AbilityBase
     {
         // Ground teleport
         if (isAiming && !movement.getIsRolling())
-            StartTeleport();
+            StartCoroutine(WaitForTeleportVfx());
 
         // Platform teleport
         if (!isAiming)
         {
             pointVisible = TeleportPointsAvailable();
             if (pointVisible)
-                StartTeleport(true);
+                StartCoroutine(WaitForTeleportVfx(true));
         }
     }
 
@@ -98,14 +103,24 @@ public class Teleport : AbilityBase
         }
     }
 
-    void StartTeleport(bool usingPlatform = false)
+    IEnumerator WaitForTeleportVfx(bool usingPlatform = false, bool callTeleport = true)
     {
         abilityStarted = true;
+        // TODO: apply post processing
+        GameObject vfxInstance = Instantiate(vfxPrefab, transform);
 
-        // todo create a coroutine to wait a certain amount of time
+        yield return new WaitForSeconds(0.5f);
 
-        // todo create and play an animation or activate a shader
+        if (callTeleport)
+            StartTeleport(usingPlatform);
 
+        // Destroy the teleport VFX instance
+        if (vfxInstance != null)
+            Destroy(vfxInstance);
+
+    }
+    void StartTeleport(bool usingPlatform = false)
+    {
         // Teleport to the raycast hit
         Vector3 newPosition;
         if (usingPlatform)
@@ -114,6 +129,14 @@ public class Teleport : AbilityBase
             newPosition = aimIndicator.transform.position + new Vector3(0f, 2f, 0f) - transform.position;
 
         controller.Move(newPosition);
+
+        float transitionLength = 0.35f;
+        DOTween.To(() => teleportVolume.weight, x => teleportVolume.weight = x, 1f, transitionLength)
+            .SetEase(Ease.InOutQuad)
+            .OnComplete(() => DOTween.To(() => teleportVolume.weight, x => teleportVolume.weight = x, 0f, transitionLength).SetEase(Ease.InOutQuad));
+
+        // Play teleport VFX again
+        StartCoroutine(WaitForTeleportVfx(false, false));
 
         // Reset teleport target
         currentTeleportTarget = null;
