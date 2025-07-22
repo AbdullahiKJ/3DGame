@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: MMAKick
   m_EditorClassIdentifier: 
   orientation: {x: 30, y: 180, z: 180}
-  scale: 0
+  scale: 1

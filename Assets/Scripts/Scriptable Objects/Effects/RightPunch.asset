@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: RightPunch
   m_EditorClassIdentifier: 
   orientation: {x: 180, y: 0, z: 0}
-  scale: 0
+  scale: 0.7

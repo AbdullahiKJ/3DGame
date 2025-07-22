@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: LeftHook
   m_EditorClassIdentifier: 
   orientation: {x: 0, y: -45, z: 0}
-  scale: 0
+  scale: 0.7

@@ -130,7 +130,7 @@ MonoBehaviour:
     x: -2251
     y: -966
     width: 4978
-    height: 2041
+    height: 2042
 --- !u!114 &114350483966674976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7d4c867f6b72b714dbb5fd1780afe208, type: 3}
-  m_Name: 01_Minimal_System
+  m_Name: ThrownLightning
   m_EditorClassIdentifier: 
   m_UIIgnoredErrors: []
   m_Parent: {fileID: 0}
@@ -733,7 +733,7 @@ VisualEffectResource:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 01_Minimal_System
+  m_Name: ThrownLightning
   m_Graph: {fileID: 114350483966674976}
   m_Infos:
     m_RendererSettings:
@@ -3624,8 +3624,6 @@ MonoBehaviour:
   - m_Id: 3
     linkedSlots:
     - outputSlot: {fileID: 8926484042661615919}
-      inputSlot: {fileID: 8926484042661616199}
-    - outputSlot: {fileID: 8926484042661615919}
       inputSlot: {fileID: 8926484042661616204}
     position: {x: 1493.5, y: -44.5}
     expandedSlots: []
@@ -3818,8 +3816,6 @@ MonoBehaviour:
     supecollapsed: 0
   - m_Id: 1
     linkedSlots:
-    - outputSlot: {fileID: 8926484042661615924}
-      inputSlot: {fileID: 8926484042661616204}
     - outputSlot: {fileID: 8926484042661615924}
       inputSlot: {fileID: 8926484042661616199}
     position: {x: 1491.5, y: -112.5}
