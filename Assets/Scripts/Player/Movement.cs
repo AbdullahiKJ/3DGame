@@ -195,7 +195,7 @@ public class Movement : MonoBehaviour
 
     void OnRoll(InputValue value)
     {
-        if (value.isPressed && !isJumping && !combatScript.getIsPunching() && abiltyScript.CurrentAbilityScript?.abilityStarted != null && abiltyScript.CurrentAbilityScript?.abilityStarted == true)
+        if (value.isPressed && !isJumping && !combatScript.getIsPunching() && abiltyScript.CurrentAbilityScript?.abilityStarted != null && abiltyScript.CurrentAbilityScript?.abilityStarted == false)
         {
             if (cameraLockOn.isLockedOn)
             {
