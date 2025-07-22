@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -41,6 +39,16 @@ public class LightningMovement : MonoBehaviour
     public float ascendSpeed = 5f;
     Vector3 ascendMoveDirection = Vector3.zero;
 
+    [Header("Lightning Projectile")]
+    [SerializeField] GameObject projectilePrefab;
+
+    [SerializeField] GameObject rightHand;
+    [SerializeField] GameObject leftHand;
+    GameObject rightInstance;
+    GameObject leftInstance;
+    float projectileDistance;
+    float combo = 0;
+
     void OnEnable()
     {
         animator = GetComponent<Animator>();
@@ -65,6 +73,9 @@ public class LightningMovement : MonoBehaviour
 
         // Disable the dash trail by default
         dashTrail.SetActive(false);
+
+        // Get the projectileDistance
+        projectileDistance = projectilePrefab.GetComponent<ProjectileDamage>().maxFlyDistance;
     }
 
     void OnDisable()
@@ -230,7 +241,43 @@ public class LightningMovement : MonoBehaviour
     }
     void OnAttack(InputValue value)
     {
+        if (value.isPressed)
+        {
+            // TODO: throw animation
+            // todo: wait for throw to complete before creating new instance
+            // todo: wait for throw to complete before you can throw again
+            RaycastHit hit;
+            Vector3 target;
+            Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
+            int layerMask = ~LayerMask.GetMask("Player");
+            // ~ inverts the mask so all layers except these are hit.
+
+            // Cast a ray from the centre of the screen to get the projectile target
+            if (Physics.Raycast(ray, out hit, projectileDistance, layerMask))
+            {
+                target = hit.point;
+            }
+            // Use the projectile distance if there is no hit
+            else
+            {
+                target = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, projectileDistance));
+            }
+
+            // Launch the projectile
+            if (combo == 0)
+            {
+                rightInstance = Instantiate(projectilePrefab, rightHand.transform.position, Quaternion.identity);
+                rightInstance.GetComponent<ProjectileDamage>().Launch(target, transform.position);
+                combo = 1;
+            }
+            else
+            {
+                leftInstance = Instantiate(projectilePrefab, leftHand.transform.position, Quaternion.identity);
+                leftInstance.GetComponent<ProjectileDamage>().Launch(target, transform.position);
+                combo = 0;
+            }
+        }
     }
     void OnLook(InputValue value)
     {
