@@ -15,6 +15,15 @@ public class FlameArmament : AbilityBase
     [SerializeField] UniversalRendererData overlayRenderer;
     ScriptableRendererFeature overlayFeature;
 
+    void Awake()
+    {
+        // Disable the overlay feature for the flame effect
+        if (overlayFeature != null)
+        {
+            overlayFeature.SetActive(false);
+        }
+    }
+
     public override void Ability()
     {
         // Create flame VFX instances at each parent object
