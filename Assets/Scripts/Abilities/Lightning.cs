@@ -14,6 +14,9 @@ public class Lightning : AbilityBase
     LightningMovement lightningMovementScript;
     [SerializeField] SkinnedMeshRenderer surfaceMeshRenderer;
     [SerializeField] Material outlineMaterial;
+    [SerializeField] GameObject auraVfxPrefab;
+    GameObject auraVfxInstance;
+    [SerializeField] GameObject crossHair;
 
     void Awake()
     {
@@ -23,6 +26,7 @@ public class Lightning : AbilityBase
         combatScript = GetComponent<Combat>();
         lightningMovementScript = GetComponent<LightningMovement>();
         lightningMovementScript.enabled = false;
+        crossHair.SetActive(false);
     }
     public float lightningDamage = 10f;
 
@@ -54,8 +58,12 @@ public class Lightning : AbilityBase
             surfaceMeshRenderer.materials = materialList.ToArray();
         }
 
-        //  TODO: Add lightning VFX to the player
-        // TODO: Lightning vfx implementation
+        // Instantiate the lightning aura VFX
+        if (auraVfxPrefab != null)
+            auraVfxInstance = Instantiate(auraVfxPrefab, this.transform);
+
+        // Enable the crosshair
+        crossHair.SetActive(true);
 
         abilityStarted = true;
     }
@@ -83,6 +91,13 @@ public class Lightning : AbilityBase
             materialList.RemoveAll(mat => mat.name.StartsWith(outlineMaterial.name));
             surfaceMeshRenderer.materials = materialList.ToArray();
         }
+
+        // Destroy the lightning aura VFX instance
+        if (auraVfxInstance != null)
+            Destroy(auraVfxInstance);
+
+        // Disable the crosshair
+        crossHair.SetActive(false);
     }
 
 }
