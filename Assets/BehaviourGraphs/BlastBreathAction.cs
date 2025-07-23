@@ -4,8 +4,6 @@ using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Unity.Properties;
 using UnityEngine.VFX;
-using System.Collections;
-using Unity.VisualScripting;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "BlastBreath", story: "play [charge] and [blastBreath] VFX at the [agent] position towards the [target] position", category: "Action", id: "dd72fc417619b909e83bd51bf5586bc7")]
@@ -20,7 +18,8 @@ public partial class BlastBreathAction : Action
     CapsuleCollider collider;
     float chargeDuration;
     float blastBreathDuration;
-    float blastBreathScale = 55f;
+    float colliderDuration = 0.15f; // Duration of the prefabs z axis elongation from the vfx graph
+    float blastBreathScale = 45f; // Scale from the vfx, size is ~49 but we want it to be larger so it goes past the target
     float distanceToTarget;
     float timer = 0f;
     bool isCharging = true;
@@ -28,21 +27,10 @@ public partial class BlastBreathAction : Action
     protected override Status OnStart()
     {
         // Instantiate vfx prefabs at the agent's position
-        chargeInstance = GameObject.Instantiate(charge.Value, agent.Value.transform.position, Quaternion.identity);
-        blastBreathInstance = GameObject.Instantiate(blastBreath.Value, agent.Value.transform.position, Quaternion.identity);
-
-        // Get the CapsuleCollider component from the blast breath instance
-        collider = blastBreathInstance.GetComponent<CapsuleCollider>();
+        chargeInstance = GameObject.Instantiate(charge.Value, agent.Value.transform);
 
         // Get the charge and blast breath durations
         chargeDuration = chargeInstance.GetComponent<VisualEffect>().GetFloat("Lifetime");
-        blastBreathDuration = blastBreathInstance.GetComponent<VisualEffect>().GetFloat("Lifetime");
-
-        // Get the blast breath scale
-
-        // Play the agent's charge animation and start the charge VFX
-        chargeInstance.GetComponent<VisualEffect>().Play();
-
         return Status.Running;
     }
 
@@ -90,16 +78,17 @@ public partial class BlastBreathAction : Action
             // Get the distance to the target
             distanceToTarget = Vector3.Distance(agent.Value.transform.position, target.Value.transform.position);
 
+            // Instantiate the blast breath VFX at the agent's position and get it's duration and collider
+            blastBreathInstance = GameObject.Instantiate(blastBreath.Value, agent.Value.transform.position, Quaternion.identity);
+            collider = blastBreathInstance.GetComponent<CapsuleCollider>();
+            blastBreathDuration = blastBreathInstance.GetComponent<VisualEffect>().GetFloat("Lifetime");
+
             // Set the position, scale and orientation of the blast breath instance towards the target
-            blastBreathInstance.transform.position = agent.Value.transform.position;
             blastBreathInstance.transform.LookAt(target.Value.transform);
             blastBreathInstance.transform.localScale = new Vector3(1f, 1f, distanceToTarget / blastBreathScale);
 
             // Reset the timer for the blast breath
             timer = 0f;
-
-            // Start the blast breath VFX
-            blastBreathInstance.GetComponent<VisualEffect>().Play();
         }
     }
 
@@ -120,9 +109,12 @@ public partial class BlastBreathAction : Action
 
     void UpdateColliderScale()
     {
-        float currentSize = (timer / blastBreathDuration) * distanceToTarget;
-        collider.height = currentSize;
-        collider.center = new Vector3(0f, 0f, currentSize / 2f);
+        if (timer <= colliderDuration)
+        {
+            float currentSize = (timer / colliderDuration) * distanceToTarget;
+            collider.height = currentSize / (distanceToTarget / blastBreathScale) * 0.9f; //Bypass the colliders height scale adjustment
+            collider.center = new Vector3(0f, 0f, collider.height / 2f);
+        }
     }
 }
 
