@@ -41,23 +41,25 @@ public class DamageManager : MonoBehaviour
         // face the attacker and move the game object to an appropriate distance from the attacker
         FaceAttacker(attacker, enemyRange);
 
-        // Play hit particle effect
-        if (damageSO.specialEffectPrefabs.Count == 0)
+        if (contactPoint != default(Vector3))
         {
-            // Play base hit particle effect
-            GameObject hitEffect = Instantiate(hitParticlePrefab, contactPoint, Quaternion.identity);
-            Destroy(hitEffect, 2f); // Destroy the effect after 2 seconds
-        }
-        else
-        {
-            // Play each custom hit particle effect
-            foreach (GameObject effectPrefab in damageSO.specialEffectPrefabs)
+            // Play hit particle effect
+            if (damageSO.specialEffectPrefabs.Count == 0)
             {
-                GameObject hitEffect = Instantiate(effectPrefab, contactPoint, Quaternion.identity);
+                // Play base hit particle effect
+                GameObject hitEffect = Instantiate(hitParticlePrefab, contactPoint, Quaternion.identity);
                 Destroy(hitEffect, 2f); // Destroy the effect after 2 seconds
             }
+            else
+            {
+                // Play each custom hit particle effect
+                foreach (GameObject effectPrefab in damageSO.specialEffectPrefabs)
+                {
+                    GameObject hitEffect = Instantiate(effectPrefab, contactPoint, Quaternion.identity);
+                    Destroy(hitEffect, 2f); // Destroy the effect after 2 seconds
+                }
+            }
         }
-
 
         animator.SetTrigger("isHit");
 
