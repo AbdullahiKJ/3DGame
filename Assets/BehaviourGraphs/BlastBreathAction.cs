@@ -18,8 +18,10 @@ public partial class BlastBreathAction : Action
     CapsuleCollider collider;
     float chargeDuration;
     float blastBreathDuration;
-    float colliderDuration = 0.15f; // Duration of the prefabs z axis elongation from the vfx graph
+    float colliderLifeDuration = 0.15f; // Duration of the prefabs z axis elongation from the vfx graph
+    float colliderDuration;
     float blastBreathScale = 45f; // Scale from the vfx, size is ~49 but we want it to be larger so it goes past the target
+    float colliderScaleCorrection = 1.1f; // To ensure the collider matches the blast breath VFX size
     float distanceToTarget;
     float timer = 0f;
     bool isCharging = true;
@@ -82,6 +84,7 @@ public partial class BlastBreathAction : Action
             blastBreathInstance = GameObject.Instantiate(blastBreath.Value, agent.Value.transform.position, Quaternion.identity);
             collider = blastBreathInstance.GetComponent<CapsuleCollider>();
             blastBreathDuration = blastBreathInstance.GetComponent<VisualEffect>().GetFloat("Lifetime");
+            colliderDuration = blastBreathDuration * colliderLifeDuration;
 
             // Set the position, scale and orientation of the blast breath instance towards the target
             blastBreathInstance.transform.LookAt(target.Value.transform);
@@ -112,7 +115,8 @@ public partial class BlastBreathAction : Action
         if (timer <= colliderDuration)
         {
             float currentSize = (timer / colliderDuration) * distanceToTarget;
-            collider.height = currentSize / (distanceToTarget / blastBreathScale) * 0.9f; //Bypass the colliders height scale adjustment
+            // Bypass the colliders height scale adjustment
+            collider.height = currentSize / blastBreathInstance.transform.localScale.z * colliderScaleCorrection;
             collider.center = new Vector3(0f, 0f, collider.height / 2f);
         }
     }
