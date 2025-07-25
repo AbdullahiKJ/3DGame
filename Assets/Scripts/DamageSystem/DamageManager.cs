@@ -126,10 +126,6 @@ public class DamageManager : MonoBehaviour
         }
 
         isStaggering = false;
-        if (knockback)
-            animator.ResetTrigger("isKnocked");
-        else
-            animator.ResetTrigger("isHit");
     }
 
     IEnumerator WaitForStateTransition(Vector3 attacker, float pushBack, bool knockback)

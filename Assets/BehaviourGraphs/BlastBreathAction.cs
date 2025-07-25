@@ -44,8 +44,10 @@ public partial class BlastBreathAction : Action
         // Check if the charge animation is still playing
         if (isCharging)
         {
-            // Look at the target while charging
-            agent.Value.transform.LookAt(target.Value.transform);
+            // Look at the target while charging (ignore the y-axis)
+            Vector3 lookatTarget = target.Value.transform.position;
+            lookatTarget.y = agent.Value.transform.position.y; // Ignore y-axis for rotation
+            agent.Value.transform.LookAt(lookatTarget);
 
             // Update the isCharging flag based on the timer
             CheckChargingTimer();
@@ -92,6 +94,12 @@ public partial class BlastBreathAction : Action
 
             // Reset the timer for the blast breath
             timer = 0f;
+
+            // Play the agent animation
+            if (agent.Value.TryGetComponent<Animator>(out Animator agentAnimator))
+            {
+                agentAnimator.Play("Blast Breath Scream");
+            }
         }
     }
 
