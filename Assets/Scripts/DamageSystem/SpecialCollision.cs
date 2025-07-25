@@ -19,7 +19,7 @@ public class SpecialCollision : MonoBehaviour
             if (player != null)
             {
                 // Deal damage
-                player.TakeDamage(transform.position, default, damageSO);
+                player.TakeDamage(transform.position, default, damageSO, 5f, true);
             }
         }
     }
