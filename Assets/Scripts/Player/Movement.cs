@@ -27,11 +27,11 @@ public class Movement : MonoBehaviour
     bool isRolling;
     bool isJumping;
 
-
     [SerializeField] float jumpHeight = 1.0f;
     [SerializeField] float gravityValue = -9.81f;
     [SerializeField] bool groundedPlayer;
     [SerializeField] GameObject enemy;
+    [SerializeField] float testDistance = 10f;
 
     void Awake()
     {
@@ -231,5 +231,6 @@ public class Movement : MonoBehaviour
     {
         float distance = (enemy.transform.position - transform.position).magnitude;
         Gizmos.DrawWireSphere(transform.position, distance);
+        Gizmos.DrawWireSphere(transform.position, testDistance);
     }
 }
