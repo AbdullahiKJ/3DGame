@@ -1,5 +1,7 @@
 using System.Collections;
+using DG.Tweening;
 using Unity.UI.Shaders.Sample;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DamageManager : MonoBehaviour
@@ -20,8 +22,7 @@ public class DamageManager : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    // TODO: pass attack data to use
-    public void TakeDamage(Vector3 attacker, Vector3 contactPoint, DamageSO damageSO = null, float enemyRange = 0f)
+    public void TakeDamage(Vector3 attacker, Vector3 contactPoint, DamageSO damageSO = null, float pushBack = 0f, bool knockback = false)
     {
         // If the character is already staggering, do not take damage again
         if (isStaggering)
@@ -37,9 +38,6 @@ public class DamageManager : MonoBehaviour
         float damageDealt = damageSO != null ? CalculateDamage(damageSO) : 10f;
         currentHealth -= damageDealt; // Example damage value
         healthBar.Value = new Vector2(1 - currentHealth / maxHealth, healthBar.Value.y);
-
-        // face the attacker and move the game object to an appropriate distance from the attacker
-        FaceAttacker(attacker, enemyRange);
 
         if (contactPoint != default(Vector3))
         {
@@ -61,29 +59,40 @@ public class DamageManager : MonoBehaviour
             }
         }
 
-        animator.SetTrigger("isHit");
+        // Play the knockback animation if enabled
+        if (knockback)
+        {
+            animator.Play("Knockback");
+        }
+        // Otherwise, play the stagger animation
+        else
+        {
+            animator.Play("Small Stagger");
+        }
 
-        // Character cannot take damage for half of the stagger animation time
-        float staggerLength = animator.GetCurrentAnimatorStateInfo(0).length;
-        StartCoroutine(WaitForStaggerAnimation(staggerLength));
+        // Wait for the stagger animation to start
+        StartCoroutine(WaitForStateTransition(attacker, pushBack, knockback));
     }
 
     // make the gameobject face the game object dealing damage
-    public void FaceAttacker(Vector3 attacker, float enemyRange)
+    public void FaceAttacker(Vector3 attacker, float pushBack, float animLength)
     {
         transform.LookAt(attacker, Vector3.up);
 
-        // move the damage receiver to an appropriate distance
-        Vector2 posDifference = new Vector2(attacker.x - transform.position.x, attacker.y - transform.position.y);
-        float posDiffMagnitude = posDifference.magnitude;
-        // controller.Move(transform.forward * -1 * (enemyRange - posDiffMagnitude));
-        if (controller != null)
-            controller.Move(transform.forward * -1 * posDiffMagnitude * 0.1f);
+        // Determine the distance to push back
+        float posDiffMagnitude = new Vector2(attacker.x - transform.position.x, attacker.y - transform.position.y).magnitude;
+        Vector3 pushDistance = transform.forward * -1;
+        if (pushBack > 0f)
+            pushDistance *= pushBack;
         else
-            transform.position += transform.forward * -1 * posDiffMagnitude * 0.1f;
+            pushDistance *= posDiffMagnitude * 0.1f;
+
+        // Move the character controller or transform
+        DOTween.To(() => transform.position, x => transform.position = x, transform.position + pushDistance, animLength)
+            .SetEase(Ease.OutQuad);
     }
 
-    // TODO: store stats for each attack and calculate damage based on those stats
+    // TODO: apply status effects based on the damageSO
     float CalculateDamage(DamageSO damageSO)
     {
         // Example calculation, can be replaced with more complex logic
@@ -103,10 +112,36 @@ public class DamageManager : MonoBehaviour
         return damage;
     }
 
-    IEnumerator WaitForStaggerAnimation(float time)
+    IEnumerator WaitForStaggerAnimation(float time, bool knockback)
     {
-        yield return new WaitForSeconds(time / 6);
+        yield return new WaitForSeconds(time);
+
+        // If the knockback animation is playing, wait for it to finish and start the getting up animation
+        if (knockback)
+        {
+            animator.Play("Getting Up");
+            yield return null;
+            float staggerLength = animator.GetCurrentAnimatorStateInfo(0).length;
+            yield return new WaitForSeconds(staggerLength);
+        }
+
         isStaggering = false;
-        animator.ResetTrigger("isHit");
+        if (knockback)
+            animator.ResetTrigger("isKnocked");
+        else
+            animator.ResetTrigger("isHit");
+    }
+
+    IEnumerator WaitForStateTransition(Vector3 attacker, float pushBack, bool knockback)
+    {
+        yield return null;
+
+        float staggerLength = animator.GetCurrentAnimatorStateInfo(0).length;
+
+        // Character cannot take damage for half of the stagger animation time
+        StartCoroutine(WaitForStaggerAnimation(staggerLength, knockback));
+
+        // face the attacker and move the game object to an appropriate distance from the attacker
+        FaceAttacker(attacker, pushBack, staggerLength);
     }
 }
