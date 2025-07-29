@@ -1,13 +1,11 @@
 using System.Collections;
 using DG.Tweening;
 using Unity.UI.Shaders.Sample;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DamageManager : MonoBehaviour
 {
     Animator animator;
-    CharacterController controller;
     [SerializeField] float maxHealth = 100f;
     float currentHealth;
     [SerializeField] float stagger = 100f;
@@ -18,7 +16,6 @@ public class DamageManager : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        controller = GetComponent<CharacterController>();
         currentHealth = maxHealth;
     }
 
@@ -87,7 +84,7 @@ public class DamageManager : MonoBehaviour
         else
             pushDistance *= posDiffMagnitude * 0.1f;
 
-        // Move the character controller or transform
+        // Move the character transform
         DOTween.To(() => transform.position, x => transform.position = x, transform.position + pushDistance, animLength)
             .SetEase(Ease.OutQuad);
     }
