@@ -872,7 +872,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 15
+      scalar: 10
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4855,6 +4855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   scytheDamageSO: {fileID: 11400000, guid: f87e9e4928bd34702a787efadec87465, type: 2}
+  isDirectional: 1
 --- !u!1 &2594058285971693730
 GameObject:
   m_ObjectHideFlags: 0
@@ -4866,6 +4867,7 @@ GameObject:
   - component: {fileID: 8685585639215559619}
   - component: {fileID: 4583767360287846913}
   - component: {fileID: 7635438475714351936}
+  - component: {fileID: 4822756998149564698}
   m_Layer: 0
   m_Name: Scythe
   m_TagString: Untagged
@@ -4904,7 +4906,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -8475,9 +8477,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -8593,7 +8595,7 @@ ParticleSystem:
     m_EnergyLossOnCollision:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -8652,7 +8654,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -8670,6 +8672,11 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     subEmitters:
+    - serializedVersion: 3
+      emitter: {fileID: 8490073607896724004}
+      type: 1
+      properties: 0
+      emitProbability: 1
     - serializedVersion: 3
       emitter: {fileID: 8490073607896724004}
       type: 2
@@ -9690,6 +9697,21 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &4822756998149564698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2594058285971693730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb7f5b937401e4c2f8a02022df363aa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  scytheDamageSO: {fileID: 11400000, guid: f87e9e4928bd34702a787efadec87465, type: 2}
+  isDirectional: 0
 --- !u!1 &5856728794461865560
 GameObject:
   m_ObjectHideFlags: 0
