@@ -3913,6 +3913,8 @@ MonoBehaviour:
   - rid: 8625586636699206541
   - rid: 7105042472840201122
   - rid: 7105042520451580857
+  - rid: 7105042612835058281
+  - rid: 7105042612835058500
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
@@ -3936,6 +3938,26 @@ MonoBehaviour:
           m_Value1: 13366116418441147024
         Name: cameraAnimator
         m_Value: {fileID: 1694562135}
+    - rid: 7105042612835058281
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]',
+        ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 10771227828487351621
+          m_Value1: 8647750547637178554
+        Name: lightningRainPrefab
+        m_Value: {fileID: 3519765802023060960, guid: bf84ad3fb629f4d669e994aa47a8d452,
+          type: 3}
+    - rid: 7105042612835058500
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]',
+        ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 8879027589124024772
+          m_Value1: 5446538232298792691
+        Name: lightningStrikePrefab
+        m_Value: {fileID: 4365449012410263562, guid: 3197f1d1f467841b08ff47b0e182ad51,
+          type: 3}
     - rid: 8625586636699205911
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]',
         ns: Unity.Behavior, asm: Unity.Behavior}
@@ -6620,6 +6642,17 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 266067958}
+    - target: {fileID: 3858691786483218172, guid: 43a964d791a76462f95a4c2bf3a7ff68,
+        type: 3}
+      propertyPath: strikePosition
+      value: 
+      objectReference: {fileID: 272514287}
+    - target: {fileID: 3858691786483218172, guid: 43a964d791a76462f95a4c2bf3a7ff68,
+        type: 3}
+      propertyPath: lightningStrikePrefab
+      value: 
+      objectReference: {fileID: 4365449012410263562, guid: 0d5f703b2035d4d5b94819d8cd52124b,
+        type: 3}
     - target: {fileID: 3942354490923603985, guid: 43a964d791a76462f95a4c2bf3a7ff68,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
