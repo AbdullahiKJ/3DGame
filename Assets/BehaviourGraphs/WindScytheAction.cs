@@ -24,10 +24,10 @@ public partial class WindScytheAction : Action
         tornadoInstance = GameObject.Instantiate(Tornado.Value, agent.Value.transform.position, Quaternion.identity);
 
         // Assign the target to the particle aim script
-        ParticleAim particleAim = tornadoInstance.GetComponentInChildren<ParticleAim>();
-        if (particleAim != null)
+        ParticleAim[] particleAim = tornadoInstance.GetComponentsInChildren<ParticleAim>();
+        foreach (ParticleAim script in particleAim)
         {
-            particleAim.target = target.Value.transform;
+            script.target = target.Value.transform;
         }
 
         // Get the duration of the tornado effect

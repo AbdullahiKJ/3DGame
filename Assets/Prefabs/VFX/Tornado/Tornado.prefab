@@ -447,9 +447,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationX:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0
-      minScalar: 0
+      minMaxState: 3
+      scalar: 1.5707963
+      minScalar: -1.5707963
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -500,9 +500,9 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotationY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: -1.5707963
-      minScalar: 0
+      minScalar: -1.5707963
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -553,7 +553,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startRotation:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 0
       minScalar: 0
       maxCurve:
@@ -667,7 +667,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 15
+    angle: 5
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -872,7 +872,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 5
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -3791,7 +3791,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 6.5
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -4856,6 +4856,8 @@ MonoBehaviour:
   target: {fileID: 0}
   scytheDamageSO: {fileID: 11400000, guid: f87e9e4928bd34702a787efadec87465, type: 2}
   isDirectional: 1
+  testPrefab: {fileID: 7860384293899258967, guid: c29a1b4fb92e64b319d1058a36041dbd,
+    type: 3}
 --- !u!1 &2594058285971693730
 GameObject:
   m_ObjectHideFlags: 0
@@ -8647,7 +8649,7 @@ ParticleSystem:
         m_RotationOrder: 4
     minKillSpeed: 0
     maxKillSpeed: 10000
-    radiusScale: 1
+    radiusScale: 6.5
     collidesWith:
       serializedVersion: 2
       m_Bits: 4294967295
@@ -9712,6 +9714,7 @@ MonoBehaviour:
   target: {fileID: 0}
   scytheDamageSO: {fileID: 11400000, guid: f87e9e4928bd34702a787efadec87465, type: 2}
   isDirectional: 0
+  testPrefab: {fileID: 0}
 --- !u!1 &5856728794461865560
 GameObject:
   m_ObjectHideFlags: 0
