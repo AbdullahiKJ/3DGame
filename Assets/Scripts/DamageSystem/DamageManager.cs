@@ -74,7 +74,10 @@ public class DamageManager : MonoBehaviour
     // make the gameobject face the game object dealing damage
     public void FaceAttacker(Vector3 attacker, float pushBack, float animLength)
     {
-        transform.LookAt(attacker, Vector3.up);
+        // Look at the target while charging (ignore the y-axis)
+        Vector3 lookatTarget = attacker;
+        lookatTarget.y = transform.position.y; // Ignore y-axis for rotation
+        transform.LookAt(lookatTarget, Vector3.up);
 
         // Determine the distance to push back
         float posDiffMagnitude = new Vector2(attacker.x - transform.position.x, attacker.y - transform.position.y).magnitude;
