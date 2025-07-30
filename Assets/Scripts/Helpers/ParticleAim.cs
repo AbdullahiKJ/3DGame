@@ -59,7 +59,6 @@ public class ParticleAim : MonoBehaviour
     {
         if (other.gameObject.layer == playerLayerIndex)
         {
-            Debug.Log("direct collision");
             DealDamage(other);
         }
         // Apply AOE damage if the particle collides with the environment
@@ -72,7 +71,6 @@ public class ParticleAim : MonoBehaviour
                 Collider[] hitColliders = Physics.OverlapSphere(collision.intersection, aoeRadius, playerLayerBitMask);
                 foreach (var hitCollider in hitColliders)
                 {
-                    Debug.Log("aoe collision");
                     DealDamage(hitCollider.gameObject);
                 }
             }
