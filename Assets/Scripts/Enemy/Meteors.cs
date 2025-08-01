@@ -34,7 +34,9 @@ public class Meteors : MonoBehaviour
                 // Create a lava prefab and instantiate it at the collision point
                 float randomRotation = Random.Range(0f, 360f);
                 Quaternion lavaRotation = Quaternion.Euler(-90f, randomRotation, 0f);
-                Instantiate(lavaPrefab, collision.intersection, lavaRotation);
+
+                Vector3 spawnPosition = collision.intersection + new Vector3(0f, 0.01f, 0f); // Slightly above the terrain to avoid clipping
+                Instantiate(lavaPrefab, spawnPosition, lavaRotation);
             }
         }
     }
