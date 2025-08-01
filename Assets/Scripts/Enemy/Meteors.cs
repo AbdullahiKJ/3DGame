@@ -44,12 +44,6 @@ public class Meteors : MonoBehaviour
         yield return new WaitForSeconds(duration);
         // Destroy the meteor rain after the duration
         Destroy(gameObject);
-
-        GameObject[] lavaInstances = GameObject.FindGameObjectsWithTag("Lava");
-        foreach (GameObject instance in lavaInstances)
-        {
-            Destroy(instance);
-        }
     }
 
     void DealDamage(GameObject other)
