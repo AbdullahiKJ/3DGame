@@ -15,7 +15,8 @@ public partial class MeteorAction : Action
 
     protected override Status OnStart()
     {
-        GameObject.Instantiate(meteorRainPrefab, agent.Value.transform.position, Quaternion.identity);
+        GameObject instance = (GameObject)GameObject.Instantiate(meteorRainPrefab, agent.Value.transform.position, Quaternion.identity);
+        instance.GetComponent<Meteors>().meteorAction = this; // Set the meteor action reference
         meteorFlag.Value = true; // Set the meteor flag to true
         return Status.Success;
     }

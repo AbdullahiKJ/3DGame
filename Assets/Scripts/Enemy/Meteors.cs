@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Behavior;
 using UnityEngine;
 
 public class Meteors : MonoBehaviour
@@ -12,6 +13,7 @@ public class Meteors : MonoBehaviour
     List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
     ParticleSystem meteorParticleSystem;
     GameObject terrain;
+    public MeteorAction meteorAction;
 
     void Start()
     {
@@ -44,6 +46,12 @@ public class Meteors : MonoBehaviour
     IEnumerator WaitForDuration()
     {
         yield return new WaitForSeconds(duration);
+        // Reset the meteor action flag
+        if (meteorAction != null)
+        {
+            meteorAction.meteorFlag.Value = false; // Set the meteor flag to false
+        }
+
         // Destroy the meteor rain after the duration
         Destroy(gameObject);
     }
