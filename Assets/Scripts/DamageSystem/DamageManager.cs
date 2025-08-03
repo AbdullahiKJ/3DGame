@@ -8,10 +8,12 @@ public class DamageManager : MonoBehaviour
     Animator animator;
     [SerializeField] float maxHealth = 100f;
     float currentHealth;
-    [SerializeField] float stagger = 100f;
+    // todo: add stagger reduction for the enemy if necessary
+    // [SerializeField] float stagger = 100f;
     public bool isStaggering { get; set; } = false;
     [SerializeField] RangeBar healthBar;
     [SerializeField] GameObject hitParticlePrefab;
+    public float blockThreshold = 0.5f; // Threshold for blocking damage
 
     void Awake()
     {
@@ -29,6 +31,18 @@ public class DamageManager : MonoBehaviour
         else
         {
             isStaggering = true;
+        }
+
+        // Optional block for the enemy to avoid damage
+        if (this.gameObject.layer == LayerMask.NameToLayer("enemies"))
+        {
+            float blockChance = Random.Range(0f, 1f);
+            if (blockChance > blockThreshold)
+            {
+                animator.SetTrigger("Block");
+                StartCoroutine(WaitForStateTransition(attacker, 0f, false));
+                return; // Blocked damage, exit early
+            }
         }
 
         // Reduce health and stagger 
@@ -126,11 +140,24 @@ public class DamageManager : MonoBehaviour
         }
 
         isStaggering = false;
+
+        // Reset the block trigger
+        if (this.gameObject.layer == LayerMask.NameToLayer("enemies"))
+        {
+            animator.ResetTrigger("Block");
+        }
     }
 
     IEnumerator WaitForStateTransition(Vector3 attacker, float pushBack, bool knockback)
     {
         yield return null;
+
+        // Check if there is an animator transition
+        if (animator.IsInTransition(0))
+        {
+            yield return new WaitForSeconds(animator.GetAnimatorTransitionInfo(0).duration);
+            yield return null;
+        }
 
         float staggerLength = animator.GetCurrentAnimatorStateInfo(0).length;
 
