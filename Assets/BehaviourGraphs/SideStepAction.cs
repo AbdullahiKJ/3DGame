@@ -12,7 +12,6 @@ public partial class SideStepAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<GameObject> Target;
     NavMeshAgent navMeshAgent;
-    Vector3 sideStepTarget;
     Animator animator;
     int stepDirection;
     float sideStepTimer;
@@ -21,10 +20,10 @@ public partial class SideStepAction : Action
     float rotationAdjustment = 110f;
 
     // TODO: Easing variables
-    bool isEasing = true;
-    bool isEasingOut = true;
-    float easingDuration = 0.5f;
-    float animationFactor = 0f;
+    // bool isEasing = true;
+    // bool isEasingOut = true;
+    // float easingDuration = 0.5f;
+    // float animationFactor = 0f;
 
     protected override Status OnStart()
     {

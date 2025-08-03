@@ -15,12 +15,12 @@ public partial class RangeDetectorAction : Action
     {
         if (Detector.Value.CheckBaseAttackRange())
         {
-            // If the player is within the base attack range, set the state to Attacking
-            currentState.Value = State.Attacking;
+            // If the player is within the base attack range, set the state to Close Range
+            currentState.Value = State.CloseRange;
         }
-        else if (currentState.Value == State.Attacking)
+        else if (currentState.Value == State.CloseRange)
         {
-            // If the player is not within the base attack range and the current state is Attacking, set the state to Idle
+            // If the player is not within the base attack range and the current state is Close Range, set the state to Idle
             currentState.Value = State.Idle;
         }
         return Status.Running;

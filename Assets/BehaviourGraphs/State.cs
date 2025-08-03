@@ -6,6 +6,9 @@ public enum State
 {
     Idle,
     Approaching,
-    Attacking,
+    CloseRange,
+    MidRange,
+    LongRange,
     SpecialAttacks,
+    Testing
 }

@@ -5,8 +5,9 @@ using UnityEngine.Rendering;
 public class Observation : MonoBehaviour
 {
     [SerializeField] Volume slowVolume;
-    float observationTimeLimit = 10f;
-    float timer = 0f;
+    // todo: add checks for mp meter
+    // float observationTimeLimit = 10f;
+    // float timer = 0f;
     bool observationTriggered = false;
     bool volumeTransitionTriggered = false;
     [SerializeField] float transitionSpeed = 0.1f;
@@ -18,7 +19,8 @@ public class Observation : MonoBehaviour
 
     void Update()
     {
-        if (volumeTransitionTriggered) {
+        if (volumeTransitionTriggered)
+        {
             float speed = transitionSpeed * (observationTriggered ? 1f : -1f);
             volumeTransition(speed);
         }
@@ -33,33 +35,40 @@ public class Observation : MonoBehaviour
     }
 
     // Reset the time scales and variables
-    void resetTimeScale() {
+    void resetTimeScale()
+    {
         Time.timeScale = 1f;
-        timer = 0f;
+        // TODO: put back after ADDing CHECKS FOR MP METER
+        // timer = 0f;
         observationTriggered = false;
     }
 
     // Trigger Observation and slow down time
     void OnObservation(InputValue value)
     {
-        if(value.isPressed) {
+        if (value.isPressed)
+        {
             observationTriggered = !observationTriggered;
             Time.timeScale = observationTriggered ? 0.5f : 1f;
             volumeTransitionTriggered = true;
 
             // TODO: FIX THIS
-            animator.SetFloat("timeScaleMultiplier", 1/Time.timeScale);
+            animator.SetFloat("timeScaleMultiplier", 1 / Time.timeScale);
         }
     }
 
-    void volumeTransition(float speed) {
-        if (speed < 0f && slowVolume.weight > 0f) {
+    void volumeTransition(float speed)
+    {
+        if (speed < 0f && slowVolume.weight > 0f)
+        {
             slowVolume.weight += Time.fixedDeltaTime * speed;
         }
-        else if (speed > 0f && slowVolume.weight < 1f ) {
+        else if (speed > 0f && slowVolume.weight < 1f)
+        {
             slowVolume.weight += Time.fixedDeltaTime * speed;
         }
-        else {
+        else
+        {
             slowVolume.weight = observationTriggered ? 1f : 0f;
             volumeTransitionTriggered = false;
         }
