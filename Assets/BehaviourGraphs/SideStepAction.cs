@@ -18,6 +18,7 @@ public partial class SideStepAction : Action
     float timer;
     Vector3 targetLookAt = Vector3.zero;
     float rotationAdjustment = 110f;
+    float distanceThreshold = 4f;
 
     protected override Status OnStart()
     {
@@ -48,6 +49,10 @@ public partial class SideStepAction : Action
         timer += Time.deltaTime;
 
         Vector3 playerOffset = Agent.Value.transform.position - Target.Value.transform.position;
+
+        // Exit if the agent is close enough to the target
+        if (playerOffset.magnitude < distanceThreshold)
+            return ResetAgent();
 
         // adjust the value of the rotation speed based on the distance from the player
         float circleRotationSpeed;
