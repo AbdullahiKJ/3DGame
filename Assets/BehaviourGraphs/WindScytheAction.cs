@@ -15,7 +15,6 @@ public partial class WindScytheAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> target;
     GameObject tornadoInstance;
     float timer = 0f;
-    // TODO: get from vfx
     float tornadoDuration = 30f;
     float scytheDelay = 5f;
 

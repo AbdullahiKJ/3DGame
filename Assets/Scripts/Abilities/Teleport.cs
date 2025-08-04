@@ -106,7 +106,6 @@ public class Teleport : AbilityBase
     IEnumerator WaitForTeleportVfx(bool usingPlatform = false, bool callTeleport = true)
     {
         abilityStarted = true;
-        // TODO: apply post processing
         GameObject vfxInstance = Instantiate(vfxPrefab, transform);
 
         yield return new WaitForSeconds(0.5f);
