@@ -4,6 +4,7 @@ using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Unity.Properties;
 using DG.Tweening;
+using UnityEngine.InputSystem;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "pushTarget", story: "push the [target] away from [agent] and apply [animator] framing", category: "Action", id: "21568f0c16340087efe7e2d78bf09844")]
@@ -20,6 +21,8 @@ public partial class PushTargetAction : Action
     float timer = 0f;
     float startTime = 1.5f;
     Vector3 lookatTarget;
+    PlayerInput targetInput;
+    float minHeightDifference = 10f;
 
     protected override Status OnStart()
     {
@@ -30,8 +33,10 @@ public partial class PushTargetAction : Action
         }
 
         // Push the target away from the agent if they are close enough
-        // TODO: evaluate if this should apply when on platforms
         posDiff = target.Value.transform.position - agent.Value.transform.position;
+
+        // Get the target's input system
+        targetInput = target.Value.GetComponent<PlayerInput>();
         return Status.Running;
     }
     protected override Status OnUpdate()
@@ -40,7 +45,8 @@ public partial class PushTargetAction : Action
         if (timer >= startTime && !pushStarted)
         {
             pushStarted = true;
-            if (posDiff.magnitude < pushDistance)
+            float heightDifference = Math.Abs(target.Value.transform.position.y - agent.Value.transform.position.y);
+            if (posDiff.magnitude < pushDistance && heightDifference < minHeightDifference)
             {
                 // Make the target look at the agent
                 lookatTarget = agent.Value.transform.position;
@@ -77,11 +83,16 @@ public partial class PushTargetAction : Action
         }
 
         if (pushStarted)
+        {
+            // Disable the target input system and look at the agent
+            targetInput.enabled = false;
             target.Value.transform.LookAt(lookatTarget);
+        }
 
         // Check if the push is completed
         if (pushCompleted)
         {
+            targetInput.enabled = true;
             return Status.Success;
         }
 
