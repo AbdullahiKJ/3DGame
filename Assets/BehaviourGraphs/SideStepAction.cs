@@ -19,12 +19,6 @@ public partial class SideStepAction : Action
     Vector3 targetLookAt = Vector3.zero;
     float rotationAdjustment = 110f;
 
-    // TODO: Easing variables
-    // bool isEasing = true;
-    // bool isEasingOut = true;
-    // float easingDuration = 0.5f;
-    // float animationFactor = 0f;
-
     protected override Status OnStart()
     {
         animator = Agent.Value.GetComponent<Animator>();
@@ -47,29 +41,6 @@ public partial class SideStepAction : Action
 
     protected override Status OnUpdate()
     {
-        // TODO: Ease the agents movement when the side step starts and comes to an end
-        // if (isEasing)
-        // {
-        //     animationFactor += Time.deltaTime / easingDuration;
-        //     if (animationFactor >= 1f)
-        //     {
-        //         animationFactor = 1f;
-        //         isEasing = false;
-        //         isEasingOut = false;
-        //     }
-        //     animator.SetFloat("HorizontalInput", animationFactor);
-        // }
-        // else if (isEasingOut)
-        // {
-        //     animationFactor -= Time.deltaTime / easingDuration;
-        //     if (animationFactor <= 0f)
-        //     {
-        //         animationFactor = 0f;
-        //         isEasingOut = false;
-        //     }
-        //     animator.SetFloat("HorizontalInput", Mathf.Lerp(1f * stepDirection, 0f, animationFactor));
-        // }
-
         if (timer > sideStepTimer)
         {
             return ResetAgent();
