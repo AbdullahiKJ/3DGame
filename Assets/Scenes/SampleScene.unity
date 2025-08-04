@@ -257,7 +257,7 @@ Transform:
   m_GameObject: {fileID: 239827766}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13697971, y: 1.02927444e-10, z: -2.3090163e-12, w: 0.9905739}
-  m_LocalPosition: {x: -0.6827755, y: 0.306293, z: 2.456121}
+  m_LocalPosition: {x: -2.1227753, y: 0.306293, z: -4.1738796}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -909,7 +909,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13697971, y: 1.0460849e-10, z: -1.4465597e-11, w: 0.9905739}
-  m_LocalPosition: {x: 4.903, y: 3.58, z: 8.1}
+  m_LocalPosition: {x: 3.463, y: 3.58, z: 1.4699998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1344,7 +1344,7 @@ Transform:
   m_GameObject: {fileID: 594085478}
   serializedVersion: 2
   m_LocalRotation: {x: 0.037001252, y: 0.74477416, z: -0.041439928, w: 0.6650001}
-  m_LocalPosition: {x: -6.6076736, y: -0.54807615, z: 9.408813}
+  m_LocalPosition: {x: -8.047673, y: -0.54807615, z: 2.778813}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13630,9 +13630,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 733dbfbd48f9d486b85c41ce0b7774db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minMidRangeDistance: 8.5
+  maxMidRangeDistance: 20
   detectionMask:
     serializedVersion: 2
     m_Bits: 8
+  target: {fileID: 266067958}
 --- !u!136 &1847800878
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -13890,7 +13893,7 @@ Transform:
   m_GameObject: {fileID: 1903679144}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6827755, y: -1.713707, z: 5.7361207}
+  m_LocalPosition: {x: -2.1227753, y: -1.713707, z: -0.8938794}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14296,7 +14299,7 @@ Transform:
   m_GameObject: {fileID: 2100167902}
   serializedVersion: 2
   m_LocalRotation: {x: 0.033277936, y: 0.000000021898261, z: -7.291326e-10, w: 0.99944615}
-  m_LocalPosition: {x: -0.8466635, y: -2.253549, z: -5.7012677}
+  m_LocalPosition: {x: -2.8049645, y: -2.273707, z: -13.038745}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14440,7 +14443,7 @@ Transform:
   m_GameObject: {fileID: 2133698454}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.8466635, y: -3.253549, z: 9.298733}
+  m_LocalPosition: {x: -2.8049645, y: -3.273707, z: 1.9612551}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15525,7 +15528,7 @@ PrefabInstance:
     - target: {fileID: 7653318446854684543, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: testDistance
-      value: 2
+      value: 19.8
       objectReference: {fileID: 0}
     - target: {fileID: 7722271654662617679, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
@@ -15625,7 +15628,7 @@ PrefabInstance:
     - target: {fileID: 8436386216473862764, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.7
+      value: 3.26
       objectReference: {fileID: 0}
     - target: {fileID: 8436386216473862764, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
@@ -15635,7 +15638,7 @@ PrefabInstance:
     - target: {fileID: 8436386216473862764, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.38
+      value: 7.75
       objectReference: {fileID: 0}
     - target: {fileID: 8436386216473862764, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
@@ -16525,6 +16528,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.88335586
+      objectReference: {fileID: 0}
+    - target: {fileID: 6886728702197070909, guid: 43a964d791a76462f95a4c2bf3a7ff68,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6967543789593842485, guid: 43a964d791a76462f95a4c2bf3a7ff68,
         type: 3}

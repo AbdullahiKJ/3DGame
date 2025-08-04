@@ -9,30 +9,55 @@ using Unity.Properties;
 public partial class AnimationTrackerAction : Action
 {
     [SerializeReference] public BlackboardVariable<Animator> Animator;
+    bool isInTransition = true;
+    bool timerStarted = false;
+    Animator animator;
+    float timer = 0f;
+    float animDuration = 0f;
+
+    protected override Status OnStart()
+    {
+        animator = Animator.Value;
+        isInTransition = animator.IsInTransition(0);
+        return Status.Running;
+    }
 
     protected override Status OnUpdate()
     {
-        // Get current animation playing
-        Animator animator = Animator.Value;
-        AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
-
-        // Get the current animation time normalized (0 to 1)
-        float currentAnimationTime = currentState.normalizedTime;
-
-        // Continue if the current state is the blend tree or the animation has not finished
-        if (currentState.IsName("Movement Blend Tree") || currentAnimationTime < 1f)
+        if (isInTransition)
         {
-            // Attack animation has not started yet
-            return Status.Running;
+            // Check if the animator is still transitioning
+            isInTransition = animator.IsInTransition(0);
         }
+        else if (!timerStarted)
+        {
+            // Get current animation playing
+            AnimatorStateInfo currentState = animator.GetCurrentAnimatorStateInfo(0);
 
-
-        // Stop if the animation is finished
+            // Get the animation length and play time
+            animDuration = currentState.length;
+            timer = animDuration * currentState.normalizedTime;
+            timerStarted = true;
+        }
+        // Check if the animation is still playing
         else
         {
-            // Animation is finished
-            return Status.Success;
+            if (timer > animDuration)
+            {
+                ResetVariables();
+                return Status.Success;
+            }
+            else
+                timer += Time.deltaTime;
         }
+        return Status.Running;
+    }
+    void ResetVariables()
+    {
+        isInTransition = true;
+        timerStarted = false;
+        timer = 0f;
+        animDuration = 0f;
     }
 }
 
