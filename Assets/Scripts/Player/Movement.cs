@@ -31,6 +31,8 @@ public class Movement : MonoBehaviour
     [SerializeField] float gravityValue = -9.81f;
     [SerializeField] bool groundedPlayer;
     [SerializeField] GameObject enemy;
+    CapsuleCollider defaultCollider;
+    [SerializeField] CapsuleCollider particleCollider;
     [SerializeField] float testDistance = 10f;
 
     void Awake()
@@ -41,6 +43,7 @@ public class Movement : MonoBehaviour
         combatScript = GetComponent<Combat>();
         abiltyScript = GetComponent<AbilityManager>();
         damageManagerScript = GetComponent<DamageManager>();
+        defaultCollider = GetComponent<CapsuleCollider>();
     }
 
     void Update()
@@ -102,8 +105,14 @@ public class Movement : MonoBehaviour
         // Apply gravity
         playerVelocity.y += gravityValue * Time.deltaTime;
 
+        // Stop movement if the player is attacking or is staggered
+        if (combatScript.getIsPunching() || damageManagerScript.isStaggering)
+        {
+            ResetAllFlags();
+            controller.Move(Vector3.zero);
+        }
         // Move the player depending on the current action
-        if (isRolling)
+        else if (isRolling)
         {
             if (cameraLockOn.isLockedOn)
             {
@@ -112,11 +121,6 @@ public class Movement : MonoBehaviour
             float adjustedRollSpeed = rollSpeed * (isSprinting ? 1.5f : 1f);
             controller.Move(transform.forward * Time.deltaTime * adjustedRollSpeed);
             moveInput = Vector2.zero;
-        }
-        // Stop movement if the player is attacking or is staggered
-        else if (combatScript.getIsPunching() || damageManagerScript.isStaggering)
-        {
-            controller.Move(Vector3.zero);
         }
         // Apply movement velocity and vertical velocity in one go
         else
@@ -212,6 +216,9 @@ public class Movement : MonoBehaviour
 
             isRolling = true;
             animator.SetTrigger("Roll");
+
+            // Disable player colliders
+            SetColliderState(false);
         }
     }
 
@@ -224,6 +231,23 @@ public class Movement : MonoBehaviour
     {
         isRolling = false;
         moveInput = new Vector2(0f, 0.01f);
+
+        // Re-enable player colliders
+        SetColliderState(true);
+    }
+
+    void SetColliderState(bool state)
+    {
+        defaultCollider.enabled = state;
+        particleCollider.enabled = state;
+    }
+
+    void ResetAllFlags()
+    {
+        isJumping = false;
+        stopJump();
+        turnOffSprint();
+        stopRoll();
     }
 
     // Draw a sphere using the distance between the player and enemy
