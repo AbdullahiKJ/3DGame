@@ -119,7 +119,7 @@ public class DamageManager : MonoBehaviour
         {
             // Apply ice damage logic
         }
-        if (damageSO.isPoisonDamage)
+        if (damageSO.isElectricDamage)
         {
             // Apply poison damage logic
         }
