@@ -1649,11 +1649,21 @@ MonoBehaviour:
   - rid: 7105042612835058281
   - rid: 7105042612835058500
   - rid: 7105042658711306690
+  - rid: 4992668006097879079
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
     RefIds:
+    - rid: 4992668006097879079
+      type: {class: 'BlackboardVariable`1[[Cinemascope, Assembly-CSharp]]', ns: Unity.Behavior,
+        asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 11332858616795655512
+          m_Value1: 8220120337160243976
+        Name: cinema
+        m_Value: {fileID: 0}
     - rid: 7105042472840201122
       type: {class: 'BlackboardVariable`1[[AttackManager, Assembly-CSharp]]', ns: Unity.Behavior,
         asm: Unity.Behavior}

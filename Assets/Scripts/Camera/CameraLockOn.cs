@@ -93,18 +93,7 @@ public class CameraLockOn : MonoBehaviour
 
             else if (isLockedOn)
             {
-                // reset locked on status to false and change animator value
-                isLockedOn = false;
-                characterAnimator.SetFloat("isLockedOn", 0);
-
-                // switch to free look camera
-                cameraAnimator.Play("FreeLookCam");
-
-                // Set the free look camera orientation and rotation to that of the lock on camera
-                freeLookCam.ForceCameraPosition(lockOnCam.transform.position, lockOnCam.transform.rotation);
-
-                // enable camera movement script
-                camMovementScript.enabled = true;
+                ResetCamera();
             }
         }
     }
@@ -120,6 +109,26 @@ public class CameraLockOn : MonoBehaviour
             lockOnCam.LookAt = CalculateAngles(playerInput).transform;
             StartCoroutine(WaitForLockSwitch());
         }
+    }
+
+    public void ResetCamera()
+    {
+        // Get the initial locked on state
+        bool initialState = isLockedOn;
+
+        // reset locked on status to false and change animator value
+        isLockedOn = false;
+        characterAnimator.SetFloat("isLockedOn", 0);
+
+        // switch to free look camera
+        cameraAnimator.Play("FreeLookCam");
+
+        // Set the free look camera orientation and rotation to that of the lock on camera if it was initially locked on
+        if (initialState)
+            freeLookCam.ForceCameraPosition(lockOnCam.transform.position, lockOnCam.transform.rotation);
+
+        // enable camera movement script
+        camMovementScript.enabled = true;
     }
 
     GameObject CalculateAngles(Vector2 playerInput)

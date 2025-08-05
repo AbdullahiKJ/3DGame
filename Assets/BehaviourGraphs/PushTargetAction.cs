@@ -7,14 +7,15 @@ using DG.Tweening;
 using UnityEngine.InputSystem;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "pushTarget", story: "push the [target] away from [agent] and apply [animator] framing", category: "Action", id: "21568f0c16340087efe7e2d78bf09844")]
+[NodeDescription(name: "pushTarget", story: "push the [target] away from [agent] and apply [animator] framing and [cinemaScope]", category: "Action", id: "21568f0c16340087efe7e2d78bf09844")]
 public partial class PushTargetAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> target;
     [SerializeReference] public BlackboardVariable<GameObject> agent;
     [SerializeReference] public BlackboardVariable<Animator> animator;
+    [SerializeReference] public BlackboardVariable<Cinemascope> cinemaScope;
     float pushDuration = 4f;
-    float pushDistance = 50f;
+    float pushDistance = 75f;
     bool pushCompleted = false;
     Vector3 posDiff;
     bool pushStarted = false;
@@ -22,6 +23,7 @@ public partial class PushTargetAction : Action
     float startTime = 1.5f;
     Vector3 lookatTarget;
     PlayerInput targetInput;
+    CameraLockOn cameraLockOn;
     float minHeightDifference = 10f;
 
     protected override Status OnStart()
@@ -35,8 +37,22 @@ public partial class PushTargetAction : Action
         // Push the target away from the agent if they are close enough
         posDiff = target.Value.transform.position - agent.Value.transform.position;
 
-        // Get the target's input system
+        // Get the target's input system and camera lock on script
         targetInput = target.Value.GetComponent<PlayerInput>();
+        cameraLockOn = target.Value.GetComponent<CameraLockOn>();
+
+        // Disable the target input system and look at the agent
+        targetInput.enabled = false;
+        lookatTarget = agent.Value.transform.position;
+        lookatTarget.y = target.Value.transform.position.y; // Ignore y-axis for rotation
+        target.Value.transform.LookAt(lookatTarget);
+
+        // Reset the target's camera if locked on
+        cameraLockOn.ResetCamera();
+
+        // Start the cinemascope transition
+        cinemaScope.Value.ShowBars();
+
         return Status.Running;
     }
     protected override Status OnUpdate()
@@ -48,22 +64,19 @@ public partial class PushTargetAction : Action
             float heightDifference = Math.Abs(target.Value.transform.position.y - agent.Value.transform.position.y);
             if (posDiff.magnitude < pushDistance && heightDifference < minHeightDifference)
             {
-                // Make the target look at the agent
-                lookatTarget = agent.Value.transform.position;
-                lookatTarget.y = target.Value.transform.position.y; // Ignore y-axis for rotation
-                target.Value.transform.LookAt(lookatTarget);
-
                 if (target.Value.TryGetComponent<Animator>(out Animator targetAnimator))
                 {
                     targetAnimator.Play("Block");
                 }
+
                 // Frame the player and target in the camera view
                 animator.Value.Play("EnemyLook");
 
                 // Push the target away from the agent
+                float pushAmount = pushDistance - posDiff.magnitude;
                 DOTween.To(() => target.Value.transform.position,
                     (newPos) => target.Value.transform.position = newPos,
-                    target.Value.transform.position + posDiff.normalized * pushDistance,
+                    target.Value.transform.position + posDiff.normalized * pushAmount,
                     pushDuration)
                     .SetEase(Ease.OutQuad)
                     .OnComplete(() =>
@@ -82,17 +95,11 @@ public partial class PushTargetAction : Action
             timer += Time.deltaTime;
         }
 
-        if (pushStarted)
-        {
-            // Disable the target input system and look at the agent
-            targetInput.enabled = false;
-            target.Value.transform.LookAt(lookatTarget);
-        }
-
         // Check if the push is completed
         if (pushCompleted)
         {
             targetInput.enabled = true;
+            cinemaScope.Value.HideBars();
             return Status.Success;
         }
 
@@ -103,7 +110,4 @@ public partial class PushTargetAction : Action
         pushCompleted = true;
         animator.Value.Play("FreeLookCam");
     }
-
 }
-
-
