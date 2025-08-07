@@ -7,14 +7,16 @@ public class ProjectileDamage : MonoBehaviour
     Vector3 player = Vector3.zero;
     public float maxFlyDistance = 100f;
     bool isMoving = false;
-    int enemyLayerMask;
-    int defaultLayerMask;
+    [SerializeField] LayerMask enemyLayerMask;
+    [SerializeField] LayerMask defaultLayerMask;
     [SerializeField] GameObject particlePrefab;
+    GameObject manager;
+    TerrainEffects terrainEffects;
 
     void Awake()
     {
-        enemyLayerMask = LayerMask.NameToLayer("enemies");
-        defaultLayerMask = LayerMask.NameToLayer("Default");
+        manager = GameObject.Find("Manager");
+        terrainEffects = manager.GetComponent<TerrainEffects>();
     }
 
     void Update()
@@ -41,6 +43,10 @@ public class ProjectileDamage : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        ContactPoint contact = collision.GetContact(0);
+        // Handle terrain impacts
+        terrainEffects.TerrainImpact(transform.position, collision.gameObject, contact.point);
+
         if (collision.gameObject.layer == enemyLayerMask)
         {
             // Get the enemy's damage manager component and apply damage
@@ -57,7 +63,6 @@ public class ProjectileDamage : MonoBehaviour
         }
         else if (collision.gameObject.layer == defaultLayerMask)
         {
-            ContactPoint contact = collision.GetContact(0);
             Instantiate(particlePrefab, contact.point, Quaternion.identity);
 
             // Destroy the projectile on collision with the environment

@@ -23,13 +23,15 @@ public class Combat : MonoBehaviour
     public float playerHeight = 5f;
     List<GameObject> hitEnemies = new List<GameObject>();
     [SerializeField] DamageSO damageSO;
+    [SerializeField] GameObject manager;
+    TerrainEffects terrainEffects;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         movement = GetComponent<Movement>();
         animator = GetComponent<Animator>();
-
+        terrainEffects = manager.GetComponent<TerrainEffects>();
     }
 
     // Update is called once per frame
@@ -68,8 +70,6 @@ public class Combat : MonoBehaviour
                 hitColliders = Physics.OverlapSphere(playerAttackColliders[comboLevel - 1].transform.position, attackRadius, enemyLayer);
             }
 
-
-            // Debug.Log(hitColliders.Length);
             foreach (Collider hit in hitColliders)
             {
                 GameObject newEnemy = hit.transform.root.gameObject;
@@ -82,9 +82,15 @@ public class Combat : MonoBehaviour
                     hitEnemies.Add(newEnemy);
                     Vector3 sphereCentre = playerAttackColliders[comboLevel == 0 ? 0 : comboLevel - 1].transform.position;
                     Vector3 contactPoint = hit.ClosestPoint(sphereCentre);
-                    newEnemy.GetComponent<DamageManager>().TakeDamage(gameObject.transform.position, contactPoint, damageSO, enemyRange);
-                }
+                    DamageManager damageManager = newEnemy.GetComponent<DamageManager>();
+                    if (damageManager != null)
+                    {
+                        damageManager.TakeDamage(gameObject.transform.position, contactPoint, damageSO, enemyRange);
+                    }
 
+                    // Handle Terrain Impacts
+                    terrainEffects.TerrainImpact(transform.position, newEnemy, contactPoint);
+                }
             }
         }
 

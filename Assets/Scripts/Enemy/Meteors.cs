@@ -14,16 +14,24 @@ public class Meteors : MonoBehaviour
     ParticleSystem meteorParticleSystem;
     GameObject terrain;
     public MeteorAction meteorAction;
+    GameObject manager;
+    TerrainEffects terrainEffects;
 
     void Start()
     {
         meteorParticleSystem = GetComponent<ParticleSystem>();
         terrain = GameObject.Find("Terrain");
+
+        manager = GameObject.Find("Manager");
+        terrainEffects = manager.GetComponent<TerrainEffects>();
         StartCoroutine(WaitForDuration());
     }
 
     void OnParticleCollision(GameObject other)
     {
+        // Handle terrain impacts
+        terrainEffects.TerrainImpact(transform.position, other, other.transform.position);
+
         if (other.gameObject.layer == playerLayerIndex)
         {
             DealDamage(other);

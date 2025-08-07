@@ -135,6 +135,12 @@ MonoBehaviour:
   speed: 40
   damageSO: {fileID: 11400000, guid: 2fd7fb6638b844d3782e5fb970778d7f, type: 2}
   maxFlyDistance: 50
+  enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  defaultLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
   particlePrefab: {fileID: 2965222256817593503, guid: a164e676dbbd6e54587237e619372c98,
     type: 3}
 --- !u!1 &4672944323017756364

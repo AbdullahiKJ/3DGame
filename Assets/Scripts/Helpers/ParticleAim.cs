@@ -16,6 +16,8 @@ public class ParticleAim : MonoBehaviour
     List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
     ParticleSystem scytheParticleSystem;
     GameObject terrain;
+    GameObject manager;
+    TerrainEffects terrainEffects;
 
     void Start()
     {
@@ -24,6 +26,8 @@ public class ParticleAim : MonoBehaviour
         playerLayerBitMask = LayerMask.GetMask("PlayerParticle");
         scytheParticleSystem = GetComponent<ParticleSystem>();
         terrain = GameObject.Find("Terrain");
+        manager = GameObject.Find("Manager");
+        terrainEffects = manager.GetComponent<TerrainEffects>();
     }
 
     void Update()
@@ -57,6 +61,9 @@ public class ParticleAim : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
+        // Handle terrain impacts
+        terrainEffects.TerrainImpact(transform.position, other, other.transform.position);
+
         if (other.gameObject.layer == playerLayerIndex)
         {
             DealDamage(other);

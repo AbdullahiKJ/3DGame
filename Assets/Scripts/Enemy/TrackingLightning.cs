@@ -20,9 +20,15 @@ public class TrackingLightning : MonoBehaviour
     [SerializeField] GameObject explosionPrefab;
     GameObject explosionInstance;
     ParticleSystem explosionParticleSystem;
+    GameObject manager;
+    TerrainEffects terrainEffects;
 
     void Start()
     {
+        // Get the manager and terrain effects script
+        manager = GameObject.Find("Manager");
+        terrainEffects = manager.GetComponent<TerrainEffects>();
+
         // Get the player layer bitmask
         playerLayerBitMask = LayerMask.GetMask("Player");
 
@@ -97,6 +103,10 @@ public class TrackingLightning : MonoBehaviour
         Collider[] hitColliders = Physics.OverlapSphere(indicatorInstance.transform.position, aoeRadius, playerLayerBitMask);
         if (hitColliders.Length > 0)
         {
+            // Terrain impact
+            Vector3 contactPoint = indicatorInstance.transform.position;
+            terrainEffects.TerrainImpact(contactPoint, hitColliders[0].gameObject, contactPoint);
+
             hitColliders[0].gameObject.GetComponent<DamageManager>().TakeDamage(indicatorInstance.transform.position, default, damageSO);
         }
     }
