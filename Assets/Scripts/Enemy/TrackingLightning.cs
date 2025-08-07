@@ -105,7 +105,7 @@ public class TrackingLightning : MonoBehaviour
         {
             // Terrain impact
             Vector3 contactPoint = indicatorInstance.transform.position;
-            terrainEffects.TerrainImpact(contactPoint, hitColliders[0].gameObject, contactPoint);
+            terrainEffects.TerrainImpact(contactPoint, hitColliders[0].gameObject, contactPoint, 100f);
 
             hitColliders[0].gameObject.GetComponent<DamageManager>().TakeDamage(indicatorInstance.transform.position, default, damageSO);
         }

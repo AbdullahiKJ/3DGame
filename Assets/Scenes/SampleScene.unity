@@ -203,7 +203,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 160842182}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ Transform:
   m_GameObject: {fileID: 239827766}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13697971, y: 1.02927444e-10, z: -2.3090163e-12, w: 0.9905739}
-  m_LocalPosition: {x: -4.4827757, y: 0.306293, z: -35.32388}
+  m_LocalPosition: {x: -4.522775, y: 0.306293, z: -65.64388}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -510,7 +510,7 @@ GameObject:
   - component: {fileID: 248304512}
   - component: {fileID: 248304511}
   - component: {fileID: 248304510}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -872,7 +872,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.13697971, y: 1.0460849e-10, z: -1.4465597e-11, w: 0.9905739}
-  m_LocalPosition: {x: 1.1029999, y: 3.58, z: -29.68}
+  m_LocalPosition: {x: 1.0630001, y: 3.58, z: -60}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1106,6 +1106,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: teleport point
       objectReference: {fileID: 0}
+    - target: {fileID: 2407625859885208066, guid: 10de0962313d94444a0f2bb97b3b6718,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 2668116722484550685, guid: 10de0962313d94444a0f2bb97b3b6718,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -1246,7 +1251,7 @@ Transform:
   m_GameObject: {fileID: 594085478}
   serializedVersion: 2
   m_LocalRotation: {x: 0.037001252, y: 0.74477416, z: -0.041439928, w: 0.6650001}
-  m_LocalPosition: {x: -10.407675, y: -0.5480764, z: -28.371187}
+  m_LocalPosition: {x: -10.447674, y: -0.54807687, z: -58.69119}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1429,7 +1434,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 687355148}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: Platform (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1815,7 +1820,7 @@ GameObject:
   - component: {fileID: 862309681}
   - component: {fileID: 862309680}
   - component: {fileID: 862309679}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7331,7 +7336,7 @@ GameObject:
   - component: {fileID: 1211052204}
   - component: {fileID: 1211052203}
   - component: {fileID: 1211052206}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7626,7 +7631,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1345369462}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Platform (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7706,7 +7711,7 @@ GameObject:
   - component: {fileID: 1433931792}
   - component: {fileID: 1433931791}
   - component: {fileID: 1433931790}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Platform (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7926,9 +7931,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 470e4d4f5b0bf47f8b175be3ae23149e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  terrainLayer:
-    serializedVersion: 2
-    m_Bits: 2048
   dirtParticlePrefab: {fileID: 6027940473476748456, guid: 7e1e30b7f6ad743b99657db7bd281c23,
     type: 3}
 --- !u!1 &1595892288
@@ -7940,7 +7942,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1595892289}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Platforms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13296,7 +13298,7 @@ GameObject:
   - component: {fileID: 1790082747}
   - component: {fileID: 1790082746}
   - component: {fileID: 1790082749}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13534,7 +13536,7 @@ Transform:
   m_GameObject: {fileID: 1903679144}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.4827757, y: -1.713707, z: -32.04388}
+  m_LocalPosition: {x: -4.522775, y: -1.713707, z: -62.36388}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13655,7 +13657,7 @@ GameObject:
   - component: {fileID: 1983045383}
   - component: {fileID: 1983045382}
   - component: {fileID: 1983045381}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Platform (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13785,7 +13787,7 @@ Transform:
   m_GameObject: {fileID: 2100167902}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.9827754, y: -0.31370687, z: -31.043879}
+  m_LocalPosition: {x: -4.022775, y: -0.31370687, z: -61.36388}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13907,7 +13909,7 @@ Transform:
   m_GameObject: {fileID: 2133698454}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.6317337, y: -3.2059133, z: -8.038013}
+  m_LocalPosition: {x: -2.661629, y: -3.2062445, z: -23.196009}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13947,17 +13949,17 @@ PrefabInstance:
     - target: {fileID: 1628347452951418006, guid: 7b616918987f54e619c4324ea17c0e47,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1628347452951418006, guid: 7b616918987f54e619c4324ea17c0e47,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.85
+      value: 1.9
       objectReference: {fileID: 0}
     - target: {fileID: 1628347452951418006, guid: 7b616918987f54e619c4324ea17c0e47,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -49.3
       objectReference: {fileID: 0}
     - target: {fileID: 1628347452951418006, guid: 7b616918987f54e619c4324ea17c0e47,
         type: 3}
@@ -14016,6 +14018,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: teleport point
+      objectReference: {fileID: 0}
+    - target: {fileID: 2407625859885208066, guid: 10de0962313d94444a0f2bb97b3b6718,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 2668116722484550685, guid: 10de0962313d94444a0f2bb97b3b6718,
         type: 3}
@@ -14117,6 +14124,11 @@ PrefabInstance:
       objectReference: {fileID: 1071659798}
     - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 1553017897}
+    - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
       propertyPath: dirtParticlePrefab
       value: 
       objectReference: {fileID: 6027940473476748456, guid: 7e1e30b7f6ad743b99657db7bd281c23,
@@ -14159,7 +14171,7 @@ PrefabInstance:
     - target: {fileID: 8436386216473862764, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.9
+      value: 0.86000013
       objectReference: {fileID: 0}
     - target: {fileID: 8436386216473862764, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
@@ -14169,7 +14181,7 @@ PrefabInstance:
     - target: {fileID: 8436386216473862764, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -23.4
+      value: -53.72
       objectReference: {fileID: 0}
     - target: {fileID: 8436386216473862764, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
@@ -14348,6 +14360,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9141632985446492759, guid: 43a964d791a76462f95a4c2bf3a7ff68,
+        type: 3}
+      propertyPath: manager
+      value: 
+      objectReference: {fileID: 1553017897}
+    - target: {fileID: 9141632985446492759, guid: 43a964d791a76462f95a4c2bf3a7ff68,
+        type: 3}
+      propertyPath: terrainLayer.m_Bits
+      value: 2048
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

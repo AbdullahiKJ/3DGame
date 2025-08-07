@@ -45,7 +45,7 @@ public class ProjectileDamage : MonoBehaviour
     {
         ContactPoint contact = collision.GetContact(0);
         // Handle terrain impacts
-        terrainEffects.TerrainImpact(transform.position, collision.gameObject, contact.point);
+        terrainEffects.TerrainImpact(transform.position, collision.gameObject, contact.point, 1.5f);
 
         if (collision.gameObject.layer == enemyLayerMask)
         {

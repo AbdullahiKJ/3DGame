@@ -62,7 +62,7 @@ public class ParticleAim : MonoBehaviour
     void OnParticleCollision(GameObject other)
     {
         // Handle terrain impacts
-        terrainEffects.TerrainImpact(transform.position, other, other.transform.position);
+        terrainEffects.TerrainImpact(transform.position, other, other.transform.position, 100f, true);
 
         if (other.gameObject.layer == playerLayerIndex)
         {

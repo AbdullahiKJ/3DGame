@@ -30,7 +30,7 @@ public class Meteors : MonoBehaviour
     void OnParticleCollision(GameObject other)
     {
         // Handle terrain impacts
-        terrainEffects.TerrainImpact(transform.position, other, other.transform.position);
+        terrainEffects.TerrainImpact(transform.position, other, other.transform.position, 150f, true);
 
         if (other.gameObject.layer == playerLayerIndex)
         {

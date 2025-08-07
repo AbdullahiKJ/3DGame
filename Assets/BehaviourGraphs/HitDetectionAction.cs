@@ -16,11 +16,20 @@ public partial class HitDetectionAction : Action
     GameObject weapon;
     float attackRadius = 1f;
     LayerMask playerLayer;
+    LayerMask terrainLayer;
+    GameObject manager;
+    TerrainEffects terrainEffects;
+    Vector3 previousContactPoint = Vector3.zero;
+    float distanceThreshold = 0.1f;
 
     protected override Status OnStart()
     {
-        weapon = Agent.Value.GetComponent<AttackManager>().weapon;
-        playerLayer = Agent.Value.GetComponent<AttackManager>().detectionMask;
+        AttackManager attackManager = Agent.Value.GetComponent<AttackManager>();
+        weapon = attackManager.weapon;
+        playerLayer = attackManager.detectionMask;
+        terrainLayer = attackManager.terrainLayer;
+        manager = attackManager.manager;
+        terrainEffects = manager.GetComponent<TerrainEffects>();
         return Status.Running;
     }
 
@@ -28,9 +37,12 @@ public partial class HitDetectionAction : Action
     {
         if (IsAttacking && AttackManager.Value.canAttack)
         {
-            // get list of enemies hit and trigger animation and damage dealt
+            // get list of enemies/terrain objects hit and trigger animation and damage dealt
             Collider[] hitColliders;
+            Collider[] terrainColliders;
             hitColliders = Physics.OverlapSphere(weapon.transform.position, attackRadius, playerLayer);
+            terrainColliders = Physics.OverlapSphere(weapon.transform.position, attackRadius, terrainLayer);
+
 
             foreach (Collider hit in hitColliders)
             {
@@ -50,6 +62,20 @@ public partial class HitDetectionAction : Action
                     Vector3 contactPoint = hit.ClosestPoint(weapon.transform.position);
                     damageManager.TakeDamage(Agent.Value.gameObject.transform.position, contactPoint, enemyDamageSO.Value);
                 }
+            }
+
+            foreach (Collider hit in terrainColliders)
+            {
+                GameObject hitObject = hit.transform.root.gameObject;
+                Vector3 contactPoint = hit.ClosestPointOnBounds(weapon.transform.position);
+
+                float distance = Vector3.Distance(contactPoint, previousContactPoint);
+
+                // Handle Terrain Impacts
+                if (distance > distanceThreshold)
+                    terrainEffects.TerrainImpact(Agent.Value.transform.position, hitObject, contactPoint, 100f);
+
+                previousContactPoint = contactPoint;
             }
         }
         return Status.Running;

@@ -3,6 +3,8 @@ using UnityEngine;
 public class AttackManager : MonoBehaviour
 {
     public LayerMask detectionMask;
+    public LayerMask terrainLayer;
+    public GameObject manager;
     public GameObject weapon;
     public bool canAttack = false;
 

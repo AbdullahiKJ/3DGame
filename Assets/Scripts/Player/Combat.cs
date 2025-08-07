@@ -20,6 +20,7 @@ public class Combat : MonoBehaviour
     [SerializeField] float attackRadius = 5f;
     [SerializeField] float enemyRange = 0.5f;
     [SerializeField] LayerMask enemyLayer;
+    [SerializeField] LayerMask terrainLayer;
     public float playerHeight = 5f;
     List<GameObject> hitEnemies = new List<GameObject>();
     [SerializeField] DamageSO damageSO;
@@ -59,15 +60,18 @@ public class Combat : MonoBehaviour
                 }
             }
 
-            // get list of enemies hit and trigger animation and damage dealt
+            // get list of enemies/terrain hit and trigger animation and damage dealt
             Collider[] hitColliders;
+            Collider[] terrainColliders;
             if (comboLevel == 0)
             {
                 hitColliders = Physics.OverlapSphere(playerAttackColliders[0].transform.position, attackRadius, enemyLayer);
+                terrainColliders = Physics.OverlapSphere(playerAttackColliders[0].transform.position, attackRadius, terrainLayer);
             }
             else
             {
                 hitColliders = Physics.OverlapSphere(playerAttackColliders[comboLevel - 1].transform.position, attackRadius, enemyLayer);
+                terrainColliders = Physics.OverlapSphere(playerAttackColliders[comboLevel - 1].transform.position, attackRadius, terrainLayer);
             }
 
             foreach (Collider hit in hitColliders)
@@ -87,10 +91,17 @@ public class Combat : MonoBehaviour
                     {
                         damageManager.TakeDamage(gameObject.transform.position, contactPoint, damageSO, enemyRange);
                     }
-
-                    // Handle Terrain Impacts
-                    terrainEffects.TerrainImpact(transform.position, newEnemy, contactPoint);
                 }
+            }
+
+            foreach (Collider hit in terrainColliders)
+            {
+                GameObject hitObject = hit.transform.root.gameObject;
+                Vector3 sphereCentre = playerAttackColliders[comboLevel == 0 ? 0 : comboLevel - 1].transform.position;
+                Vector3 contactPoint = hit.ClosestPoint(sphereCentre);
+
+                // Handle Terrain Impacts
+                terrainEffects.TerrainImpact(transform.position, hitObject, contactPoint);
             }
         }
 
