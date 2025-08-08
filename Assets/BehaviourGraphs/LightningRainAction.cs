@@ -5,10 +5,11 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "LightningRain", story: "play [lightningVFX] and [lightningStrike] at the [agent] position towards the [target] position", category: "Action", id: "a74796651db8c457c578ae0cb1949d22")]
+[NodeDescription(name: "LightningRain", story: "play [lightningVFX], [ambientClip] and [lightningStrike] at the [agent] position towards the [target] position", category: "Action", id: "a74796651db8c457c578ae0cb1949d22")]
 public partial class LightningRainAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> lightningVFX;
+    [SerializeReference] public BlackboardVariable<AudioClip> ambientClip;
     [SerializeReference] public BlackboardVariable<GameObject> lightningStrike;
     [SerializeReference] public BlackboardVariable<GameObject> agent;
     [SerializeReference] public BlackboardVariable<GameObject> target;
@@ -68,6 +69,9 @@ public partial class LightningRainAction : Action
             // Instantiate the lightning strike at the origin and assign the target transform
             strikeInstance = GameObject.Instantiate(lightningStrike.Value, Vector3.zero, Quaternion.identity);
             strikeInstance.GetComponent<TrackingLightning>().targetTransform = target.Value.transform;
+
+            // Play the ambient sound
+            SoundFXManager.instance.PlayAmbientClip(ambientClip, agent.Value.transform, 1f, abilityDuration);
 
             startVFX = true; // Set flag to true to indicate VFX has started
         }

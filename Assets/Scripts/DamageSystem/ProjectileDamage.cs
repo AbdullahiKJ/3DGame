@@ -1,3 +1,4 @@
+using TreeEditor;
 using UnityEngine;
 
 public class ProjectileDamage : MonoBehaviour
@@ -12,11 +13,15 @@ public class ProjectileDamage : MonoBehaviour
     [SerializeField] GameObject particlePrefab;
     GameObject manager;
     TerrainEffects terrainEffects;
+    [SerializeField] AudioClip soundFX;
+    [SerializeField] AudioClip hitSoundFX;
 
     void Awake()
     {
         manager = GameObject.Find("Manager");
         terrainEffects = manager.GetComponent<TerrainEffects>();
+        // Play the sound FX
+        SoundFXManager.instance.PlaySoundFXClip(soundFX, transform, 1f);
     }
 
     void Update()
@@ -68,5 +73,8 @@ public class ProjectileDamage : MonoBehaviour
             // Destroy the projectile on collision with the environment
             Destroy(gameObject);
         }
+
+        // Play the sound FX
+        SoundFXManager.instance.PlaySoundFXClip(hitSoundFX, transform, 1f);
     }
 }

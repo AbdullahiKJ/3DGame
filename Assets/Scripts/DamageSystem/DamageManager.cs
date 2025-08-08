@@ -14,6 +14,7 @@ public class DamageManager : MonoBehaviour
     [SerializeField] RangeBar healthBar;
     [SerializeField] GameObject hitParticlePrefab;
     public float blockThreshold = 0.5f; // Threshold for blocking damage
+    [SerializeField] AudioClip[] defaultClips;
 
     void Awake()
     {
@@ -68,6 +69,17 @@ public class DamageManager : MonoBehaviour
                     Destroy(hitEffect, 2f); // Destroy the effect after 2 seconds
                 }
             }
+        }
+
+        // Play hit sounds
+        AudioClip[] damageSOAudio = damageSO.audioClips.ToArray();
+        if (damageSOAudio.Length > 0)
+        {
+            SoundFXManager.instance.PlayRandomSoundFXClip(damageSOAudio, transform, 1f);
+        }
+        else
+        {
+            SoundFXManager.instance.PlayRandomSoundFXClip(defaultClips, transform, 1f);
         }
 
         // Play the knockback animation if enabled

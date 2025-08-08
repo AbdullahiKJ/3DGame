@@ -14,6 +14,8 @@ public class FlameArmament : AbilityBase
     [SerializeField] float damageMultiplier = 1.5f;
     [SerializeField] UniversalRendererData overlayRenderer;
     ScriptableRendererFeature overlayFeature;
+    [SerializeField] AudioClip soundFX;
+    [SerializeField] AudioClip ambientSound;
 
     void Awake()
     {
@@ -57,6 +59,10 @@ public class FlameArmament : AbilityBase
             if (overlayFeature != null)
                 overlayFeature.SetActive(true);
         }
+
+        // Play the ambient sound and sound FX
+        SoundFXManager.instance.PlaySoundFXClip(soundFX, transform, 1f);
+        SoundFXManager.instance.PlayAmbientClip(ambientSound, transform, 1f, this.abilityDuration);
 
         abilityStarted = true;
     }

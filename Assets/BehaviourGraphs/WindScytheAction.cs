@@ -6,10 +6,11 @@ using Unity.Properties;
 using UnityEngine.VFX;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "windScythe", story: "play [tornado] and [scythe] VFX at the [agent] position towards the [target] position", category: "Action", id: "08a69cdb2f8c516afd3165a5ddae7308")]
+[NodeDescription(name: "windScythe", story: "play [tornado], [ambientSound] and [scythe] VFX at the [agent] position towards the [target] position", category: "Action", id: "08a69cdb2f8c516afd3165a5ddae7308")]
 public partial class WindScytheAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Tornado;
+    [SerializeReference] public BlackboardVariable<AudioClip> ambientSound;
     [SerializeReference] public BlackboardVariable<GameObject> Scythe;
     [SerializeReference] public BlackboardVariable<GameObject> agent;
     [SerializeReference] public BlackboardVariable<GameObject> target;
@@ -38,6 +39,9 @@ public partial class WindScytheAction : Action
         {
             tornadoDuration = 30f; // Default duration if not found
         }
+
+        // Play the ambient sound
+        SoundFXManager.instance.PlayAmbientClip(ambientSound, agent.Value.transform, 1f, tornadoDuration);
 
         // Set the duration for the particle system
         ParticleSystem scytheParticle = tornadoInstance.transform.Find("Directional Scythe").GetComponent<ParticleSystem>();

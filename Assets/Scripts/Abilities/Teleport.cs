@@ -27,6 +27,7 @@ public class Teleport : AbilityBase
     GameObject currentTeleportTarget;
     [SerializeField] GameObject vfxPrefab;
     [SerializeField] Volume teleportVolume;
+    [SerializeField] AudioClip soundFX;
 
     void Awake()
     {
@@ -133,6 +134,9 @@ public class Teleport : AbilityBase
         DOTween.To(() => teleportVolume.weight, x => teleportVolume.weight = x, 1f, transitionLength)
             .SetEase(Ease.InOutQuad)
             .OnComplete(() => DOTween.To(() => teleportVolume.weight, x => teleportVolume.weight = x, 0f, transitionLength).SetEase(Ease.InOutQuad));
+
+        // Play sound effects
+        SoundFXManager.instance.PlaySoundFXClip(soundFX, transform, 1f);
 
         // Play teleport VFX again
         StartCoroutine(WaitForTeleportVfx(false, false));

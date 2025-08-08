@@ -22,6 +22,7 @@ public class TrackingLightning : MonoBehaviour
     ParticleSystem explosionParticleSystem;
     GameObject manager;
     TerrainEffects terrainEffects;
+    [SerializeField] AudioClip hitSoundFX;
 
     void Start()
     {
@@ -85,6 +86,9 @@ public class TrackingLightning : MonoBehaviour
         explosionInstance.transform.position = indicatorInstance.transform.position;
         explosionParticleSystem.Play();
         DealDamage();
+
+        // Play the hit sound FX
+        SoundFXManager.instance.PlaySoundFXClip(hitSoundFX, indicatorInstance.transform, 1f);
 
         // Wait for the lightning strike to finish
         yield return new WaitForSeconds(strikeDuration);

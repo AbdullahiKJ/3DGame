@@ -6,10 +6,12 @@ using Unity.Properties;
 using UnityEngine.VFX;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "BlastBreath", story: "play [charge] and [blastBreath] VFX at the [agent] position towards the [target] position", category: "Action", id: "dd72fc417619b909e83bd51bf5586bc7")]
+[NodeDescription(name: "BlastBreath", story: "play [charge], [chargeAudio], [blastAudio] and [blastBreath] VFX at the [agent] position towards the [target] position", category: "Action", id: "dd72fc417619b909e83bd51bf5586bc7")]
 public partial class BlastBreathAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> charge;
+    [SerializeReference] public BlackboardVariable<AudioClip> chargeAudio;
+    [SerializeReference] public BlackboardVariable<AudioClip> blastAudio;
     [SerializeReference] public BlackboardVariable<GameObject> blastBreath;
     [SerializeReference] public BlackboardVariable<GameObject> agent;
     [SerializeReference] public BlackboardVariable<GameObject> target;
@@ -33,6 +35,9 @@ public partial class BlastBreathAction : Action
 
         // Get the charge and blast breath durations
         chargeDuration = chargeInstance.GetComponent<VisualEffect>().GetFloat("Lifetime");
+
+        // Play the charge audio
+        SoundFXManager.instance.PlaySoundFXClip(chargeAudio, agent.Value.transform, 1f);
         return Status.Running;
     }
 
@@ -87,6 +92,9 @@ public partial class BlastBreathAction : Action
             collider = blastBreathInstance.GetComponent<CapsuleCollider>();
             blastBreathDuration = blastBreathInstance.GetComponent<VisualEffect>().GetFloat("Lifetime");
             colliderDuration = blastBreathDuration * colliderLifeDuration;
+
+            // Play the blast breath audio
+            SoundFXManager.instance.PlaySoundFXClip(blastAudio, agent.Value.transform, 1f);
 
             // Set the position, scale and orientation of the blast breath instance towards the target
             blastBreathInstance.transform.LookAt(target.Value.transform);

@@ -16,6 +16,8 @@ public class Meteors : MonoBehaviour
     public MeteorAction meteorAction;
     GameObject manager;
     TerrainEffects terrainEffects;
+    [SerializeField] AudioClip ambientSound;
+    [SerializeField] AudioClip hitSoundFX;
 
     void Start()
     {
@@ -25,6 +27,9 @@ public class Meteors : MonoBehaviour
         manager = GameObject.Find("Manager");
         terrainEffects = manager.GetComponent<TerrainEffects>();
         StartCoroutine(WaitForDuration());
+
+        // Play the sound FX
+        SoundFXManager.instance.PlayAmbientClip(ambientSound, transform, 1f, duration);
     }
 
     void OnParticleCollision(GameObject other)
@@ -49,6 +54,9 @@ public class Meteors : MonoBehaviour
                 Instantiate(lavaPrefab, spawnPosition, lavaRotation);
             }
         }
+
+        // Play the sound FX
+        SoundFXManager.instance.PlaySoundFXClip(hitSoundFX, transform, 1f);
     }
 
     IEnumerator WaitForDuration()
