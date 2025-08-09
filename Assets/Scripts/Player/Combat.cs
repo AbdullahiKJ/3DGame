@@ -26,6 +26,7 @@ public class Combat : MonoBehaviour
     [SerializeField] DamageSO damageSO;
     [SerializeField] GameObject manager;
     TerrainEffects terrainEffects;
+    bool colliderActive = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -61,14 +62,14 @@ public class Combat : MonoBehaviour
             }
 
             // get list of enemies/terrain hit and trigger animation and damage dealt
-            Collider[] hitColliders;
-            Collider[] terrainColliders;
-            if (comboLevel == 0)
+            Collider[] hitColliders = new Collider[0];
+            Collider[] terrainColliders = new Collider[0];
+            if (comboLevel == 0 && colliderActive)
             {
                 hitColliders = Physics.OverlapSphere(playerAttackColliders[0].transform.position, attackRadius, enemyLayer);
                 terrainColliders = Physics.OverlapSphere(playerAttackColliders[0].transform.position, attackRadius, terrainLayer);
             }
-            else
+            else if (colliderActive)
             {
                 hitColliders = Physics.OverlapSphere(playerAttackColliders[comboLevel - 1].transform.position, attackRadius, enemyLayer);
                 terrainColliders = Physics.OverlapSphere(playerAttackColliders[comboLevel - 1].transform.position, attackRadius, terrainLayer);
@@ -97,11 +98,19 @@ public class Combat : MonoBehaviour
             foreach (Collider hit in terrainColliders)
             {
                 GameObject hitObject = hit.transform.root.gameObject;
-                Vector3 sphereCentre = playerAttackColliders[comboLevel == 0 ? 0 : comboLevel - 1].transform.position;
-                Vector3 contactPoint = hit.ClosestPoint(sphereCentre);
+                if (hitEnemies.Contains(hitObject))
+                {
+                    // pass
+                }
+                else
+                {
+                    hitEnemies.Add(hitObject);
+                    Vector3 sphereCentre = playerAttackColliders[comboLevel == 0 ? 0 : comboLevel - 1].transform.position;
+                    Vector3 contactPoint = hit.ClosestPoint(sphereCentre);
 
-                // Handle Terrain Impacts
-                terrainEffects.TerrainImpact(transform.position, hitObject, contactPoint);
+                    // Handle Terrain Impacts
+                    terrainEffects.TerrainImpact(transform.position, hitObject, contactPoint);
+                }
             }
         }
 
@@ -196,5 +205,13 @@ public class Combat : MonoBehaviour
         AnimatorStateInfo currentState = animator.GetNextAnimatorStateInfo(0);
         // Assign the new time variable
         timeBeforePunch = 0.6f * currentState.length;
+    }
+    void EnableCollider()
+    {
+        colliderActive = true;
+    }
+    void DisableCollider()
+    {
+        colliderActive = false;
     }
 }

@@ -26,7 +26,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e43298aacd4f24ce6b02b9e4f4b0b33a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.02
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e43298aacd4f24ce6b02b9e4f4b0b33a,
         type: 3}
@@ -36,7 +36,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e43298aacd4f24ce6b02b9e4f4b0b33a,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16.45
+      value: -49.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e43298aacd4f24ce6b02b9e4f4b0b33a,
         type: 3}
@@ -162,6 +162,7 @@ MonoBehaviour:
   rockMat: {fileID: 2100000, guid: dd23e9916f8a741d896f706c5ef7d8bb, type: 2}
   soundFX:
   - {fileID: 8300000, guid: c8d9e24eff7de4e8f9a45ba5f4e741f5, type: 3}
+  fxVolume: 0.25
 --- !u!54 &888854503525500629
 Rigidbody:
   m_ObjectHideFlags: 0

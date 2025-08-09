@@ -15,6 +15,7 @@ public class DamageManager : MonoBehaviour
     [SerializeField] GameObject hitParticlePrefab;
     public float blockThreshold = 0.5f; // Threshold for blocking damage
     [SerializeField] AudioClip[] defaultClips;
+    [SerializeField] AudioClip blockSoundFX;
 
     void Awake()
     {
@@ -40,6 +41,9 @@ public class DamageManager : MonoBehaviour
             float blockChance = Random.Range(0f, 1f);
             if (blockChance > blockThreshold)
             {
+                // Play sound effects
+                SoundFXManager.instance.PlaySoundFXClip(blockSoundFX, transform, 0.5f, 0.8f, 1.2f);
+
                 animator.SetTrigger("Block");
                 StartCoroutine(WaitForStateTransition(attacker, 0f, false));
                 return; // Blocked damage, exit early

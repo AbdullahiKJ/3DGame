@@ -14,6 +14,7 @@ public class DestroyTerrain : MonoBehaviour
     [SerializeField] Material rockMat;
     Material sharedRockMat;
     [SerializeField] AudioClip[] soundFX;
+    [SerializeField] float fxVolume = 0.5f;
 
     void Start()
     {
@@ -49,7 +50,7 @@ public class DestroyTerrain : MonoBehaviour
         }
 
         // Play the sound effect
-        SoundFXManager.instance.PlayRandomSoundFXClip(soundFX, transform, 1f);
+        SoundFXManager.instance.PlayRandomSoundFXClip(soundFX, transform, fxVolume);
 
         StartCoroutine(FadeAway());
     }

@@ -24,7 +24,7 @@ public class SoundFXManager : MonoBehaviour
         audioSource.volume = volume;
         audioSource.Play();
         float clipLength = clip.length;
-        Destroy(audioSource, clipLength);
+        Destroy(audioSource.gameObject, clipLength);
     }
     // Play an audio clip for a specified amount of time
     public void PlaySoundFXClip(AudioClip clip, Transform spawnTransform, float volume, float duration)
@@ -39,8 +39,25 @@ public class SoundFXManager : MonoBehaviour
         float clipSpeed = clipLength / duration;
         audioSource.pitch = clipSpeed;
         audioSource.Play();
-        Destroy(audioSource, duration);
+        Destroy(audioSource.gameObject, duration);
     }
+    // Play an audio clip with a random pitch between two specified values amount of time
+    public void PlaySoundFXClip(AudioClip clip, Transform spawnTransform, float volume, float minPitch, float maxPitch)
+    {
+        if (clip == null)
+            return;
+
+        AudioSource audioSource = Instantiate(soundFXPrefab, transform.position, Quaternion.identity);
+        audioSource.clip = clip;
+        audioSource.volume = volume;
+        float rand = Random.Range(minPitch, maxPitch);
+        audioSource.pitch = rand;
+
+        float duration = clip.length / rand;
+        audioSource.Play();
+        Destroy(audioSource.gameObject, duration);
+    }
+
     public void PlayRandomSoundFXClip(AudioClip[] clips, Transform spawnTransform, float volume)
     {
         int rand = Random.Range(0, clips.Length);
@@ -54,7 +71,7 @@ public class SoundFXManager : MonoBehaviour
         audioSource.clip = clip;
         audioSource.volume = volume;
         audioSource.Play();
-        Destroy(audioSource, duration);
+        Destroy(audioSource.gameObject, duration);
     }
 
     // todo: get audio clips for attacks, vfx, collisions, background noise, music
