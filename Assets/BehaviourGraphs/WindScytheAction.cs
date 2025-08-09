@@ -6,12 +6,11 @@ using Unity.Properties;
 using UnityEngine.VFX;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "windScythe", story: "play [tornado], [ambientSound] and [scythe] VFX at the [agent] position towards the [target] position", category: "Action", id: "08a69cdb2f8c516afd3165a5ddae7308")]
+[NodeDescription(name: "windScythe", story: "play [tornado] VFX and [ambientSound] at the [agent] position towards the [target] position", category: "Action", id: "08a69cdb2f8c516afd3165a5ddae7308")]
 public partial class WindScytheAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Tornado;
     [SerializeReference] public BlackboardVariable<AudioClip> ambientSound;
-    [SerializeReference] public BlackboardVariable<GameObject> Scythe;
     [SerializeReference] public BlackboardVariable<GameObject> agent;
     [SerializeReference] public BlackboardVariable<GameObject> target;
     GameObject tornadoInstance;

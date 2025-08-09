@@ -4880,6 +4880,29 @@ MonoBehaviour:
     m_Bits: 1024
   lavaPrefab: {fileID: 4388537074315075623, guid: e96b08199a14147c3b822cca28e058c3,
     type: 3}
+  meteorAction:
+    ID:
+      m_Value0: 0
+      m_Value1: 0
+    Graph:
+      rid: -2
+    m_Parent:
+      rid: -2
+    meteorRainPrefab:
+      rid: -2
+    agent:
+      rid: -2
+    target:
+      rid: -2
+    meteorFlag:
+      rid: -2
+  ambientSound: {fileID: 8300000, guid: e7007caae5ab143f6a653364bdfc38f7, type: 3}
+  hitSoundFX: {fileID: 8300000, guid: 460c5846613104330b3e267edfb15b2e, type: 3}
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
 --- !u!1 &1705983049359352042
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,9 +12,7 @@ public class Observation : MonoBehaviour
     bool volumeTransitionTriggered = false;
     [SerializeField] float transitionSpeed = 0.1f;
     Animator animator;
-    [SerializeField] AudioClip ambientSound;
     [SerializeField] AudioClip startSoundFX;
-    [SerializeField] AudioClip endSoundFX;
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -62,11 +60,13 @@ public class Observation : MonoBehaviour
             if (observationTriggered)
             {
                 SoundFXManager.instance.PlaySoundFXClip(startSoundFX, transform, 1f);
-                // todo: add duration and destroy ambient clip if ended early
-                SoundFXManager.instance.PlayAmbientClip(ambientSound, transform, 1f, 100f);
             }
             else
-                SoundFXManager.instance.PlaySoundFXClip(endSoundFX, transform, 1f);
+            {
+                // Play the start sound fx in reverse
+                float clipLength = startSoundFX.length;
+                SoundFXManager.instance.PlaySoundFXClip(startSoundFX, transform, 1f, -clipLength);
+            }
         }
     }
 

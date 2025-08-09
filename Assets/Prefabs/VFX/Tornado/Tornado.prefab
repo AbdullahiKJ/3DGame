@@ -4856,8 +4856,10 @@ MonoBehaviour:
   target: {fileID: 0}
   scytheDamageSO: {fileID: 11400000, guid: f87e9e4928bd34702a787efadec87465, type: 2}
   isDirectional: 1
-  testPrefab: {fileID: 7860384293899258967, guid: c29a1b4fb92e64b319d1058a36041dbd,
-    type: 3}
+  hitSoundFX:
+  - {fileID: 8300000, guid: af31c94c8871142eb9680a3a4a7498f5, type: 3}
+  - {fileID: 8300000, guid: a67d5d9a6d19c42ca8b8dc4e7313f274, type: 3}
+  - {fileID: 8300000, guid: 043d0f629a2404bbfad4b99812461e17, type: 3}
 --- !u!1 &2594058285971693730
 GameObject:
   m_ObjectHideFlags: 0
@@ -9714,7 +9716,10 @@ MonoBehaviour:
   target: {fileID: 0}
   scytheDamageSO: {fileID: 11400000, guid: f87e9e4928bd34702a787efadec87465, type: 2}
   isDirectional: 0
-  testPrefab: {fileID: 0}
+  hitSoundFX:
+  - {fileID: 8300000, guid: af31c94c8871142eb9680a3a4a7498f5, type: 3}
+  - {fileID: 8300000, guid: a67d5d9a6d19c42ca8b8dc4e7313f274, type: 3}
+  - {fileID: 8300000, guid: 043d0f629a2404bbfad4b99812461e17, type: 3}
 --- !u!1 &5856728794461865560
 GameObject:
   m_ObjectHideFlags: 0

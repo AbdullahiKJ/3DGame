@@ -143,6 +143,12 @@ MonoBehaviour:
     m_Bits: 2048
   particlePrefab: {fileID: 2965222256817593503, guid: a164e676dbbd6e54587237e619372c98,
     type: 3}
+  soundFX:
+  - {fileID: 8300000, guid: d9b21e10975bf4033a248dddb94b92cf, type: 3}
+  - {fileID: 8300000, guid: ce4b8f868a5784b39abc0352b538ba9d, type: 3}
+  hitSoundFX:
+  - {fileID: 8300000, guid: 22add696eee6e4217b25e9c1f5fb53a8, type: 3}
+  - {fileID: 8300000, guid: a6ac053c01dba4c91a442f0ee82ded65, type: 3}
 --- !u!1 &4672944323017756364
 GameObject:
   m_ObjectHideFlags: 0

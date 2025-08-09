@@ -17,7 +17,6 @@ public class Lightning : AbilityBase
     [SerializeField] GameObject auraVfxPrefab;
     GameObject auraVfxInstance;
     [SerializeField] GameObject crossHair;
-    [SerializeField] AudioClip soundFX;
     [SerializeField] AudioClip ambientSound;
 
     void Awake()
@@ -67,8 +66,7 @@ public class Lightning : AbilityBase
         // Enable the crosshair
         crossHair.SetActive(true);
 
-        // Play the ambient sound and sound FX
-        SoundFXManager.instance.PlaySoundFXClip(soundFX, transform, 1f);
+        // Play the ambient sound
         SoundFXManager.instance.PlayAmbientClip(ambientSound, transform, 1f, this.abilityDuration);
 
         abilityStarted = true;

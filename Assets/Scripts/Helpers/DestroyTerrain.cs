@@ -13,6 +13,7 @@ public class DestroyTerrain : MonoBehaviour
     float defaulScale = 265f;
     [SerializeField] Material rockMat;
     Material sharedRockMat;
+    [SerializeField] AudioClip[] soundFX;
 
     void Start()
     {
@@ -46,6 +47,9 @@ public class DestroyTerrain : MonoBehaviour
                 rb.AddForce(force);
             }
         }
+
+        // Play the sound effect
+        SoundFXManager.instance.PlayRandomSoundFXClip(soundFX, transform, 1f);
 
         StartCoroutine(FadeAway());
     }
