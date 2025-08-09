@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orientation: {x: 0, y: -45, z: 0}
   scale: 0.7
+  soundFX: {fileID: 8300000, guid: f4a2cd372f8184648aa109f015acf350, type: 3}

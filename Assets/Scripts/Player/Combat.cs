@@ -175,6 +175,9 @@ public class Combat : MonoBehaviour
 
         // Play the vfx
         slashInstance.GetComponent<VisualEffect>().Play();
+
+        // Play the swing sound effect
+        SoundFXManager.instance.PlaySoundFXClip(playerAttackSO[hitBoxIndex].soundFX, transform, 1f);
     }
 
     public void destroyAttackVFX()

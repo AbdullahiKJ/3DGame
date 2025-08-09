@@ -7,8 +7,25 @@ public class AttackManager : MonoBehaviour
     public GameObject manager;
     public GameObject weapon;
     public bool canAttack = false;
+    [SerializeField] AudioClip swingSoundFX;
+    float clipLength;
+    float minPitch = 0.8f;
+    float maxPitch = 1.2f;
+    float minLength;
+    float maxLength;
 
-    // Update is called once per frame
+    void Start()
+    {
+        clipLength = swingSoundFX.length;
+        minLength = clipLength / minPitch;
+        maxLength = clipLength / maxPitch;
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            PlaySwingSoundFX();
+    }
     void DisableAttack()
     {
         canAttack = false;
@@ -16,6 +33,11 @@ public class AttackManager : MonoBehaviour
     void EnableAttack()
     {
         canAttack = true;
+    }
+    void PlaySwingSoundFX()
+    {
+        float rand = Random.Range(minLength, maxLength);
+        SoundFXManager.instance.PlaySoundFXClip(swingSoundFX, transform, 1f, rand);
     }
 
     void OnDrawGizmosSelected()

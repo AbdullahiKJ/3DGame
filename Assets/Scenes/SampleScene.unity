@@ -8114,8 +8114,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dirtParticlePrefab: {fileID: 6027940473476748456, guid: 7e1e30b7f6ad743b99657db7bd281c23,
     type: 3}
-  defaultSoundFX: {fileID: 0}
-  destructSoundFX: {fileID: 0}
+  defaultSoundFX:
+  - {fileID: 8300000, guid: 2319e76b136044afb82aff2d2c1ccfe6, type: 3}
+  - {fileID: 8300000, guid: f4db44ac726f148079e5ffd2a1da12fd, type: 3}
+  - {fileID: 8300000, guid: ab96eba09493f48ae9d09e85ce7dcb1c, type: 3}
 --- !u!1 &1595892288
 GameObject:
   m_ObjectHideFlags: 0
@@ -14430,11 +14432,36 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1327215566}
+    - target: {fileID: 706478257149331030, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: defaultClips.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 706478257149331030, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: 'defaultClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4fd01475bd03c4765959d4553fd78f0b, type: 3}
+    - target: {fileID: 706478257149331030, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: 'defaultClips.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 16b552790c96641e4b5eaceecbcc8ad5, type: 3}
+    - target: {fileID: 706478257149331030, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: 'defaultClips.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1a468bf87caa448379912fc5dc5428ee, type: 3}
     - target: {fileID: 2922178500664471321, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: crossHair
       value: 
       objectReference: {fileID: 1071659798}
+    - target: {fileID: 2922178500664471321, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: ambientSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 5e8eb9a05bb89492faf08492fbfc89a2, type: 3}
     - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: manager
@@ -14456,6 +14483,11 @@ PrefabInstance:
       propertyPath: slowVolume
       value: 
       objectReference: {fileID: 1469095988}
+    - target: {fileID: 7529223791109869375, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: startSoundFX
+      value: 
+      objectReference: {fileID: 8300000, guid: d769f1f9680334ee1bc6094467d31f31, type: 3}
     - target: {fileID: 7653318446854684543, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: cam
@@ -14714,6 +14746,11 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 1553017897}
+    - target: {fileID: 9141632985446492759, guid: 43a964d791a76462f95a4c2bf3a7ff68,
+        type: 3}
+      propertyPath: swingSoundFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 1c0ead824645e478aa0226834b6e014b, type: 3}
     - target: {fileID: 9141632985446492759, guid: 43a964d791a76462f95a4c2bf3a7ff68,
         type: 3}
       propertyPath: terrainLayer.m_Bits
