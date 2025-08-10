@@ -149,9 +149,17 @@ public class DamageManager : MonoBehaviour
         // If the knockback animation is playing, wait for it to finish and start the getting up animation
         if (knockback)
         {
-            animator.Play("Getting Up");
+            // animator.Play("Getting Up");
             yield return null;
-            float staggerLength = animator.GetCurrentAnimatorStateInfo(0).length;
+
+            // Check if there is an animator transition
+            if (animator.IsInTransition(0))
+            {
+                yield return new WaitForSeconds(animator.GetAnimatorTransitionInfo(0).duration);
+                yield return null;
+            }
+
+            float staggerLength = animator.GetCurrentAnimatorStateInfo(0).length / animator.GetCurrentAnimatorStateInfo(0).speed;
             yield return new WaitForSeconds(staggerLength);
         }
 
@@ -175,7 +183,7 @@ public class DamageManager : MonoBehaviour
             yield return null;
         }
 
-        float staggerLength = animator.GetCurrentAnimatorStateInfo(0).length;
+        float staggerLength = animator.GetCurrentAnimatorStateInfo(0).length / animator.GetCurrentAnimatorStateInfo(0).speed;
 
         // Character cannot take damage for half of the stagger animation time
         StartCoroutine(WaitForStaggerAnimation(staggerLength, knockback));

@@ -14438,11 +14438,6 @@ PrefabInstance:
       objectReference: {fileID: 1553017897}
     - target: {fileID: 7529223791109869375, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
-      propertyPath: endSoundFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 76d79ed28cb7148c89e0f50cacded15c, type: 3}
-    - target: {fileID: 7529223791109869375, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
       propertyPath: slowVolume
       value: 
       objectReference: {fileID: 1469095988}
@@ -14536,46 +14531,6 @@ PrefabInstance:
       propertyPath: cameraAnimator
       value: 
       objectReference: {fileID: 1694562135}
-    - target: {fileID: 8574476171941929600, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: dashSFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 672af86326e1e4b4686a16a8ceffa408, type: 3}
-    - target: {fileID: 8574476171941929600, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: dashSFX.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8574476171941929600, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: sfxVolume.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8574476171941929600, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: 'dashSFX.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8300000, guid: ddd0baf8919fe46699dbf6885b19b11f, type: 3}
-    - target: {fileID: 8574476171941929600, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: 'dashSFX.Array.data[1]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 52fb131a020bd494b966e05e9bc2b768, type: 3}
-    - target: {fileID: 8574476171941929600, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: 'sfxVolume.Array.data[0]'
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8574476171941929600, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: 'sfxVolume.Array.data[1]'
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: soundFX
-      value: 
-      objectReference: {fileID: 8300000, guid: 41c54c7506c13481fbd8e473e1003c9d, type: 3}
     - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: mainCamera
@@ -14596,41 +14551,6 @@ PrefabInstance:
       propertyPath: teleportVolume
       value: 
       objectReference: {fileID: 794259733}
-    - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: sfxVolume.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: 'soundFX.Array.data[0]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 41c54c7506c13481fbd8e473e1003c9d, type: 3}
-    - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: 'soundFX.Array.data[1]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 6a1d965d8a80e45c58e5d6033464c119, type: 3}
-    - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: 'soundFX.Array.data[2]'
-      value: 
-      objectReference: {fileID: 8300000, guid: 91e121ecb28f846898aade61de55e870, type: 3}
-    - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: 'sfxVolume.Array.data[0]'
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: 'sfxVolume.Array.data[1]'
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8924582947195801213, guid: f3e4000cdbcf343e1854b9460f97453a,
-        type: 3}
-      propertyPath: 'sfxVolume.Array.data[2]'
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9106208337617058006, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: m_Name
@@ -14649,11 +14569,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1829857331840165950, guid: 43a964d791a76462f95a4c2bf3a7ff68,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2523933258311975946, guid: 43a964d791a76462f95a4c2bf3a7ff68,
         type: 3}
       propertyPath: target

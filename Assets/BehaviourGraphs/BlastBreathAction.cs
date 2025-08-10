@@ -31,6 +31,10 @@ public partial class BlastBreathAction : Action
 
     protected override Status OnStart()
     {
+        // Reset charging flag and timer
+        isCharging = true;
+        timer = 0f;
+
         // Instantiate vfx prefabs at the agent's position
         chargeInstance = GameObject.Instantiate(charge.Value, agent.Value.transform);
 
@@ -38,7 +42,7 @@ public partial class BlastBreathAction : Action
         chargeDuration = chargeInstance.GetComponent<VisualEffect>().GetFloat("Lifetime");
 
         // Play the charge audio
-        SoundFXManager.instance.PlaySoundFXClip(chargeAudio, agent.Value.transform, 1f, chargeDuration);
+        SoundFXManager.instance.PlaySoundFXClip(chargeAudio, agent.Value.transform, 1f, chargeDuration - 1f);
         return Status.Running;
     }
 

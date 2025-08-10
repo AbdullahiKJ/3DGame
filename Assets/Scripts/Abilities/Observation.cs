@@ -62,7 +62,6 @@ public class Observation : MonoBehaviour
             {
                 SoundFXManager.instance.PlaySoundFXClip(startSoundFX, transform, 1f);
             }
-            // todo: not playing
             else
             {
                 // Play the start sound fx in reverse

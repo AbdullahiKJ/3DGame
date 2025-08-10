@@ -25,8 +25,6 @@ public class TerrainEffects : MonoBehaviour
             else if (ignoreParticle)
             {
                 // Don't play any partcile systems
-                // Play sound effects
-                SoundFXManager.instance.PlayRandomSoundFXClip(defaultSoundFX, hitObject.transform, 1f);
             }
             // Otherwise play a dirt particle system
             else

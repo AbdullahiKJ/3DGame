@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Behavior;
 using UnityEngine;
 
 public class Meteors : MonoBehaviour
@@ -55,8 +54,10 @@ public class Meteors : MonoBehaviour
             }
         }
 
-        // Play the sound FX
-        SoundFXManager.instance.PlaySoundFXClip(hitSoundFX, transform, 1f);
+        // Play the sound FX every other collision
+        int rand = Random.Range(0, 3);
+        if (rand == 0)
+            SoundFXManager.instance.PlaySoundFXClip(hitSoundFX, transform, 0.5f, 0.8f, 1.2f);
     }
 
     IEnumerator WaitForDuration()

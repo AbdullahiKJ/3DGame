@@ -52,3 +52,4 @@ MonoBehaviour:
   damageSO: {fileID: 11400000, guid: db2eeba5beae543afb7014329dea5bc3, type: 2}
   explosionPrefab: {fileID: 4535006216103734310, guid: a7fa7c882cdc04c17a2daa8b2c4704c4,
     type: 3}
+  hitSoundFX: {fileID: 8300000, guid: 820a17f33ef20487bbc58d69974ba711, type: 3}

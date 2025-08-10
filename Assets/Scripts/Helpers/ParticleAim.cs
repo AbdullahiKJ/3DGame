@@ -18,7 +18,6 @@ public class ParticleAim : MonoBehaviour
     GameObject terrain;
     GameObject manager;
     TerrainEffects terrainEffects;
-    [SerializeField] AudioClip[] hitSoundFX;
 
     void Start()
     {
@@ -62,10 +61,6 @@ public class ParticleAim : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        // todo: check if this is overkill
-        // Play the sound fx
-        SoundFXManager.instance.PlayRandomSoundFXClip(hitSoundFX, other.transform, 1f);
-
         // Handle terrain impacts
         terrainEffects.TerrainImpact(transform.position, other, other.transform.position, 100f, true);
 

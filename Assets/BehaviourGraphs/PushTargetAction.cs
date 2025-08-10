@@ -28,6 +28,16 @@ public partial class PushTargetAction : Action
 
     protected override Status OnStart()
     {
+        // Reset flags and timers
+        timer = 0f;
+        pushStarted = false;
+        pushCompleted = false;
+
+        // todo: add scream audio
+        // SoundFXManager.instance.PlaySoundFXClip(screamSFX, agent.Value.transform, 1f);
+        // todo: play rumbling ambient sound
+        // SoundFXManager.instance.PlayAmbientClip(rumbleSFX, agent.Value.transform, 1f);
+
         // Play the agent animation
         if (agent.Value.TryGetComponent<Animator>(out Animator agentAnimator))
         {
@@ -83,6 +93,9 @@ public partial class PushTargetAction : Action
                     {
                         ResetTargetCamera();
                     });
+
+                // todo: play gravelly push sound effect
+                // SoundFXManager.instance.PlaySoundFXClip(pushSFX, target.Value.transform, 1f);
             }
         }
         else if (timer > startTime + pushDuration)

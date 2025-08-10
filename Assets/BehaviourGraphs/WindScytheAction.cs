@@ -20,6 +20,9 @@ public partial class WindScytheAction : Action
 
     protected override Status OnStart()
     {
+        // Set the timer to 0
+        timer = 0f;
+
         tornadoInstance = GameObject.Instantiate(Tornado.Value, agent.Value.transform.position, Quaternion.identity);
 
         // Assign the target to the particle aim script
@@ -41,6 +44,8 @@ public partial class WindScytheAction : Action
 
         // Play the ambient sound
         SoundFXManager.instance.PlayAmbientClip(ambientSound, agent.Value.transform, 1f, tornadoDuration);
+        // todo: get another ambient sound for shooting particles
+        // SoundFXManager.instance.PlayAmbientClip(emissionSFX, agent.Value.transform, 1f, tornadoDuration);
 
         // Set the duration for the particle system
         ParticleSystem scytheParticle = tornadoInstance.transform.Find("Directional Scythe").GetComponent<ParticleSystem>();
@@ -70,7 +75,7 @@ public partial class WindScytheAction : Action
             }
             return Status.Success; // End the action after the scythe is instantiated
         }
-        return Status.Success;
+        return Status.Running;
     }
 }
 

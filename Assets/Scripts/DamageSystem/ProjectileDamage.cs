@@ -1,4 +1,3 @@
-using TreeEditor;
 using UnityEngine;
 
 public class ProjectileDamage : MonoBehaviour
@@ -48,7 +47,6 @@ public class ProjectileDamage : MonoBehaviour
         transform.LookAt(target);
         isMoving = true;
     }
-    // todo: projectiles are bouncing off
 
     void OnCollisionEnter(Collision collision)
     {
@@ -80,7 +78,5 @@ public class ProjectileDamage : MonoBehaviour
             // Destroy the projectile on collision with the environment
             Destroy(gameObject);
         }
-
-        Debug.Log(collision.gameObject.layer);
     }
 }

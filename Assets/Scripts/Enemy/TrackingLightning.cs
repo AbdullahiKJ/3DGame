@@ -88,7 +88,7 @@ public class TrackingLightning : MonoBehaviour
         DealDamage();
 
         // Play the hit sound FX
-        SoundFXManager.instance.PlaySoundFXClip(hitSoundFX, indicatorInstance.transform, 1f);
+        SoundFXManager.instance.PlaySoundFXClip(hitSoundFX, indicatorInstance.transform, 0.5f, 0.8f, 1.2f);
 
         // Wait for the lightning strike to finish
         yield return new WaitForSeconds(strikeDuration);

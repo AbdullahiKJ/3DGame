@@ -2341,6 +2341,9 @@ MonoBehaviour:
   StopAnimTime: 0.15
   dashSpeed: 30
   dashTrail: {fileID: 3304386394104880306}
+  dashSFX:
+  - {fileID: 8300000, guid: ddd0baf8919fe46699dbf6885b19b11f, type: 3}
+  - {fileID: 8300000, guid: 52fb131a020bd494b966e05e9bc2b768, type: 3}
   ascendActionReference: {fileID: -5485238077985867799, guid: e4893553dd20b480d9a2c80ac7af172f,
     type: 3}
   descendActionReference: {fileID: 839739373153085792, guid: e4893553dd20b480d9a2c80ac7af172f,
@@ -2474,7 +2477,10 @@ MonoBehaviour:
   vfxPrefab: {fileID: 7761031033666763820, guid: 1eb833340b41fb444b576c4dced8d4dc,
     type: 3}
   teleportVolume: {fileID: 0}
-  soundFX: {fileID: 8300000, guid: 41c54c7506c13481fbd8e473e1003c9d, type: 3}
+  soundFX:
+  - {fileID: 8300000, guid: 41c54c7506c13481fbd8e473e1003c9d, type: 3}
+  - {fileID: 8300000, guid: 6a1d965d8a80e45c58e5d6033464c119, type: 3}
+  - {fileID: 8300000, guid: 91e121ecb28f846898aade61de55e870, type: 3}
 --- !u!114 &7982654594632849719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2558,3 +2564,4 @@ MonoBehaviour:
   slowVolume: {fileID: 0}
   transitionSpeed: 0.5
   startSoundFX: {fileID: 8300000, guid: d769f1f9680334ee1bc6094467d31f31, type: 3}
+  endSoundFX: {fileID: 8300000, guid: 76d79ed28cb7148c89e0f50cacded15c, type: 3}

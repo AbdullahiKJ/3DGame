@@ -26,8 +26,9 @@ public class SpecialCollision : MonoBehaviour
             DamageManager player = other.gameObject.GetComponent<DamageManager>();
             if (player != null)
             {
+                // todo: get hit sound effect for the blast breath
                 // Deal damage
-                player.TakeDamage(transform.position, default, damageSO, 5f, true);
+                player.TakeDamage(transform.position, default, damageSO, 7.5f, true);
             }
         }
     }
