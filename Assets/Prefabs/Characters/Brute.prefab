@@ -1577,7 +1577,13 @@ MonoBehaviour:
   healthBar: {fileID: 0}
   hitParticlePrefab: {fileID: 8301483922777730208, guid: 7d41ff61cc9114cc0bdf31e43e156e4a,
     type: 3}
-  blockThreshold: 0.2
+  blockThreshold: 0
+  defaultClips:
+  - {fileID: 8300000, guid: cf98e14a28e494f0d8da6487e6e153da, type: 3}
+  - {fileID: 8300000, guid: 3d46cf9c276a143f3862f33332637293, type: 3}
+  - {fileID: 8300000, guid: 120231c139a9f49feb97c7f45e32dc89, type: 3}
+  - {fileID: 8300000, guid: e1029592d8c8c49a5a54820efdc0a9a7, type: 3}
+  blockSoundFX: {fileID: 8300000, guid: 7ffda2e79b9c041618a070d01c183b79, type: 3}
 --- !u!114 &4571853019935666014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1772,8 +1778,13 @@ MonoBehaviour:
   detectionMask:
     serializedVersion: 2
     m_Bits: 8
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 2048
+  manager: {fileID: 0}
   weapon: {fileID: 5720577577802056662}
   canAttack: 0
+  swingSoundFX: {fileID: 8300000, guid: 1c0ead824645e478aa0226834b6e014b, type: 3}
 --- !u!136 &1829857331840165950
 CapsuleCollider:
   m_ObjectHideFlags: 0

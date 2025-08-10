@@ -57,7 +57,6 @@ public class SoundFXManager : MonoBehaviour
         audioSource.Play();
         Destroy(audioSource.gameObject, duration);
     }
-
     public void PlayRandomSoundFXClip(AudioClip[] clips, Transform spawnTransform, float volume)
     {
         int rand = Random.Range(0, clips.Length);
@@ -72,6 +71,26 @@ public class SoundFXManager : MonoBehaviour
         audioSource.volume = volume;
         audioSource.Play();
         Destroy(audioSource.gameObject, duration);
+    }
+    public void PlayLayeredSoundFX(AudioClip[] clips, Transform spawnTransform, float volume)
+    {
+        AudioSource[] audioSources = new AudioSource[clips.Length];
+        // Get max length
+        float maxLength = 0f;
+        foreach (AudioClip clip in clips)
+        {
+            if (clip.length > maxLength)
+                maxLength = clip.length;
+        }
+
+        for (int i = 0; i < clips.Length; i++)
+        {
+            audioSources[i] = Instantiate(soundFXPrefab, transform.position, Quaternion.identity);
+            audioSources[i].clip = clips[i];
+            audioSources[i].volume = volume;
+            audioSources[i].Play();
+            Destroy(audioSources[i].gameObject, maxLength);
+        }
     }
 
     // todo: get audio clips for attacks, vfx, collisions, background noise, music

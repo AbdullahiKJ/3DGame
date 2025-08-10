@@ -8,8 +8,8 @@ public class ProjectileDamage : MonoBehaviour
     Vector3 player = Vector3.zero;
     public float maxFlyDistance = 100f;
     bool isMoving = false;
-    [SerializeField] LayerMask enemyLayerMask;
-    [SerializeField] LayerMask defaultLayerMask;
+    int enemyLayer;
+    int terrainLayer;
     [SerializeField] GameObject particlePrefab;
     GameObject manager;
     TerrainEffects terrainEffects;
@@ -21,7 +21,10 @@ public class ProjectileDamage : MonoBehaviour
         manager = GameObject.Find("Manager");
         terrainEffects = manager.GetComponent<TerrainEffects>();
         // Play the sound FX
-        SoundFXManager.instance.PlayRandomSoundFXClip(soundFX, transform, 1f);
+        SoundFXManager.instance.PlayRandomSoundFXClip(soundFX, transform, 0.5f);
+
+        enemyLayer = LayerMask.NameToLayer("enemies");
+        terrainLayer = LayerMask.NameToLayer("Terrain");
     }
 
     void Update()
@@ -45,6 +48,7 @@ public class ProjectileDamage : MonoBehaviour
         transform.LookAt(target);
         isMoving = true;
     }
+    // todo: projectiles are bouncing off
 
     void OnCollisionEnter(Collision collision)
     {
@@ -52,7 +56,10 @@ public class ProjectileDamage : MonoBehaviour
         // Handle terrain impacts
         terrainEffects.TerrainImpact(transform.position, collision.gameObject, contact.point, 1.5f);
 
-        if (collision.gameObject.layer == enemyLayerMask)
+        // Play the sound FX
+        SoundFXManager.instance.PlayRandomSoundFXClip(hitSoundFX, transform, 1f);
+
+        if (collision.gameObject.layer == enemyLayer)
         {
             // Get the enemy's damage manager component and apply damage
             DamageManager enemy = collision.gameObject.GetComponent<DamageManager>();
@@ -66,7 +73,7 @@ public class ProjectileDamage : MonoBehaviour
             // Destroy the projectile after hitting an enemy
             Destroy(gameObject);
         }
-        else if (collision.gameObject.layer == defaultLayerMask)
+        else if (collision.gameObject.layer == terrainLayer)
         {
             Instantiate(particlePrefab, contact.point, Quaternion.identity);
 
@@ -74,7 +81,6 @@ public class ProjectileDamage : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // Play the sound FX
-        SoundFXManager.instance.PlayRandomSoundFXClip(hitSoundFX, transform, 1f);
+        Debug.Log(collision.gameObject.layer);
     }
 }

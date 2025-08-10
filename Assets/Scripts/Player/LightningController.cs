@@ -29,6 +29,7 @@ public class LightningMovement : MonoBehaviour
     [SerializeField] GameObject dashTrail;
     TrailRenderer[] trailObjects;
     Gradient oldGradient;
+    [SerializeField] AudioClip[] dashSFX;
 
     [Header("Ascend/Descend")]
 
@@ -201,6 +202,9 @@ public class LightningMovement : MonoBehaviour
         if (value.isPressed && !isDashing)
         {
             isDashing = true;
+
+            // Play the sound effect
+            SoundFXManager.instance.PlayLayeredSoundFX(dashSFX, transform, 1f);
 
             // Enable the dash trail effect
             dashTrail.SetActive(true);

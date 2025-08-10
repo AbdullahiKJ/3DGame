@@ -13,6 +13,7 @@ public class Observation : MonoBehaviour
     [SerializeField] float transitionSpeed = 0.1f;
     Animator animator;
     [SerializeField] AudioClip startSoundFX;
+    [SerializeField] AudioClip endSoundFX;
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -61,11 +62,11 @@ public class Observation : MonoBehaviour
             {
                 SoundFXManager.instance.PlaySoundFXClip(startSoundFX, transform, 1f);
             }
+            // todo: not playing
             else
             {
                 // Play the start sound fx in reverse
-                float clipLength = startSoundFX.length;
-                SoundFXManager.instance.PlaySoundFXClip(startSoundFX, transform, 1f, -clipLength);
+                SoundFXManager.instance.PlaySoundFXClip(endSoundFX, transform, 1f, 2f, 2f);
             }
         }
     }
