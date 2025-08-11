@@ -62,17 +62,17 @@ public class Combat : MonoBehaviour
             }
 
             // get list of enemies/terrain hit and trigger animation and damage dealt
-            Collider[] hitColliders = new Collider[0];
-            Collider[] terrainColliders = new Collider[0];
+            Collider[] hitColliders = new Collider[5];
+            Collider[] terrainColliders = new Collider[5];
             if (comboLevel == 0 && colliderActive)
             {
-                hitColliders = Physics.OverlapSphere(playerAttackColliders[0].transform.position, attackRadius, enemyLayer);
-                terrainColliders = Physics.OverlapSphere(playerAttackColliders[0].transform.position, attackRadius, terrainLayer);
+                Physics.OverlapSphereNonAlloc(playerAttackColliders[0].transform.position, attackRadius, hitColliders, enemyLayer);
+                Physics.OverlapSphereNonAlloc(playerAttackColliders[0].transform.position, attackRadius, terrainColliders, terrainLayer);
             }
             else if (colliderActive)
             {
-                hitColliders = Physics.OverlapSphere(playerAttackColliders[comboLevel - 1].transform.position, attackRadius, enemyLayer);
-                terrainColliders = Physics.OverlapSphere(playerAttackColliders[comboLevel - 1].transform.position, attackRadius, terrainLayer);
+                Physics.OverlapSphereNonAlloc(playerAttackColliders[comboLevel - 1].transform.position, attackRadius, hitColliders, enemyLayer);
+                Physics.OverlapSphereNonAlloc(playerAttackColliders[comboLevel - 1].transform.position, attackRadius, terrainColliders, terrainLayer);
             }
 
             foreach (Collider hit in hitColliders)

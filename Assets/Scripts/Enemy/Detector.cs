@@ -11,16 +11,8 @@ public class Detector : MonoBehaviour
     // Check if the player is within the base attack range
     public bool CheckBaseAttackRange()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, attackDistance, detectionMask);
-
-        if (colliders.Length > 0)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        int hits = Physics.OverlapSphereNonAlloc(transform.position, attackDistance, new Collider[1], detectionMask);
+        return hits > 0;
     }
 
     public float CheckWithinMidRange()

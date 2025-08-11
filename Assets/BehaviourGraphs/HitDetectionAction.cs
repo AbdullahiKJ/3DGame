@@ -38,14 +38,17 @@ public partial class HitDetectionAction : Action
         if (IsAttacking && AttackManager.Value.canAttack)
         {
             // get list of enemies/terrain objects hit and trigger animation and damage dealt
-            Collider[] hitColliders;
-            Collider[] terrainColliders;
-            hitColliders = Physics.OverlapSphere(weapon.transform.position, attackRadius, playerLayer);
-            terrainColliders = Physics.OverlapSphere(weapon.transform.position, attackRadius, terrainLayer);
+            Collider[] hitColliders = new Collider[5];
+            Collider[] terrainColliders = new Collider[5];
+            Physics.OverlapSphereNonAlloc(weapon.transform.position, attackRadius, hitColliders, playerLayer);
+            Physics.OverlapSphereNonAlloc(weapon.transform.position, attackRadius, terrainColliders, terrainLayer);
 
 
             foreach (Collider hit in hitColliders)
             {
+                if (hit == null)
+                    continue;
+
                 GameObject newEnemy = hit.transform.gameObject;
                 DamageManager damageManager = newEnemy.GetComponent<DamageManager>();
                 // if (hitEnemies.Contains(newEnemy))

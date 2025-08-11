@@ -75,7 +75,8 @@ public class ParticleAim : MonoBehaviour
             foreach (ParticleCollisionEvent collision in collisionEvents)
             {
                 // Get all colliders in the area of effect
-                Collider[] hitColliders = Physics.OverlapSphere(collision.intersection, aoeRadius, playerLayerBitMask);
+                Collider[] hitColliders = new Collider[5];
+                Physics.OverlapSphereNonAlloc(collision.intersection, aoeRadius, hitColliders, playerLayerBitMask);
                 foreach (var hitCollider in hitColliders)
                 {
                     DealDamage(hitCollider.gameObject);

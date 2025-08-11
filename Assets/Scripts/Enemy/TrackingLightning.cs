@@ -104,8 +104,9 @@ public class TrackingLightning : MonoBehaviour
     void DealDamage()
     {
         // Check if the player is in the area of effect and deal damage
-        Collider[] hitColliders = Physics.OverlapSphere(indicatorInstance.transform.position, aoeRadius, playerLayerBitMask);
-        if (hitColliders.Length > 0)
+        Collider[] hitColliders = new Collider[5];
+        int hits = Physics.OverlapSphereNonAlloc(indicatorInstance.transform.position, aoeRadius, hitColliders, playerLayerBitMask);
+        if (hits > 0)
         {
             // Terrain impact
             Vector3 contactPoint = indicatorInstance.transform.position;
