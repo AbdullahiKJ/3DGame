@@ -130,7 +130,7 @@ public class Combat : MonoBehaviour
     void OnPunch(InputValue value)
     {
         // Condition prevents tirggering attacks before most of the animation has played out
-        if (value.isPressed && (comboTimer > timeBeforePunch || comboTimer == 0))
+        if (value.isPressed && (comboTimer > timeBeforePunch || comboTimer == 0) && !movement.isJumping)
         {
             // reset the hit enemies list
             hitEnemies = new List<GameObject>();

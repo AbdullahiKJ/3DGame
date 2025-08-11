@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Vector2 = UnityEngine.Vector2;
@@ -25,7 +26,7 @@ public class Movement : MonoBehaviour
     Vector3 rollDirection;
     bool isSprinting;
     bool isRolling;
-    bool isJumping;
+    public bool isJumping;
 
     [SerializeField] float jumpHeight = 1.0f;
     [SerializeField] float gravityValue = -9.81f;
@@ -34,6 +35,7 @@ public class Movement : MonoBehaviour
     CapsuleCollider defaultCollider;
     [SerializeField] CapsuleCollider particleCollider;
     [SerializeField] float testDistance = 10f;
+    float attackMoveThreshold = 0.5f; // Animator limit for movement while attacking
 
     void Awake()
     {
@@ -58,14 +60,31 @@ public class Movement : MonoBehaviour
             moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
 
-        animator.SetFloat("Speed", moveInput.magnitude);
+        if (combatScript.getIsPunching())
+        {
+            // Limit the input to walking
+            animator.SetFloat("Speed", attackMoveThreshold);
 
-        // send values to animator
-        animator.SetFloat("HorizontalInput", moveInput.x);
-        animator.SetFloat("VerticalInput", moveInput.y);
+            // send values to animator
+            float clampX = Math.Clamp(moveInput.x, -attackMoveThreshold, attackMoveThreshold);
+            float clampY = Math.Clamp(moveInput.y, -attackMoveThreshold, attackMoveThreshold);
+            animator.SetFloat("HorizontalInput", clampX);
+            animator.SetFloat("VerticalInput", clampY);
 
-        move = new Vector3(moveInput.x, 0, moveInput.y);
-        move = Quaternion.Euler(0f, cam.transform.eulerAngles.y, 0f) * move;
+            move = new Vector3(clampX, 0, clampY);
+            move = Quaternion.Euler(0f, cam.transform.eulerAngles.y, 0f) * move;
+        }
+        else
+        {
+            animator.SetFloat("Speed", moveInput.magnitude);
+
+            // send values to animator
+            animator.SetFloat("HorizontalInput", moveInput.x);
+            animator.SetFloat("VerticalInput", moveInput.y);
+
+            move = new Vector3(moveInput.x, 0, moveInput.y);
+            move = Quaternion.Euler(0f, cam.transform.eulerAngles.y, 0f) * move;
+        }
 
         // Set the player movement speed based on the joycon position and sprint button
         if (moveInput.magnitude < 0.05f)
@@ -106,7 +125,7 @@ public class Movement : MonoBehaviour
         playerVelocity.y += gravityValue * Time.deltaTime;
 
         // Stop movement if the player is attacking or is staggered
-        if (combatScript.getIsPunching() || damageManagerScript.isStaggering)
+        if (damageManagerScript.isStaggering)
         {
             ResetAllFlags();
             controller.Move(Vector3.zero);
@@ -137,7 +156,7 @@ public class Movement : MonoBehaviour
 
     void OnJump()
     {
-        if (groundedPlayer)
+        if (groundedPlayer && !combatScript.getIsPunching())
         {
             tempMoveInput = moveInput;
             animator.SetBool("isJumping", true);
@@ -158,23 +177,20 @@ public class Movement : MonoBehaviour
 
     void OnMove(InputValue value)
     {
-        if (!combatScript.getIsPunching())
+        // get the raw value if the player is on the ground
+        if (!isRolling && groundedPlayer)
         {
-            // get the raw value if the player is on the ground
-            if (!isRolling && groundedPlayer)
-            {
-                moveInput = value.Get<Vector2>();
-            }
-            // if the player is jumping apply only half of the value to the movement
-            else if (!groundedPlayer && !isRolling)
-            {
-                moveInput = tempMoveInput + value.Get<Vector2>() * 0.5f;
-            }
-            // if the player is rolling apply only half of the value to the movement 
-            else if (isRolling)
-            {
-                moveInput += value.Get<Vector2>() * 0.5f;
-            }
+            moveInput = value.Get<Vector2>();
+        }
+        // if the player is jumping apply only half of the value to the movement
+        else if (!groundedPlayer && !isRolling)
+        {
+            moveInput = tempMoveInput + value.Get<Vector2>() * 0.5f;
+        }
+        // if the player is rolling apply only half of the value to the movement 
+        else if (isRolling)
+        {
+            moveInput += value.Get<Vector2>() * 0.5f;
         }
     }
 
