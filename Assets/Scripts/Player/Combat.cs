@@ -77,6 +77,9 @@ public class Combat : MonoBehaviour
 
             foreach (Collider hit in hitColliders)
             {
+                if (hit == null)
+                    continue;
+
                 GameObject newEnemy = hit.transform.root.gameObject;
                 if (hitEnemies.Contains(newEnemy))
                 {
@@ -97,6 +100,9 @@ public class Combat : MonoBehaviour
 
             foreach (Collider hit in terrainColliders)
             {
+                if (hit == null)
+                    continue;
+
                 GameObject hitObject = hit.transform.root.gameObject;
                 if (hitEnemies.Contains(hitObject))
                 {

@@ -63,7 +63,7 @@ public class Movement : MonoBehaviour
         if (combatScript.getIsPunching())
         {
             // Limit the input to walking
-            animator.SetFloat("Speed", attackMoveThreshold);
+            animator.SetFloat("Speed", Math.Clamp(moveInput.magnitude, 0f, attackMoveThreshold));
 
             // send values to animator
             float clampX = Math.Clamp(moveInput.x, -attackMoveThreshold, attackMoveThreshold);
