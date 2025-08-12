@@ -120,6 +120,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isPunching
     m_EventTreshold: 0
+  - m_ConditionMode: 6
+    m_ConditionEvent: Combo
+    m_EventTreshold: 1
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6372400480405737327}
   m_Solo: 0
@@ -1593,7 +1596,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Right Punch
-  m_Speed: 1.75
+  m_Speed: 1.5
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 4060014793720065245}
@@ -1607,7 +1610,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 36cdfb78c4b0f4a159da704c2bed6246, type: 2}
+  m_Motion: {fileID: 7400000, guid: f39407cdd24a343c29bb942ed84a1be5, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
