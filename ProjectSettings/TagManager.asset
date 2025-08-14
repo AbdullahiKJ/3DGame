@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - HitBox
+  - SlashVfx
+  - Lava
+  - Destructible
   layers:
   - Default
   - TransparentFX
@@ -13,11 +16,11 @@ TagManager:
   - Water
   - UI
   - enemies
-  - Swing
+  - Teleport
   - DefaultVolume
   - SlowVolume
-  - 
-  - 
+  - PlayerParticle
+  - Terrain
   - 
   - 
   - 

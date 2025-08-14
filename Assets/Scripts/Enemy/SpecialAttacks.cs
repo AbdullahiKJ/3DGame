@@ -1,62 +1,30 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class SpecialAttacks : MonoBehaviour
 {
-    [SerializeField] Animator specialAnimator;
-    EnemyMovement enemyMovement;
-    bool isAttacking = false;
-    bool isMoving = false;
-    float jumpTimer = 1.5f;
-    float attackTimer = 5f;
-    float currentTImer = 0f;
-    [SerializeField] GameObject vfxContainer;
-    [SerializeField] GameObject blastBreath;
-    GameObject currentSpecial;
-    [SerializeField] GameObject player;
-    AI aiScript;
-    void Awake()
-    {
-        enemyMovement = GetComponent<EnemyMovement>();
-        aiScript = GetComponent<AI>();
-    }
+    [Header("Lightning Strike Settings")]
+    [SerializeField] GameObject lightningStrikePrefab;
+    [SerializeField] Transform strikePosition;
+    GameObject lightningStrikeInstance;
 
-    void Update()
+    public void TriggerLightningStrike()
     {
-        if (isMoving) {
-            enemyMovement.jumpBack();
-            currentTImer += Time.deltaTime;
-            if (currentTImer > jumpTimer) {
-                isMoving = false;
-                enemyMovement.cancelMovement();
-                triggerAttack();
-            }
-        }
-
-        if (isAttacking) {
-            currentTImer += Time.deltaTime;
-            if (currentTImer > attackTimer) {
-                isAttacking = false;
-                currentTImer = 0f;
-                // Destroy prefab
-                Destroy(currentSpecial);
-                aiScript.setDoNotInterrupt();
-            }
-            return;
+        if (lightningStrikePrefab != null)
+        {
+            lightningStrikeInstance = Instantiate(lightningStrikePrefab, strikePosition.position, Quaternion.identity);
+            float strikeDuration = lightningStrikeInstance.GetComponent<VisualEffect>().GetFloat("Lifetime");
+            StartCoroutine(WaitForStrikeEnd(strikeDuration));
         }
     }
 
-    void triggerAttack() {
-        currentSpecial = Instantiate(blastBreath, vfxContainer.transform);
-        currentSpecial.transform.LookAt(player.transform.position);
-        isAttacking = true;
-        currentTImer = 0f;
-    }
-
-    public bool getIsAttacking() {
-        return isAttacking;
-    }
-
-    public void triggerSpecial() {
-        isMoving = true;
+    IEnumerator WaitForStrikeEnd(float duration)
+    {
+        // Wait for the lightning strike to finish
+        yield return new WaitForSeconds(duration);
+        // Destroy the lightning strike instance if it exists
+        if (lightningStrikeInstance != null)
+            Destroy(lightningStrikeInstance);
     }
 }

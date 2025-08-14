@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4365449012410263562
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6918032836875288653}
+  - component: {fileID: 8515780935153493952}
+  m_Layer: 0
+  m_Name: Tracking Lightning
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6918032836875288653
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4365449012410263562}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 24.532576, y: 0.00002670288, z: -0.8358002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8515780935153493952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4365449012410263562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7427b0dad376465cbdd152132e3f860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  singleLightningPrefab: {fileID: 4365449012410263562, guid: 0d5f703b2035d4d5b94819d8cd52124b,
+    type: 3}
+  indicatorPrefab: {fileID: 522918731269964204, guid: 05a1f216971a64de4a9ea9dfb0f02038,
+    type: 3}
+  targetTransform: {fileID: 0}
+  damageSO: {fileID: 11400000, guid: db2eeba5beae543afb7014329dea5bc3, type: 2}
+  explosionPrefab: {fileID: 4535006216103734310, guid: a7fa7c882cdc04c17a2daa8b2c4704c4,
+    type: 3}
+  hitSoundFX: {fileID: 8300000, guid: 820a17f33ef20487bbc58d69974ba711, type: 3}

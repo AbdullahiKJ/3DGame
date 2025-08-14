@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0cbf77c991b84c5e900ce380c136ef2, type: 3}
+  m_Name: WindScythe
+  m_EditorClassIdentifier: 
+  baseDamage: 10
+  isFireDamage: 0
+  isIceDamage: 0
+  isElectricDamage: 0
+  multiplier: 1
+  specialEffectPrefabs: []
+  audioClips:
+  - {fileID: 8300000, guid: af31c94c8871142eb9680a3a4a7498f5, type: 3}
+  - {fileID: 8300000, guid: a67d5d9a6d19c42ca8b8dc4e7313f274, type: 3}
+  - {fileID: 8300000, guid: 043d0f629a2404bbfad4b99812461e17, type: 3}
