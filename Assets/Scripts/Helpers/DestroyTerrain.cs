@@ -10,7 +10,7 @@ public class DestroyTerrain : MonoBehaviour
     [SerializeField] float maxForce = 250f;
     float lifetime = 7f;
     float fadeDuration = 3f;
-    float defaulScale = 265f;
+    [SerializeField] float defaultScale = 265f;
     [SerializeField] Material rockMat;
     Material sharedRockMat;
     [SerializeField] AudioClip[] soundFX;
@@ -33,7 +33,7 @@ public class DestroyTerrain : MonoBehaviour
         rotation.x = 0f;
 
         fractureInstance = Instantiate(fracturePrefab, transform.position, rotation);
-        fractureInstance.transform.localScale = transform.localScale / defaulScale;
+        fractureInstance.transform.localScale = transform.localScale / defaultScale;
 
         foreach (Transform t in fractureInstance.transform)
         {
