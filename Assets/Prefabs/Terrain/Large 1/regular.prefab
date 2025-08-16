@@ -127,8 +127,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fracturePrefab: {fileID: 295995299439451754, guid: 07ea4c46f00bd45e8b6ad601b89db80a,
     type: 3}
-  minForce: 100
-  maxForce: 250
+  minForce: 15
+  maxForce: 20
   defaultScale: 265
   rockMat: {fileID: 2100000, guid: dd23e9916f8a741d896f706c5ef7d8bb, type: 2}
   soundFX:
