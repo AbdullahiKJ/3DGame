@@ -21,6 +21,12 @@ public class DestroyTerrain : MonoBehaviour
         sharedRockMat = new Material(rockMat);
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            TriggerExplosion(Vector3.zero, 1f);
+    }
+
     public void TriggerExplosion(Vector3 attacker, float forceMultiplier = 1f)
     {
         // Hide mesh renderer and disable collider

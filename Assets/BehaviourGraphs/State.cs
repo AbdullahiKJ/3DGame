@@ -10,5 +10,7 @@ public enum State
     MidRange,
     LongRange,
     SpecialAttacks,
+    Running,
+    FutureSight,
     Testing
 }

@@ -86,7 +86,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e43298aacd4f24ce6b02b9e4f4b0b33a,
         type: 3}
       propertyPath: m_Name
-      value: low-poly-rocks
+      value: regular
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e43298aacd4f24ce6b02b9e4f4b0b33a,
         type: 3}
@@ -159,6 +159,7 @@ MonoBehaviour:
     type: 3}
   minForce: 2
   maxForce: 5
+  defaultScale: 265
   rockMat: {fileID: 2100000, guid: dd23e9916f8a741d896f706c5ef7d8bb, type: 2}
   soundFX:
   - {fileID: 8300000, guid: c8d9e24eff7de4e8f9a45ba5f4e741f5, type: 3}

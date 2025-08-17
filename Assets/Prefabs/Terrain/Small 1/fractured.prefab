@@ -181,7 +181,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2148585053561447a8d348c9962b67f3,
         type: 3}
       propertyPath: m_Name
-      value: fractured-rocks
+      value: fractured
       objectReference: {fileID: 0}
     - target: {fileID: 1998946705502263240, guid: 2148585053561447a8d348c9962b67f3,
         type: 3}
