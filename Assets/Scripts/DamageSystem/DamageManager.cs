@@ -6,8 +6,8 @@ using UnityEngine;
 public class DamageManager : MonoBehaviour
 {
     Animator animator;
-    [SerializeField] float maxHealth = 100f;
-    float currentHealth;
+    public float maxHealth = 100f;
+    public float currentHealth;
     // todo: add stagger reduction for the enemy if necessary
     // [SerializeField] float stagger = 100f;
     public bool isStaggering { get; set; } = false;

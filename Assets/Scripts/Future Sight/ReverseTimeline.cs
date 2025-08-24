@@ -20,6 +20,9 @@ public class ReverseTimeline : MonoBehaviour
             {
                 director.time = 0;
                 director.Stop();
+
+                // Start the main playable scene
+                GameDirector.instance.StartPlayableScene();
             }
         }
     }
