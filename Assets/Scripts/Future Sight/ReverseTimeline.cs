@@ -20,9 +20,12 @@ public class ReverseTimeline : MonoBehaviour
             {
                 director.time = 0;
                 director.Stop();
+                startedReverse = false;
 
                 // Start the main playable scene
                 GameDirector.instance.StartPlayableScene();
+
+                // todo: transition to normal global volume
             }
         }
     }

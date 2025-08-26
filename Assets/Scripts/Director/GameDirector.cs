@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Playables;
 
 public class GameDirector : MonoBehaviour
@@ -29,10 +31,44 @@ public class GameDirector : MonoBehaviour
 
     [Header("Timeline assets")]
     [SerializeField] PlayableDirector director;
+    Playable currentPlayable;
     [SerializeField] PlayableAsset mainPlayableScene;
+    [SerializeField] PlayableAsset[] failureTimeline;
+    MeshTrail[] trails;
 
     [Header("UI")]
     [SerializeField] GameObject defaultUI;
+    [SerializeField] GameObject inputPromptUI;
+    RectTransform inputPromptRect;
+    [SerializeField] TextMeshProUGUI inputPromptText;
+    [SerializeField] Image inputPromptOutline;
+    float inputPromptTimer = 2f;
+    float timer = 0f;
+
+    [Header("Input Prompts")]
+    int currentInputPrompt = 0;
+    bool isExpectingInput = false;
+    string[] controllerInputPrompts = new string[]
+    {
+    };
+    string[] keyboardInputPrompts = new string[]
+    {
+        "E",
+        "Q",
+        "R",
+        "P",
+        "J",
+    };
+    [SerializeField]
+    Vector2[] promptPositions = new Vector2[]
+    {
+        new Vector2(0, -200),
+        new Vector2(0, 200),
+        new Vector2(-300, 0),
+        new Vector2(300, 0),
+        new Vector2(0, 0),
+    };
+    [SerializeField] float[] promptTimeScales;
 
     void Awake()
     {
@@ -44,6 +80,44 @@ public class GameDirector : MonoBehaviour
 
         enemyDamageManager = enemy.GetComponent<DamageManager>();
         playerDamageManager = player.GetComponent<DamageManager>();
+        inputPromptRect = inputPromptUI.GetComponent<RectTransform>();
+
+        // Ensure the prompt UI is in disabled at the start
+        if (inputPromptUI.activeSelf == true)
+            inputPromptUI.SetActive(false);
+
+        // Find all mesh trail scripts and disable them
+        trails = FindObjectsByType<MeshTrail>(FindObjectsSortMode.None);
+        // todo: disable mesh trail scripts
+    }
+
+    void Update()
+    {
+        if (isExpectingInput)
+        {
+            // Check for input
+            if (Input.GetKeyDown(keyboardInputPrompts[currentInputPrompt - 1].ToLower()))
+            {
+                ResetPrompt();
+                return;
+            }
+
+            timer += Time.deltaTime;
+            if (timer >= inputPromptTimer)
+            {
+                ResetPrompt();
+
+                // Move to the failure timeline
+                director.Play(failureTimeline[currentInputPrompt - 1]);
+
+                // todo: add a failure global volume
+            }
+            else
+            {
+                // Update the outline fill amount
+                inputPromptOutline.fillAmount = 1 - (timer / inputPromptTimer);
+            }
+        }
     }
 
     public void CheckHealth(bool isPlayer)
@@ -102,7 +176,7 @@ public class GameDirector : MonoBehaviour
         // todo: disable player controller
         // todo: apply some sort of volume transition or add a black screen before playing the timeline asset
 
-        // Disbale the default UI
+        // Disable the default UI
         defaultUI.SetActive(false);
 
         // Set positions and rotation to the origin
@@ -111,11 +185,48 @@ public class GameDirector : MonoBehaviour
 
         // Play the timeline asset
         director.Play();
+
+        // Enable mesh trail scripts
+        foreach (MeshTrail trail in trails)
+        {
+            trail.enabled = true;
+        }
+
     }
 
     public void StartPlayableScene()
     {
+        // Disable mesh trail scripts
+        foreach (MeshTrail trail in trails)
+        {
+            trail.enabled = false;
+        }
+
         if (mainPlayableScene != null)
+        {
             director.Play(mainPlayableScene);
+            currentPlayable = director.playableGraph.GetRootPlayable(0);
+        }
+    }
+
+    public void ShowNextInputPrompt()
+    {
+        currentInputPrompt++;
+        isExpectingInput = true;
+        inputPromptUI.SetActive(true);
+        inputPromptText.text = keyboardInputPrompts[currentInputPrompt - 1];
+        inputPromptRect.anchoredPosition = promptPositions[currentInputPrompt - 1];
+
+        // Slow down director playback speed
+        float desiredSpeed = promptTimeScales[currentInputPrompt - 1] / inputPromptTimer;
+        currentPlayable.SetSpeed(desiredSpeed);
+    }
+
+    void ResetPrompt()
+    {
+        isExpectingInput = false;
+        inputPromptUI.SetActive(false);
+        timer = 0f;
+        currentPlayable.SetSpeed(1f);
     }
 }
