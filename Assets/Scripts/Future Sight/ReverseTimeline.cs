@@ -1,11 +1,14 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Rendering;
 
 public class ReverseTimeline : MonoBehaviour
 {
     [SerializeField] PlayableDirector director;
     [SerializeField] float reverseSpeed = 1f;
     [SerializeField] AudioClip reverseClip;
+    [SerializeField] Volume reverseVolume;
     bool startedReverse = false;
 
     void Update()
@@ -25,7 +28,9 @@ public class ReverseTimeline : MonoBehaviour
                 // Start the main playable scene
                 GameDirector.instance.StartPlayableScene();
 
-                // todo: transition to normal global volume
+                // Transition out of the reverse global volume
+                if (reverseVolume != null)
+                    DOTween.To(() => reverseVolume.weight, x => reverseVolume.weight = x, 0f, 0.5f);
             }
         }
     }
@@ -40,5 +45,9 @@ public class ReverseTimeline : MonoBehaviour
         // Play sound fx
         float sequenceLength = (float)director.playableAsset.duration / reverseSpeed;
         SoundFXManager.instance.PlaySoundFXClip(reverseClip, transform, 1f, sequenceLength);
+
+        // Transition to the reverse global volume
+        if (reverseVolume != null)
+            DOTween.To(() => reverseVolume.weight, x => reverseVolume.weight = x, 1f, 0.5f);
     }
 }

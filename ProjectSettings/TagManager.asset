@@ -8,6 +8,7 @@ TagManager:
   - SlashVfx
   - Lava
   - Destructible
+  - Enemy
   layers:
   - Default
   - TransparentFX

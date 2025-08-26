@@ -5,10 +5,11 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "RangeDetector", story: "Use [Detector] to update the [currentState]", category: "Action", id: "695e378e84706e46c9171c68c08bbc7f")]
+[NodeDescription(name: "RangeDetector", story: "Use [Detector] and [isFutureSightActive] to update the [currentState]", category: "Action", id: "695e378e84706e46c9171c68c08bbc7f")]
 public partial class RangeDetectorAction : Action
 {
     [SerializeReference] public BlackboardVariable<Detector> Detector;
+    [SerializeReference] public BlackboardVariable<Boolean> isFutureSightActive;
     [SerializeReference] public BlackboardVariable<State> currentState;
     float checkInterval = 5f;
     float timer;
@@ -20,6 +21,13 @@ public partial class RangeDetectorAction : Action
     }
     protected override Status OnUpdate()
     {
+        // Future Sight
+        if (isFutureSightActive.Value)
+        {
+            currentState.Value = State.FutureSight;
+            return Status.Running;
+        }
+
         if (timer < checkInterval)
             timer += Time.deltaTime;
         else

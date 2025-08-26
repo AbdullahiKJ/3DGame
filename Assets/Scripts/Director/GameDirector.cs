@@ -2,16 +2,28 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Playables;
+using UnityEngine.Rendering;
+using DG.Tweening;
+using System.Collections;
+using Unity.Behavior;
 
 public class GameDirector : MonoBehaviour
 {
     public static GameDirector instance;
-    [SerializeField] GameObject enemy;
-    [SerializeField] DamageManager player;
+    GameObject enemy;
+    GameObject player;
+    BehaviorGraphAgent agent;
+    [SerializeField] string enemyTag;
+    [SerializeField] string playerTag;
+    [SerializeField] GameObject blackScreen;
 
     [Header("Damage managers")]
     DamageManager enemyDamageManager;
     DamageManager playerDamageManager;
+
+    [Header("Player controllers")]
+    Movement playerMovement;
+    LightningMovement playerLightning;
 
     [Header("Health thresholds")]
     float threshOne = 0.75f;
@@ -35,6 +47,7 @@ public class GameDirector : MonoBehaviour
     [SerializeField] PlayableAsset mainPlayableScene;
     [SerializeField] PlayableAsset[] failureTimeline;
     MeshTrail[] trails;
+    [SerializeField] Volume failureVolume;
 
     [Header("UI")]
     [SerializeField] GameObject defaultUI;
@@ -69,6 +82,9 @@ public class GameDirector : MonoBehaviour
         new Vector2(0, 0),
     };
     [SerializeField] float[] promptTimeScales;
+    [Header("Damage Settings")]
+    float damageToPlayer = 50f;
+    float damageToEnemy = 100f;
 
     void Awake()
     {
@@ -78,8 +94,16 @@ public class GameDirector : MonoBehaviour
             instance = this;
         }
 
+        // Get player and enemy game objects
+        enemy = GameObject.FindGameObjectWithTag(enemyTag);
+        player = GameObject.FindGameObjectWithTag(playerTag);
+        agent = enemy.GetComponent<BehaviorGraphAgent>();
+
+        // Get scripts
         enemyDamageManager = enemy.GetComponent<DamageManager>();
         playerDamageManager = player.GetComponent<DamageManager>();
+        playerMovement = player.GetComponent<Movement>();
+        playerLightning = player.GetComponent<LightningMovement>();
         inputPromptRect = inputPromptUI.GetComponent<RectTransform>();
 
         // Ensure the prompt UI is in disabled at the start
@@ -88,7 +112,13 @@ public class GameDirector : MonoBehaviour
 
         // Find all mesh trail scripts and disable them
         trails = FindObjectsByType<MeshTrail>(FindObjectsSortMode.None);
-        // todo: disable mesh trail scripts
+        foreach (MeshTrail trail in trails)
+        {
+            trail.enabled = false;
+        }
+
+        // Disable black screen
+        blackScreen.SetActive(false);
     }
 
     void Update()
@@ -110,7 +140,15 @@ public class GameDirector : MonoBehaviour
                 // Move to the failure timeline
                 director.Play(failureTimeline[currentInputPrompt - 1]);
 
-                // todo: add a failure global volume
+                // Transition to the failure global volume
+                if (failureVolume != null)
+                    DOTween.To(() => failureVolume.weight, x => failureVolume.weight = x, 1f, 0.5f);
+
+                // Deal damage to the player
+                if (playerDamageManager.currentHealth > damageToPlayer)
+                    playerDamageManager.currentHealth -= damageToPlayer;
+                else
+                    playerDamageManager.currentHealth = 0f;
             }
             else
             {
@@ -135,7 +173,9 @@ public class GameDirector : MonoBehaviour
         {
             // todo: trigger death
             // todo: show UI
-            // todo: disable character and player controllers
+            // Disable character and player controllers
+            playerMovement.enabled = false;
+            playerLightning.enabled = false;
         }
     }
     void CheckEnemyHealth()
@@ -169,12 +209,23 @@ public class GameDirector : MonoBehaviour
             passedThreshFour = true;
             FutureSight();
         }
+        else if (normalizedHealth <= 0f)
+        {
+            // todo: end game, show victory UI
+        }
     }
 
     void FutureSight()
     {
-        // todo: disable player controller
-        // todo: apply some sort of volume transition or add a black screen before playing the timeline asset
+        // Set the behavior graph flag
+        agent.SetVariableValue("isFutureSightActive", true);
+
+        // Disable player controller
+        playerMovement.enabled = false;
+        playerLightning.enabled = false;
+
+        // Enable black screen
+        blackScreen.SetActive(true);
 
         // Disable the default UI
         defaultUI.SetActive(false);
@@ -182,6 +233,13 @@ public class GameDirector : MonoBehaviour
         // Set positions and rotation to the origin
         player.transform.SetPositionAndRotation(playerPosition, playerRotation);
         enemy.transform.SetPositionAndRotation(enemyPosition, enemyRotation);
+
+        StartCoroutine(PlayCutsceneAfterDelay(1f));
+    }
+
+    IEnumerator PlayCutsceneAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
 
         // Play the timeline asset
         director.Play();
@@ -192,6 +250,8 @@ public class GameDirector : MonoBehaviour
             trail.enabled = true;
         }
 
+        // Disable black screen
+        blackScreen.SetActive(false);
     }
 
     public void StartPlayableScene()
@@ -222,11 +282,46 @@ public class GameDirector : MonoBehaviour
         currentPlayable.SetSpeed(desiredSpeed);
     }
 
+    public void EndFutureSight()
+    {
+        // Disable the behavior graph flag
+        agent.SetVariableValue("isFutureSightActive", false);
+
+        // Reset input prompt variables
+        currentInputPrompt = 0;
+
+        // Re-enable player controller
+        playerMovement.enabled = true;
+    }
+
+    public void DealDamageToEnemy()
+    {
+        if (enemyDamageManager.currentHealth > damageToEnemy)
+            enemyDamageManager.currentHealth -= damageToEnemy;
+        else
+            enemyDamageManager.currentHealth = 0f;
+
+        CheckEnemyHealth();
+    }
+
     void ResetPrompt()
     {
         isExpectingInput = false;
         inputPromptUI.SetActive(false);
         timer = 0f;
         currentPlayable.SetSpeed(1f);
+    }
+    void EndTimelineAsset()
+    {
+        // Re-enable player controller
+        playerMovement.enabled = true;
+        playerLightning.enabled = true;
+
+        // Transtition out of the failure global volume
+        if (failureVolume != null)
+            DOTween.To(() => failureVolume.weight, x => failureVolume.weight = x, 0f, 0.5f);
+
+        // Re-enable the default UI
+        defaultUI.SetActive(true);
     }
 }
