@@ -145,10 +145,8 @@ public class GameDirector : MonoBehaviour
                     DOTween.To(() => failureVolume.weight, x => failureVolume.weight = x, 1f, 0.5f);
 
                 // Deal damage to the player
-                if (playerDamageManager.currentHealth > damageToPlayer)
-                    playerDamageManager.currentHealth -= damageToPlayer;
-                else
-                    playerDamageManager.currentHealth = 0f;
+                playerDamageManager.TakeDamage(damageToPlayer);
+                CheckPlayerHealth();
             }
             else
             {
@@ -296,11 +294,7 @@ public class GameDirector : MonoBehaviour
 
     public void DealDamageToEnemy()
     {
-        if (enemyDamageManager.currentHealth > damageToEnemy)
-            enemyDamageManager.currentHealth -= damageToEnemy;
-        else
-            enemyDamageManager.currentHealth = 0f;
-
+        enemyDamageManager.TakeDamage(damageToEnemy);
         CheckEnemyHealth();
     }
 

@@ -101,6 +101,14 @@ public class DamageManager : MonoBehaviour
         StartCoroutine(WaitForStateTransition(attacker, pushBack, knockback));
     }
 
+    public void TakeDamage(float damage)
+    {
+        currentHealth -= damage;
+        if (currentHealth < 0f)
+            currentHealth = 0f;
+        healthBar.Value = new Vector2(1 - currentHealth / maxHealth, healthBar.Value.y);
+    }
+
     // make the gameobject face the game object dealing damage
     public void FaceAttacker(Vector3 attacker, float pushBack, float animLength)
     {
