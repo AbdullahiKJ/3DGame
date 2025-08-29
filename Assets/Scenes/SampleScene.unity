@@ -8831,7 +8831,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_UseGeometry: 0
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_GenerateLinks: 0
   m_IgnoreNavMeshAgent: 1
@@ -16693,6 +16693,11 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 1553017897}
+    - target: {fileID: 4964595599134233259, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5443494629021916281, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: m_WarningMessage
