@@ -1,7 +1,7 @@
 using System.Collections;
 using DG.Tweening;
-using Unity.UI.Shaders.Sample;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DamageManager : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class DamageManager : MonoBehaviour
     // todo: add stagger reduction for the enemy if necessary
     // [SerializeField] float stagger = 100f;
     public bool isStaggering { get; set; } = false;
-    [SerializeField] RangeBar healthBar;
+    [SerializeField] Image healthBar;
     [SerializeField] GameObject hitParticlePrefab;
     public float blockThreshold = 0.5f; // Threshold for blocking damage
     [SerializeField] AudioClip[] defaultClips;
@@ -53,7 +53,7 @@ public class DamageManager : MonoBehaviour
         // Reduce health and stagger 
         float damageDealt = damageSO != null ? CalculateDamage(damageSO) : 10f;
         currentHealth -= damageDealt; // Example damage value
-        healthBar.Value = new Vector2(1 - currentHealth / maxHealth, healthBar.Value.y);
+        healthBar.fillAmount = currentHealth / maxHealth;
 
         if (contactPoint != default(Vector3))
         {
@@ -106,7 +106,7 @@ public class DamageManager : MonoBehaviour
         currentHealth -= damage;
         if (currentHealth < 0f)
             currentHealth = 0f;
-        healthBar.Value = new Vector2(1 - currentHealth / maxHealth, healthBar.Value.y);
+        healthBar.fillAmount = currentHealth / maxHealth;
     }
 
     // make the gameobject face the game object dealing damage

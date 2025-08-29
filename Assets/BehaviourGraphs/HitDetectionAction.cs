@@ -3,6 +3,7 @@ using Unity.Behavior;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Unity.Properties;
+using System.Collections.Generic;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "HitDetection", story: "Check [IsAttacking] variable, [AttackManager] AttackManager script, [enemyDamageSO] scriptable object and [Agent] for hits and update [State]", category: "Action", id: "828d7c607943a9112c00a96c3d306b8a")]
@@ -19,8 +20,9 @@ public partial class HitDetectionAction : Action
     LayerMask terrainLayer;
     GameObject manager;
     TerrainEffects terrainEffects;
-    Vector3 previousContactPoint = Vector3.zero;
-    float distanceThreshold = 0.1f;
+    List<GameObject> hitTerrainObjects = new List<GameObject>();
+    bool startedHitTimer = false;
+    float timer = 0f;
 
     protected override Status OnStart()
     {
@@ -42,7 +44,6 @@ public partial class HitDetectionAction : Action
             Collider[] terrainColliders = new Collider[5];
             Physics.OverlapSphereNonAlloc(weapon.transform.position, attackRadius, hitColliders, playerLayer);
             Physics.OverlapSphereNonAlloc(weapon.transform.position, attackRadius, terrainColliders, terrainLayer);
-
 
             foreach (Collider hit in hitColliders)
             {
@@ -69,16 +70,39 @@ public partial class HitDetectionAction : Action
 
             foreach (Collider hit in terrainColliders)
             {
+                if (hit == null)
+                    continue;
+                else if (!startedHitTimer)
+                {
+                    // Set timer flag
+                    startedHitTimer = true;
+                }
+
                 GameObject hitObject = hit.transform.root.gameObject;
+
+                // Check if this terrain object has already been processed
+                if (hitTerrainObjects.Contains(hitObject))
+                    continue;
+                hitTerrainObjects.Add(hitObject);
+
                 Vector3 contactPoint = hit.ClosestPointOnBounds(weapon.transform.position);
 
-                float distance = Vector3.Distance(contactPoint, previousContactPoint);
-
                 // Handle Terrain Impacts
-                if (distance > distanceThreshold)
-                    terrainEffects.TerrainImpact(Agent.Value.transform.position, hitObject, contactPoint, 100f);
+                terrainEffects.TerrainImpact(Agent.Value.transform.position, hitObject, contactPoint, 100f);
+            }
+        }
 
-                previousContactPoint = contactPoint;
+        // Timer
+        if (startedHitTimer)
+        {
+            timer += Time.deltaTime;
+            if (timer >= 1f)
+            {
+                // Reset timer and flag
+                timer = 0f;
+                startedHitTimer = false;
+                // Clear hit terrain objects list for the next attack
+                hitTerrainObjects.Clear();
             }
         }
         return Status.Running;
