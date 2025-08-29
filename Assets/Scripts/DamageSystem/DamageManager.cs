@@ -1,7 +1,9 @@
 using System.Collections;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class DamageManager : MonoBehaviour
 {
@@ -16,6 +18,16 @@ public class DamageManager : MonoBehaviour
     public float blockThreshold = 0.5f; // Threshold for blocking damage
     [SerializeField] AudioClip[] defaultClips;
     [SerializeField] AudioClip blockSoundFX;
+
+    [Header("Healing")]
+    [SerializeField] TextMeshProUGUI healText;
+    int healCharges = 3;
+    float healFactor = 0.3f; // Heal 30% of max health
+    [SerializeField] Image healIcon;
+    [SerializeField] Image healIconBorder;
+    [SerializeField] Color noHealColor;
+    [SerializeField] AudioClip healSoundFX;
+    [SerializeField] GameObject healFxPrefab;
 
     void Awake()
     {
@@ -198,5 +210,46 @@ public class DamageManager : MonoBehaviour
 
         // face the attacker and move the game object to an appropriate distance from the attacker
         FaceAttacker(attacker, pushBack, staggerLength);
+    }
+
+    void OnHeal(InputValue value)
+    {
+        if (value.isPressed && healCharges > 0 && currentHealth < maxHealth && this.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            // Heal the player
+            float healAmount = maxHealth * healFactor;
+            currentHealth += healAmount;
+            if (currentHealth > maxHealth)
+                currentHealth = maxHealth;
+            healthBar.fillAmount = currentHealth / maxHealth;
+
+            // Play heal sound effect
+            SoundFXManager.instance.PlaySoundFXClip(healSoundFX, transform, 0.5f);
+
+            // Decrease heal charges and update icon color if no charges left
+            healCharges--;
+            if (healCharges <= 0)
+            {
+                healIcon.color = noHealColor;
+                healCharges = 0;
+            }
+
+            // Apply changes to the UI
+            healText.text = healCharges.ToString();
+            if (healCharges <= 0)
+            {
+                healIcon.color = noHealColor;
+                healIconBorder.color = noHealColor;
+            }
+
+            // Play heal particle effect
+            if (healFxPrefab != null)
+            {
+                GameObject healEffect = Instantiate(healFxPrefab, transform.position, Quaternion.identity);
+                ParticleSystem particleSystem = healEffect.GetComponent<ParticleSystem>();
+                float duration = particleSystem != null ? particleSystem.main.duration : 2f;
+                Destroy(healEffect, duration); // Destroy the effect after the particle systems duration or 2 seconds
+            }
+        }
     }
 }
