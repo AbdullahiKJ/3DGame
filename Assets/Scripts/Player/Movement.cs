@@ -138,7 +138,7 @@ public class Movement : MonoBehaviour
                 transform.forward = rollDirection;
             }
             float adjustedRollSpeed = rollSpeed * (isSprinting ? 1.5f : 1f);
-            controller.Move(transform.forward * Time.deltaTime * adjustedRollSpeed);
+            controller.Move(transform.forward * Time.deltaTime * 1 / Time.timeScale * adjustedRollSpeed);
             moveInput = Vector2.zero;
         }
         // Apply movement velocity and vertical velocity in one go

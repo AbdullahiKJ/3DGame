@@ -85,7 +85,7 @@ namespace Unity.UI.Shaders.Sample
         public float Value
         {
             get => _value;
-            private set
+            set
             {
                 _value = value;
                 Graphic.SetMaterialDirty();

@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 public class Lightning : AbilityBase
 {
     [Header("Lightning Settings")]
-    [SerializeField] RuntimeAnimatorController baseController;
-    [SerializeField] RuntimeAnimatorController lightningController;
     Animator animator;
     PlayerInput playerInput;
     Movement baseMovementScript;
@@ -44,9 +42,6 @@ public class Lightning : AbilityBase
         // Enable the lightning movement script
         lightningMovementScript.enabled = true;
 
-        // Switch over to the lightning animator controller
-        animator.runtimeAnimatorController = lightningController;
-
         // Switch the player input to the lightning action map
         playerInput.SwitchCurrentActionMap("Lightning");
 
@@ -54,8 +49,10 @@ public class Lightning : AbilityBase
         if (surfaceMeshRenderer != null && outlineMaterial != null)
         {
             Material[] materials = surfaceMeshRenderer.materials;
-            List<Material> materialList = new List<Material>(materials);
-            materialList.Add(outlineMaterial);
+            List<Material> materialList = new List<Material>(materials)
+            {
+                outlineMaterial
+            };
             surfaceMeshRenderer.materials = materialList.ToArray();
         }
 
@@ -69,6 +66,9 @@ public class Lightning : AbilityBase
         // Play the ambient sound
         SoundFXManager.instance.PlayAmbientClip(ambientSound, transform, 1f, this.abilityDuration);
 
+        // Set the animation layer weight for the lightning ability
+        animator.SetLayerWeight(3, 1f);
+
         abilityStarted = true;
     }
     public override void EndAbility()
@@ -80,12 +80,8 @@ public class Lightning : AbilityBase
         baseMovementScript.enabled = true;
         combatScript.enabled = true;
 
-        // Switch back to the base animator controller
-        animator.runtimeAnimatorController = baseController;
-
         // Switch back to the default player input action map
         playerInput.SwitchCurrentActionMap("Player");
-
 
         // Remove the outline material from the surface mesh renderer
         if (surfaceMeshRenderer != null && outlineMaterial != null)
@@ -102,6 +98,8 @@ public class Lightning : AbilityBase
 
         // Disable the crosshair
         crossHair.SetActive(false);
-    }
 
+        // Reset the animation layer weight for the lightning ability
+        animator.SetLayerWeight(3, 0f);
+    }
 }
