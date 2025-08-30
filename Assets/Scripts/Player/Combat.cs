@@ -44,7 +44,7 @@ public class Combat : MonoBehaviour
         {
             movement.setMoveInput(Vector2.zero);
 
-            comboTimer += Time.deltaTime;
+            comboTimer += Time.deltaTime / Time.timeScale;
             if (comboTimer > timeBetweenPunches)
             {
                 comboTimer = 0;
@@ -135,11 +135,14 @@ public class Combat : MonoBehaviour
     // trigger punch
     void OnPunch(InputValue value)
     {
-        // Condition prevents tirggering attacks before most of the animation has played out
+        // Condition prevents triggering attacks before most of the animation has played out
         if (value.isPressed && (comboTimer > timeBeforePunch || comboTimer == 0) && !movement.isJumping)
         {
             // reset the hit enemies list
             hitEnemies = new List<GameObject>();
+
+            // reset the collider actibe bool
+            colliderActive = false;
 
             movement.turnOffSprint();
             movement.setMoveInput(Vector2.zero);
@@ -207,7 +210,7 @@ public class Combat : MonoBehaviour
     // Wait for the animation state to change - wait the transition duration
     IEnumerator WaitForAnimationStateChange()
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.1f);
         AnimatorStateInfo currentState = animator.GetNextAnimatorStateInfo(0);
         // Assign the new time variable
         timeBeforePunch = 0.6f * currentState.length;
