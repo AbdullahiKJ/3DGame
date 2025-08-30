@@ -24,6 +24,7 @@ public class InterfaceManager : MonoBehaviour
             player.abilities[i].OnAbilityUse.AddListener((cooldown) => abilityUI.ShowCoolDown(cooldown));
             abilityUI.SetIcon(player.abilities[i].icon);
             abilityUI.SetTransform(abilityUiPositions[i]);
+            abilityUI.title = player.abilities[i].title;
 
             // Instantiate ability cooldown UI and set its properties
             if (player.abilities[i].abilityDuration > 0f)

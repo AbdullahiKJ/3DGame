@@ -18,13 +18,30 @@ public abstract class AbilityBase : MonoBehaviour
     public bool canUse = true;
     public bool abilityStarted = false;
     public GameObject hitParticlePrefab;
+    AbilityManager abilityManager;
+
+    void Start()
+    {
+        abilityManager = GetComponent<AbilityManager>();
+    }
 
     public void TriggerAbility()
     {
         if (canUse)
         {
+            // Add the ability to the active abilities list in AbilityManager
+            if (abilityManager != null)
+            {
+                abilityManager.activeAbilities.Add(title);
+                abilityManager.UpdateAbilityIconColor();
+            }
             Ability();
             StartCooldown();
+        }
+        else if (abilityManager != null)
+        {
+            // Play inactive sound for feedback
+            abilityManager.PlayInactiveSound();
         }
     }
 
@@ -45,6 +62,13 @@ public abstract class AbilityBase : MonoBehaviour
                 yield return new WaitForSeconds(abilityDuration);
                 EndAbility();
                 abilityStarted = false;
+
+                // Remove the ability from the active abilities list in AbilityManager
+                if (abilityManager != null)
+                {
+                    abilityManager.activeAbilities.Remove(title);
+                    abilityManager.ResetAbilityIconColor();
+                }
             }
 
             // Trigger the cooldown timer

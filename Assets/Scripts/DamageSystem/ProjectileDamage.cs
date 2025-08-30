@@ -31,7 +31,7 @@ public class ProjectileDamage : MonoBehaviour
         // Move the projectile forward at the specified speed
         if (isMoving)
         {
-            transform.Translate(transform.forward * speed * Time.deltaTime, Space.World);
+            transform.Translate(transform.forward * speed * Time.deltaTime * 1 / Time.timeScale, Space.World);
 
             // Destroy the projectile after a certain distance (optional)
             if (Vector3.Distance(transform.position, player) > maxFlyDistance)

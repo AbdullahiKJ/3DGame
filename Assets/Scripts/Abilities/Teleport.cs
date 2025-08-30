@@ -114,7 +114,7 @@ public class Teleport : AbilityBase
         if (callTeleport)
             SoundFXManager.instance.PlayLayeredSoundFX(soundFX, transform, 1f);
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSecondsRealtime(0.5f);
 
         if (callTeleport)
             StartTeleport(usingPlatform);

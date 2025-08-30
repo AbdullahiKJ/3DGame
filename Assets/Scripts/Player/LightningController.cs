@@ -91,8 +91,8 @@ public class LightningMovement : MonoBehaviour
         // TOOD: after adding animations, check if this is needed
         LookInCameraDirection();
 
-        finalMoveDirection += ascendMoveDirection * Time.deltaTime; // Add ascend/descend movement to final move direction
-        finalMoveDirection += dashMoveDirection * Time.deltaTime; // Add dash movement to final move direction
+        finalMoveDirection += ascendMoveDirection * Time.deltaTime * 1 / Time.timeScale; // Add ascend/descend movement to final move direction
+        finalMoveDirection += dashMoveDirection * Time.deltaTime * 1 / Time.timeScale; // Add dash movement to final move direction
         controller.Move(finalMoveDirection);
         finalMoveDirection = Vector3.zero; // Reset the final move direction after applying it
     }
@@ -105,15 +105,15 @@ public class LightningMovement : MonoBehaviour
         if (Speed > allowPlayerRotation)
         {
             // TODO: ANIMATION
-            // animator.SetFloat("VerticalInput", InputZ, StartAnimTime, Time.deltaTime);
-            // animator.SetFloat("HorizontalInput", InputX, StartAnimTime, Time.deltaTime);
+            // animator.SetFloat("VerticalInput", InputZ, StartAnimTime, Time.deltaTime * 1 / Time.timeScale);
+            // animator.SetFloat("HorizontalInput", InputX, StartAnimTime, Time.deltaTime * 1 / Time.timeScale);
             PlayerMoveAndRotation();
         }
         else if (Speed < allowPlayerRotation)
         {
             // TODO: ANIMATION
-            animator.SetFloat("VerticalInput", InputZ, StopAnimTime, Time.deltaTime);
-            animator.SetFloat("HorizontalInput", InputX, StopAnimTime, Time.deltaTime);
+            animator.SetFloat("VerticalInput", InputZ, StopAnimTime, Time.deltaTime * 1 / Time.timeScale);
+            animator.SetFloat("HorizontalInput", InputX, StopAnimTime, Time.deltaTime * 1 / Time.timeScale);
         }
     }
 
@@ -128,7 +128,7 @@ public class LightningMovement : MonoBehaviour
         Vector3 desiredMoveDirection = forward * InputZ + right * InputX;
 
         // Add the joystick input to the final move direction
-        finalMoveDirection += desiredMoveDirection * Time.deltaTime * moveSpeed;
+        finalMoveDirection += desiredMoveDirection * Time.deltaTime * 1 / Time.timeScale * moveSpeed;
     }
 
     void LookInCameraDirection()

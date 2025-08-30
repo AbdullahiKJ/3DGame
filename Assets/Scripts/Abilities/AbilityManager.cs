@@ -28,7 +28,10 @@ public class AbilityManager : MonoBehaviour
         (-25,-25), // Ability 3
         (-25,25)  // Ability 4
     };
-    List<string> activeAbilities = new List<string>();
+    public List<string> activeAbilities = new List<string>();
+    [SerializeField] Color activeColor;
+    [SerializeField] Color inactiveColor;
+    [SerializeField] AudioClip inactiveSound;
 
     void Awake()
     {
@@ -62,6 +65,11 @@ public class AbilityManager : MonoBehaviour
             if (abilityIndex >= 0 && abilityIndex < abilities.Length && IsValidCombination(abilities[abilityIndex].title))
             {
                 abilities[abilityIndex].TriggerAbility();
+            }
+            else
+            {
+                // Play invalid ability sound for feedback
+                PlayInactiveSound();
             }
         }
     }
@@ -102,6 +110,40 @@ public class AbilityManager : MonoBehaviour
                 return false; // Invalid combination
             }
         }
+        else if (activeAbilities.Contains("Flame Armament"))
+        {
+            if (ability == "Lightning")
+            {
+                return false; // Invalid combination
+            }
+        }
         return true; // Valid combination
+    }
+
+    public void UpdateAbilityIconColor()
+    {
+        AbilityUI[] abilityUIs = FindObjectsByType<AbilityUI>(FindObjectsSortMode.None);
+        foreach (var ui in abilityUIs)
+        {
+            if (!IsValidCombination(ui.title))
+            {
+                ui.SetColour(inactiveColor);
+            }
+        }
+    }
+
+    public void ResetAbilityIconColor()
+    {
+        AbilityUI[] abilityUIs = FindObjectsByType<AbilityUI>(FindObjectsSortMode.None);
+        foreach (var ui in abilityUIs)
+        {
+            ui.SetColour(activeColor);
+        }
+    }
+
+    public void PlayInactiveSound()
+    {
+        // todo: add sound effect in the inspector
+        SoundFXManager.instance.PlaySoundFXClip(inactiveSound, transform, 1f);
     }
 }

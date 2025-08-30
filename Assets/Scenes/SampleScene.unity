@@ -17058,7 +17058,14 @@ PrefabInstance:
     - target: {fileID: 5443494629021916281, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: m_WarningMessage
-      value: 
+      value: "\nBinding warning: Some generic clip(s) animate transforms that are
+        already bound by a Humanoid avatar. These transforms can only be changed
+        by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
+        'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
+        'mixamorig:LeftHandPinky2'\n\tTransform 'mixamorig:RightHandRing2'\n\tTransform
+        'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:RightArm'\n\tTransform
+        'mixamorig:LeftLeg'\n\tand more ...\n\tFrom animation clip 'Walk Forward'\n\tFrom
+        animation clip 'Walk Back'"
       objectReference: {fileID: 0}
     - target: {fileID: 7529223791109869375, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
@@ -17085,6 +17092,41 @@ PrefabInstance:
       propertyPath: uiSelector
       value: 
       objectReference: {fileID: 1841168393}
+    - target: {fileID: 8151028177532899587, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: activeColor.a
+      value: 0.78039217
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151028177532899587, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: activeColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151028177532899587, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: activeColor.g
+      value: 0.69411767
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151028177532899587, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: inactiveColor.a
+      value: 0.78039217
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151028177532899587, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: inactiveColor.b
+      value: 0.24528301
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151028177532899587, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: inactiveColor.g
+      value: 0.24528301
+      objectReference: {fileID: 0}
+    - target: {fileID: 8151028177532899587, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: inactiveColor.r
+      value: 0.24528301
+      objectReference: {fileID: 0}
     - target: {fileID: 8436386216473862764, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: m_LocalPosition.x

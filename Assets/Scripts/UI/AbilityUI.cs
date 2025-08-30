@@ -7,6 +7,7 @@ public class AbilityUI : MonoBehaviour
     [SerializeField] private Image icon = default;
     [SerializeField] private Image outlineIcon = default;
     [SerializeField] private Image fillImage = default;
+    public string title;
 
     public void SetIcon(Sprite s)
     {
