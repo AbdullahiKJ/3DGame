@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.VFX;
@@ -27,6 +28,15 @@ public class Combat : MonoBehaviour
     [SerializeField] GameObject manager;
     TerrainEffects terrainEffects;
     bool colliderActive = false;
+
+    [Header("Target Dash Settings")]
+    [SerializeField] string enemyTag = "Enemy";
+    [SerializeField] float targetDashRadius = 150f;
+    [SerializeField] float targetOffset = 0.5f;
+    [SerializeField] float minDashDistance = 1f;
+    [SerializeField] float maxDashDistance = 5f;
+    [SerializeField] float dashDuration = 0.5f;
+    [SerializeField] float heightOffset = 0.5f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -161,6 +171,10 @@ public class Combat : MonoBehaviour
 
             animator.SetInteger("Combo", comboLevel);
             StartCoroutine(WaitForAnimationStateChange());
+
+            // Dash to target if within range on the first punch
+            if (comboLevel == 1)
+                DashToTarget();
         }
     }
 
@@ -222,5 +236,28 @@ public class Combat : MonoBehaviour
     void DisableCollider()
     {
         colliderActive = false;
+    }
+
+    void DashToTarget()
+    {
+        GameObject enemy = GameObject.FindGameObjectWithTag(enemyTag);
+
+        if (enemy != null)
+        {
+            Vector2 screenCentre = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(enemy.transform.position + new Vector3(0f, heightOffset, 0f));
+
+            // Ignore if the enemy is behind the player
+            if (screenPos.z < 0)
+                return;
+
+            float distanceFromCentre = Vector2.Distance(screenCentre, screenPos);
+            float distanceFromPlayer = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distanceFromCentre < targetDashRadius && distanceFromPlayer < maxDashDistance)
+            {
+                transform.LookAt(enemy.transform);
+                transform.DOMove(enemy.transform.position - (transform.forward * targetOffset), dashDuration);
+            }
+        }
     }
 }

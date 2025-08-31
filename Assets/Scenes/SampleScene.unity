@@ -17047,9 +17047,34 @@ PrefabInstance:
       objectReference: {fileID: 1071659798}
     - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
+      propertyPath: debugUI
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
       propertyPath: manager
       value: 
       objectReference: {fileID: 1553017897}
+    - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: dashDuration
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: heightOffset
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: maxDashDistance
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: targetDashRadius
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: controllerVibration.x
