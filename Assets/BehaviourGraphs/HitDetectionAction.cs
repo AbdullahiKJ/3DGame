@@ -88,7 +88,7 @@ public partial class HitDetectionAction : Action
                 Vector3 contactPoint = hit.ClosestPointOnBounds(weapon.transform.position);
 
                 // Handle Terrain Impacts
-                terrainEffects.TerrainImpact(Agent.Value.transform.position, hitObject, contactPoint, 100f);
+                terrainEffects.TerrainImpact(Agent.Value.transform.position, hitObject, contactPoint, enemyDamageSO, 100f);
             }
         }
 

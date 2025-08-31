@@ -11,7 +11,7 @@ public class TerrainEffects : MonoBehaviour
         terrainLayer = LayerMask.NameToLayer("Terrain");
     }
 
-    public void TerrainImpact(Vector3 attackPos, GameObject hitObject, Vector3 contactPoint, float forceMultiplier = 1f, bool ignoreParticle = false)
+    public void TerrainImpact(Vector3 attackPos, GameObject hitObject, Vector3 contactPoint, DamageSO damageSO, float forceMultiplier = 1f, bool ignoreParticle = false)
     {
         if (hitObject.layer == terrainLayer)
         {
@@ -20,7 +20,18 @@ public class TerrainEffects : MonoBehaviour
             {
                 DestroyTerrain destroy = hitObject.GetComponent<DestroyTerrain>();
                 if (destroy != null)
-                    destroy.TriggerExplosion(attackPos, forceMultiplier);
+                {
+                    if (damageSO != null)
+                        destroy.TakeDamage(damageSO.baseDamage * damageSO.multiplier);
+                    if (destroy.health <= 0f)
+                        destroy.TriggerExplosion(attackPos, forceMultiplier);
+                    else
+                    {
+                        // Play sound effects and particle effects
+                        Instantiate(dirtParticlePrefab, contactPoint, Quaternion.identity);
+                        SoundFXManager.instance.PlayRandomSoundFXClip(defaultSoundFX, hitObject.transform, 1f);
+                    }
+                }
             }
             else if (ignoreParticle)
             {

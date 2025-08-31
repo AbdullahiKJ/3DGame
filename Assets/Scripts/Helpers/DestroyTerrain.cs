@@ -6,11 +6,13 @@ public class DestroyTerrain : MonoBehaviour
 {
     [SerializeField] GameObject fracturePrefab;
     GameObject fractureInstance;
+    public float health = 100f;
     [SerializeField] float minForce = 100f;
     [SerializeField] float maxForce = 250f;
     float lifetime = 7f;
     float fadeDuration = 3f;
     [SerializeField] float defaultScale = 265f;
+    [SerializeField] Quaternion defaultRotation = Quaternion.Euler(0f, 0f, 0f);
     [SerializeField] Material rockMat;
     Material sharedRockMat;
     [SerializeField] AudioClip[] soundFX;
@@ -35,8 +37,7 @@ public class DestroyTerrain : MonoBehaviour
         meshRenderer.enabled = false;
         meshCollider.enabled = false;
 
-        Quaternion rotation = transform.rotation;
-        rotation.x = 0f;
+        Quaternion rotation = transform.rotation * defaultRotation;
 
         fractureInstance = Instantiate(fracturePrefab, transform.position, rotation);
         fractureInstance.transform.localScale = transform.localScale / defaultScale;
@@ -51,7 +52,7 @@ public class DestroyTerrain : MonoBehaviour
             {
                 Vector3 direction = (transform.position - attacker).normalized;
                 Vector3 force = direction * Random.Range(minForce, maxForce) * forceMultiplier;
-                rb.AddForce(force);
+                // rb.AddForce(force);
             }
         }
 
@@ -72,5 +73,14 @@ public class DestroyTerrain : MonoBehaviour
                 Destroy(fractureInstance);
                 Destroy(this.gameObject);
             });
+    }
+
+    public void TakeDamage(float damage)
+    {
+        health -= damage;
+        if (health <= 0f)
+        {
+            health = 0f;
+        }
     }
 }

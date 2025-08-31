@@ -115,7 +115,7 @@ public class Combat : MonoBehaviour
                     Vector3 contactPoint = hit.ClosestPoint(sphereCentre);
 
                     // Handle Terrain Impacts
-                    terrainEffects.TerrainImpact(transform.position, hitObject, contactPoint);
+                    terrainEffects.TerrainImpact(transform.position, hitObject, contactPoint, damageSO);
                 }
             }
         }

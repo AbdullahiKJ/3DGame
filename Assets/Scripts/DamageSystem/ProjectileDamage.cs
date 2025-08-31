@@ -52,7 +52,7 @@ public class ProjectileDamage : MonoBehaviour
     {
         ContactPoint contact = collision.GetContact(0);
         // Handle terrain impacts
-        terrainEffects.TerrainImpact(transform.position, collision.gameObject, contact.point, 1.5f);
+        terrainEffects.TerrainImpact(transform.position, collision.gameObject, contact.point, damageSO, 1.5f);
 
         // Play the sound FX
         SoundFXManager.instance.PlayRandomSoundFXClip(hitSoundFX, transform, 1f);

@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0cbf77c991b84c5e900ce380c136ef2, type: 3}
   m_Name: Enemy
   m_EditorClassIdentifier: 
-  baseDamage: 10
+  baseDamage: 15
   isFireDamage: 0
   isIceDamage: 0
-  isPoisonDamage: 0
+  isElectricDamage: 0
   multiplier: 1
+  specialEffectPrefabs: []
+  audioClips: []

@@ -11,22 +11,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8d7e63d7d7c014a268187ecbe0336cac,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.87131
+      value: -6.79
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d7e63d7d7c014a268187ecbe0336cac,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25312
+      value: -0.14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d7e63d7d7c014a268187ecbe0336cac,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.03467
+      value: 21.88
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d7e63d7d7c014a268187ecbe0336cac,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071067
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d7e63d7d7c014a268187ecbe0336cac,
         type: 3}
@@ -41,12 +41,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8d7e63d7d7c014a268187ecbe0336cac,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d7e63d7d7c014a268187ecbe0336cac,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8d7e63d7d7c014a268187ecbe0336cac,
         type: 3}
@@ -67,6 +67,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: regular
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8d7e63d7d7c014a268187ecbe0336cac,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8d7e63d7d7c014a268187ecbe0336cac,
+        type: 3}
+      propertyPath: m_TagString
+      value: Destructible
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -127,9 +137,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fracturePrefab: {fileID: 295995299439451754, guid: 07ea4c46f00bd45e8b6ad601b89db80a,
     type: 3}
+  health: 50
   minForce: 15
   maxForce: 20
   defaultScale: 265
+  defaultRotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
   rockMat: {fileID: 2100000, guid: dd23e9916f8a741d896f706c5ef7d8bb, type: 2}
   soundFX:
   - {fileID: 8300000, guid: ca7f327ebf0f74f6dac82e84c0089aea, type: 3}

@@ -18,7 +18,7 @@ public class SpecialCollision : MonoBehaviour
     {
         Vector3 contact = other.ClosestPointOnBounds(transform.position);
         // Handle terrain impacts
-        terrainEffects.TerrainImpact(transform.position, other.gameObject, contact, 200f);
+        terrainEffects.TerrainImpact(transform.position, other.gameObject, contact, damageSO, 200f);
 
         if (other.gameObject.layer == playerLayerMask)
         {

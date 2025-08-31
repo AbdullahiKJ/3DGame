@@ -658,7 +658,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239827766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13692129, y: -0.00004188508, z: 0.0000057894836, w: 0.990582}
+  m_LocalRotation: {x: 0.1369797, y: -2.5581402e-11, z: 4.2647995e-12, w: 0.9905739}
   m_LocalPosition: {x: -5.3727756, y: 0.306293, z: 3.5461211}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1104,7 +1104,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.13697968, y: -1.6353184e-11, z: 2.2613703e-12, w: 0.9905739}
+  m_LocalRotation: {x: 0.1369797, y: -2.5478862e-11, z: 3.5232982e-12, w: 0.9905739}
   m_LocalPosition: {x: 0.213, y: 3.58, z: 9.190001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -17050,6 +17050,16 @@ PrefabInstance:
       propertyPath: manager
       value: 
       objectReference: {fileID: 1553017897}
+    - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: controllerVibration.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3800933854839298781, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: controllerVibration.y
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 4964595599134233259, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: m_Enabled

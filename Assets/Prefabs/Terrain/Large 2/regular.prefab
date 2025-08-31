@@ -68,6 +68,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: regular
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1c091b27df5e34db8a0b47a08b457048,
+        type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1c091b27df5e34db8a0b47a08b457048,
+        type: 3}
+      propertyPath: m_TagString
+      value: Destructible
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -127,9 +137,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fracturePrefab: {fileID: 5915760924803386009, guid: 854336fe47c434760993f37a92bc1dd9,
     type: 3}
+  health: 50
   minForce: 15
   maxForce: 20
   defaultScale: 265
+  defaultRotation: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
   rockMat: {fileID: 2100000, guid: dd23e9916f8a741d896f706c5ef7d8bb, type: 2}
   soundFX:
   - {fileID: 8300000, guid: ca7f327ebf0f74f6dac82e84c0089aea, type: 3}
