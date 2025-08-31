@@ -86,6 +86,11 @@ public class GameDirector : MonoBehaviour
     float damageToPlayer = 50f;
     float damageToEnemy = 100f;
 
+    [Header("Enemy AI Settings")]
+    [SerializeField] string specialAttackCapVar = "specialAttackCap";
+    [SerializeField] string futureSightActiveVar = "isFutureSightActive";
+    [SerializeField] string waitTimeVar = "waitTime";
+
     void Awake()
     {
         // Singleton
@@ -185,21 +190,27 @@ public class GameDirector : MonoBehaviour
         if (normalizedHealth < threshOne && !passedThreshOne)
         {
             passedThreshOne = true;
-            // todo: unlock new special
-            // todo: increase attack rate and or reduce wait time
+            // Unlock new special
+            agent.SetVariableValue(specialAttackCapVar, 1);
+            // Reduce wait time
+            agent.SetVariableValue(waitTimeVar, 1.5f);
         }
         else if (normalizedHealth < threshTwo && !passedThreshTwo)
         {
             passedThreshTwo = true;
-            // todo: unlock new special
-            // todo: increase attack rate and or reduce wait time
+            // Unlock new special
+            agent.SetVariableValue(specialAttackCapVar, 2);
+            // Reduce wait time
+            agent.SetVariableValue(waitTimeVar, 1f);
             FutureSight();
         }
         else if (normalizedHealth < threshThree & !passedThreshThree)
         {
             passedThreshThree = true;
-            // todo: unlock new special
-            // todo: increase attack rate and or reduce wait time
+            // Unlock new special
+            agent.SetVariableValue(specialAttackCapVar, 3);
+            // Reduce wait time
+            agent.SetVariableValue(waitTimeVar, 0.5f);
 
         }
         else if (normalizedHealth < threshFour && !passedThreshFour)
@@ -216,7 +227,7 @@ public class GameDirector : MonoBehaviour
     void FutureSight()
     {
         // Set the behavior graph flag
-        agent.SetVariableValue("isFutureSightActive", true);
+        agent.SetVariableValue(futureSightActiveVar, true);
 
         // Disable player controller
         playerMovement.enabled = false;
