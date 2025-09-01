@@ -60,6 +60,9 @@ public class Movement : MonoBehaviour
             moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
         }
 
+        // Set the gravity parameter in the animator
+        animator.SetFloat("gravity", playerVelocity.y);
+
         if (combatScript.getIsPunching())
         {
             // Limit the input to walking
