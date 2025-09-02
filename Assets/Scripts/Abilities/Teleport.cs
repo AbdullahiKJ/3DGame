@@ -133,7 +133,16 @@ public class Teleport : AbilityBase
         else
             newPosition = aimIndicator.transform.position + new Vector3(0f, 2f, 0f) - transform.position;
 
+        // Disable collisions temporarily to avoid collision issues
+        for (int i = 0; i < 32; i++)
+            Physics.IgnoreLayerCollision(gameObject.layer, i, true);
+
         controller.Move(newPosition);
+
+        // Re-enable collisions
+        for (int i = 0; i < 32; i++)
+            Physics.IgnoreLayerCollision(gameObject.layer, i, false);
+
 
         float transitionLength = 0.35f;
         DOTween.To(() => teleportVolume.weight, x => teleportVolume.weight = x, 1f, transitionLength)
