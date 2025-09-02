@@ -5,29 +5,38 @@ public class TeleportPoint : MonoBehaviour
     Teleport teleportScript;
     GameObject player;
     [SerializeField] float maxDistance = 50f;
+    [SerializeField] float minDistance = 2f;
     [SerializeField] Color activeColor;
     [SerializeField] Color inactiveColor;
-    float intensity = 5f;
+    float intensity = 2f;
     Material material;
+    MeshRenderer meshRenderer;
 
     void Awake()
     {
         teleportScript = FindFirstObjectByType<Teleport>();
         player = GameObject.Find("Y Bot");
         material = GetComponent<MeshRenderer>().material;
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         float distance = (transform.position - player.transform.position).magnitude;
         // Change the material color depending on the teleport cooldown and distance from the player
         if (teleportScript.canUse && distance < maxDistance && distance > 8f)
         {
+            meshRenderer.enabled = true;
             material.SetColor("_EmissionColor", activeColor * intensity);
+        }
+        else if (distance < minDistance)
+        {
+            // Hide the teleport point if too close to the player
+            meshRenderer.enabled = false;
         }
         else
         {
+            meshRenderer.enabled = true;
             material.SetColor("_EmissionColor", inactiveColor * intensity);
         }
     }
