@@ -2591,7 +2591,7 @@ PrefabInstance:
     - target: {fileID: 8479509098261808062, guid: f27d767064a6c5d47af325efcb60d218,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 115
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8479509098261808062, guid: f27d767064a6c5d47af325efcb60d218,
         type: 3}
@@ -17153,6 +17153,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9017484664307500583, guid: 1245b8d2997d5b34fb1637be70a7eb05,
         type: 3}
+    - target: {fileID: 706478257149331030, guid: f3e4000cdbcf343e1854b9460f97453a,
+        type: 3}
+      propertyPath: testDamageSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 573ddcf2bda164937bc70366f65cf3ab,
+        type: 2}
     - target: {fileID: 706478257149331030, guid: f3e4000cdbcf343e1854b9460f97453a,
         type: 3}
       propertyPath: noHealColor.a

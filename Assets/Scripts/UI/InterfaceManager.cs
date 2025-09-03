@@ -39,6 +39,10 @@ public class InterfaceManager : MonoBehaviour
                     abilityCooldownUI.SetColour(player.abilities[index].cooldownIconColor);
                     abilityCooldownUI.ShowCoolDown(cooldown, true);
                 });
+                player.abilities[i].OnAbilityCancelled.AddListener(() =>
+                {
+                    abilityCooldownUI.gameObject.SetActive(false);
+                });
                 abilityCooldownUI.gameObject.SetActive(false);
             }
         }

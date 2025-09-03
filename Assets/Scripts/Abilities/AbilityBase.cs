@@ -4,8 +4,10 @@ using UnityEngine;
 public abstract class AbilityBase : MonoBehaviour
 {
     public class MyFloatEvent : UnityEngine.Events.UnityEvent<float> { }
+    public class MyVoidEvent : UnityEngine.Events.UnityEvent { }
     public MyFloatEvent OnAbilityUse = new MyFloatEvent();
     public MyFloatEvent OnAbilityStarted = new MyFloatEvent();
+    public MyVoidEvent OnAbilityCancelled = new MyVoidEvent();
 
     [Header("Base Ability Settings")]
     public string title;
@@ -48,6 +50,16 @@ public abstract class AbilityBase : MonoBehaviour
     public abstract void Ability();
     public abstract void EndAbility();
     public abstract void Helper();
+    public void ForceCancel()
+    {
+        if (abilityManager.activeAbilities.Contains(title))
+        {
+            RemoveFromActiveAbilities();
+            this.EndAbility();
+            StartCoroutine(CancelAbility());
+            OnAbilityCancelled.Invoke();
+        }
+    }
 
     void StartCooldown()
     {
@@ -66,15 +78,35 @@ public abstract class AbilityBase : MonoBehaviour
                 // Remove the ability from the active abilities list in AbilityManager
                 if (abilityManager != null)
                 {
-                    abilityManager.activeAbilities.Remove(title);
-                    abilityManager.ResetAbilityIconColor();
+                    RemoveFromActiveAbilities();
                 }
             }
 
             // Trigger the cooldown timer
-            OnAbilityUse.Invoke(cooldownTime);
-            yield return new WaitForSeconds(cooldownTime);
-            canUse = true;
+            StartCoroutine(CancelAbility());
+        }
+    }
+
+    IEnumerator CancelAbility()
+    {
+        OnAbilityUse.Invoke(cooldownTime);
+        yield return new WaitForSeconds(cooldownTime);
+        canUse = true;
+    }
+
+    void RemoveFromActiveAbilities()
+    {
+        abilityManager.activeAbilities.Remove(title);
+        abilityManager.ResetAbilityIconColor();
+    }
+
+    protected void RemoveAllSoundFX(AudioClip clip)
+    {
+        AudioSource[] sfxInstances = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
+        foreach (var sfx in sfxInstances)
+        {
+            if (sfx.clip == clip)
+                Destroy(sfx.gameObject);
         }
     }
 }

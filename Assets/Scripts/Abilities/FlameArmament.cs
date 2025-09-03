@@ -104,5 +104,8 @@ public class FlameArmament : AbilityBase
             overlayFeature.SetActive(false);
         }
 
+        // Remove all instances of the ambient sound and sound FX
+        this.RemoveAllSoundFX(soundFX);
+        this.RemoveAllSoundFX(ambientSound);
     }
 }

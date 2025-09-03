@@ -101,6 +101,15 @@ public class DamageManager : MonoBehaviour
         // Play the knockback animation if enabled
         if (knockback)
         {
+            // Cancel any active abilites
+            if (gameObject.layer == LayerMask.NameToLayer("Player"))
+            {
+                AbilityBase[] abilities = GetComponents<AbilityBase>();
+                foreach (AbilityBase ability in abilities)
+                {
+                    ability.ForceCancel();
+                }
+            }
             animator.Play("Knockback");
         }
         // Otherwise, play the stagger animation

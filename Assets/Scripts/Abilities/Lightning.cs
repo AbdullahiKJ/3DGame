@@ -101,5 +101,8 @@ public class Lightning : AbilityBase
 
         // Reset the animation layer weight for the lightning ability
         animator.SetLayerWeight(3, 0f);
+
+        // Remove all instances of the ambient sound and sound FX
+        this.RemoveAllSoundFX(ambientSound);
     }
 }
